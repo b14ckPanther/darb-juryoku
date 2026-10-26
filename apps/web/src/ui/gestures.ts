@@ -5,14 +5,17 @@ interface SheetThresholds {
   dismiss_velocity_px_s: number;
 }
 
-/** A sheet dragged down (positive offset) closes past a fraction of its height or on a fast flick. */
+/**
+ * A sheet dragged below its lowest detent (positive offset) closes past a fraction of its height or on
+ * a fast downward flick. Above the lowest detent a flick steps down a detent instead (see nearestDetent).
+ */
 export function sheetShouldDismiss(
   offsetY: number,
   velocityY: number,
   sheetHeight: number,
   t: SheetThresholds,
 ): boolean {
-  if (offsetY <= 0 && velocityY <= 0) return false;
+  if (offsetY <= 0) return false;
   return offsetY > sheetHeight * t.dismiss_fraction || velocityY > t.dismiss_velocity_px_s;
 }
 

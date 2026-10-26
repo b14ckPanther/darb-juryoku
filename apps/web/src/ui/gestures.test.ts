@@ -20,6 +20,10 @@ describe('sheetShouldDismiss (thresholds from tokens)', () => {
     expect(sheetShouldDismiss(10, sheet.dismiss_velocity_px_s + 1, height, sheet)).toBe(true);
   });
 
+  it('steps down instead of closing when flicked from above the lowest detent', () => {
+    expect(sheetShouldDismiss(-120, sheet.dismiss_velocity_px_s + 1, height, sheet)).toBe(false);
+  });
+
   it('never closes on an upward drag', () => {
     expect(sheetShouldDismiss(-300, -2000, height, sheet)).toBe(false);
   });

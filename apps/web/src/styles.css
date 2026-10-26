@@ -100,6 +100,73 @@
     }
   }
 
+  /* Range input: thin track filled with gold up to the value, a 28 px thumb on a 44 px hit area. */
+  .jr-slider {
+    appearance: none;
+    width: 100%;
+    height: var(--touch-min);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .jr-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: var(--radius-control);
+    background: linear-gradient(
+      90deg,
+      var(--accent-fill) var(--fill),
+      var(--surface-overlay) var(--fill)
+    );
+  }
+
+  .jr-slider::-moz-range-track {
+    height: 4px;
+    border-radius: var(--radius-control);
+    background: linear-gradient(
+      90deg,
+      var(--accent-fill) var(--fill),
+      var(--surface-overlay) var(--fill)
+    );
+  }
+
+  .jr-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    margin-top: -12px;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: var(--shadow-raised);
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .jr-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: var(--shadow-raised);
+  }
+
+  .jr-slider:active::-webkit-slider-thumb {
+    transform: scale(1.08);
+  }
+
+  .jr-slider:focus-visible {
+    outline: none;
+  }
+
+  .jr-slider:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .jr-slider:focus-visible::-moz-range-thumb {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
   /* Pressed-state scale feedback on every tappable element (agent manual 1.10). */
   .pressable {
     transition: transform var(--duration-fast) var(--ease-out);
