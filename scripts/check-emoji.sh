@@ -15,16 +15,20 @@ for path in "$@"; do
 done
 [ "${#existing[@]}" -eq 0 ] && exit 0
 
-find "${existing[@]}" \
+# find -exec ... + never runs perl on an empty list, and the exit code is normalised to 1
+# (GNU and BSD tools report a failed child differently).
+if ! find "${existing[@]}" \
   \( -name node_modules -o -name dist -o -name .venv -o -name coverage -o -name .git \) -prune -o \
   -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.mjs' -o -name '*.json' \
   -o -name '*.yaml' -o -name '*.yml' -o -name '*.md' -o -name '*.css' -o -name '*.html' \
-  -o -name '*.py' -o -name '*.sh' -o -name '*.bats' -o -name '*.svg' -o -name '*.txt' \) -print0 |
-  xargs -0 perl -CSD -ne '
+  -o -name '*.py' -o -name '*.sh' -o -name '*.bats' -o -name '*.svg' -o -name '*.txt' \) \
+  -exec perl -CSD -ne '
     BEGIN { $bad = 0 }
     if (/[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{FE0F}]/) {
       print "$ARGV:$.: emoji or pictograph code point\n"; $bad = 1;
     }
     close ARGV if eof;
     END { exit $bad }
-  '
+  ' {} +; then
+  exit 1
+fi

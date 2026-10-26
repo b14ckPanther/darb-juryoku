@@ -4,7 +4,9 @@
 set -euo pipefail
 
 msg_file="${1:?usage: commit-msg <message-file>}"
-body="$(grep -v '^#' "$msg_file" || true)"
+# Read the message only: stop at the scissors line (git commit -v appends the diff below it),
+# then drop git's comment lines.
+body="$(sed -n '/^# -\{24\} >8 -\{24\}$/q;p' "$msg_file" | grep -v '^#' || true)"
 
 if printf '%s\n' "$body" | grep -qiE 'co-authored|claude|anthropic|generated with'; then
   echo "commit-msg: rejected, the message contains attribution text (co-authored, tool or vendor names, 'generated with')." >&2

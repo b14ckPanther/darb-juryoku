@@ -61,3 +61,15 @@ write_msg() { printf '%b' "$1" > "$MSG"; }
   run "$HOOK" "$MSG"
   [[ "$output" == *"attribution"* ]]
 }
+
+@test "ignores the verbose diff below the scissors line" {
+  write_msg "Update agent manual\n# ------------------------ >8 ------------------------\n# Do not modify or remove the line above.\ndiff --git a/CLAUDE.md b/CLAUDE.md\n+Co-Authored-By rule\n"
+  run "$HOOK" "$MSG"
+  [ "$status" -eq 0 ]
+}
+
+@test "still checks message lines above the scissors line" {
+  write_msg "Tidy\n\nGenerated with a tool\n# ------------------------ >8 ------------------------\ndiff\n"
+  run "$HOOK" "$MSG"
+  [ "$status" -eq 1 ]
+}
