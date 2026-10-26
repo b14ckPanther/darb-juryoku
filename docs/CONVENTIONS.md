@@ -1,6 +1,6 @@
 # Conventions
 
-Proposed, confirm with Nour in Phase 1. Phase 0 encodes these in config files (ESLint, Prettier, ruff, mypy, EditorConfig) so they are enforced, not remembered.
+Accepted in Phase 1 (decided by Claude under Nour's delegation, 2026-10-26). Phase 0 encodes these in config files (ESLint, Prettier, ruff, mypy, EditorConfig) so they are enforced, not remembered.
 
 ## 1. Project layout
 

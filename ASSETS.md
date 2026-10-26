@@ -7,5 +7,5 @@ Phase 2 completes this file (icon set, nudge chime).
 |---|---|---|---|---|
 | Zen Old Mincho | `brand/fonts/ZenOldMincho-*.ttf` | Google Fonts | SIL OFL 1.1 (`brand/fonts/OFL-ZenOldMincho.txt`) | Display face |
 | Geist | `brand/fonts/Geist.ttf` | Vercel, via Google Fonts | SIL OFL 1.1 | UI face; licence text to be added in Phase 2 |
-| Darb Juryoku mark and brand exports | `brand/` | Made in this repo | MIT (this repo) | Approved brand set |
+| Darb Juryoku mark and brand exports | `brand/` | Made in this repo | Not covered by MIT: the name, mark and renders identify this project and may not be reused as another product's brand | Approved brand set (ADR-030) |
 | MediaPipe Pose Landmarker model | not yet added (Phase 4) | Google | Apache-2.0 | Self-hosted under the app origin |

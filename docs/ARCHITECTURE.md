@@ -1,6 +1,6 @@
 # Architecture
 
-Status: MediaPipe, PyTorch, ONNX Runtime Web, on-device inference and "no cloud" come from Nour's roadmap. Everything else here (feature set, classes, model family, sample rate, storage layout, DVC, tooling) is **proposed, confirm with Nour in Phase 1**.
+Status: MediaPipe, PyTorch, ONNX Runtime Web, on-device inference and "no cloud" come from Nour's roadmap. Everything else here (feature set, classes, model family, sample rate, storage layout, DVC, tooling) is **accepted in Phase 1** (decided by Claude under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`).
 
 ## 1. Shape in one paragraph
 
@@ -108,7 +108,7 @@ The winner is chosen by macro F1 on the test set, then by latency. All candidate
 - **Leave-one-condition-out** check: train without, say, evening-light sessions, test on them (conditions from session metadata).
 - **On-device latency**: p50/p95/p99 of classifier inference and of the full pose + classifier step, for WebGPU and WASM, measured by Model Lab's benchmark on Nour's laptop, committed as `eval/latency/<model>-<device>-<date>.json`.
 - **Model size** on disk for FP32, FP16 and INT8.
-- Metric gates in `ml/configs/gates.yaml` (proposed: macro F1 at least 0.85, `slouch` recall at least 0.85, beats heuristic macro F1 by at least 0.05, INT8 macro F1 within 0.01 of FP32). A model that fails a gate is not released.
+- Metric gates in `ml/configs/gates.yaml` (accepted in Phase 1, plus p95 latency gates of 8 ms classifier on WASM and 60 ms pose + classifier step; originally proposed as: macro F1 at least 0.85, `slouch` recall at least 0.85, beats heuristic macro F1 by at least 0.05, INT8 macro F1 within 0.01 of FP32). A model that fails a gate is not released.
 
 ## 5. Running while Nour codes
 
@@ -145,7 +145,7 @@ Python 3.12, managed with **uv**. Package `pg_ml` in `ml/src/pg_ml/`.
 - Dataset Studio exports `recording-<sessionId>.jsonl` (one landmark frame per line: `t`, `landmarks[15][x,y,z,visibility]`, `label`, `label_source: protocol|prompt|manual`) and `manifest.json` (session metadata: protocol, camera, lighting, chair, time of day, calibration id). Both validated against `packages/schemas/dataset/`.
 - Raw exports go to `data/raw/`, tracked with **DVC 3** (`dvc add data/raw`). The DVC remote is a local folder outside the repo or an external drive (proposed). Nothing about the dataset is pushed anywhere public unless Nour decides to publish it (open question).
 - Each dataset version is a git tag `data-vN` pointing at the `.dvc` file, with a `data/CHANGELOG.md` entry (sessions added, label fixes).
-- Target for v1 (proposed): at least 30 sessions and 6 hours, across morning, afternoon and evening light, two chairs, two camera positions, and at least 2 hours of passive real-work sessions labelled by prompts.
+- Target for v1 (accepted in Phase 1, schedule in spec section 8): at least 30 sessions and 6 hours, across morning, afternoon and evening light, two chairs, two camera positions, and at least 2 hours of passive real-work sessions labelled by prompts.
 
 ### Pipeline stages (`dvc.yaml`)
 

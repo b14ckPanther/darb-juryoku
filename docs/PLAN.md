@@ -268,6 +268,7 @@ Every phase also uses the process skills (`superpowers:brainstorming`, `superpow
 
 **Deliverables**
 - Session lifecycle (start, pause, idle timeout, end, midnight split) writing minute buckets.
+- "Send to phone": aggregates-only export through the share sheet and import on the phone PWA (ADR-028; QR handoff is a stretch goal), with a test that the file holds no landmarks.
 - Nudge engine per `config/nudges.yaml` with escalation, cooldowns, quiet hours, snooze; system notifications with permission flow.
 - Signature polish on real video: match moment motes, drift warming, bloom tuned per art direction.
 - Today and History on real data (Phase 3 engine reused), with retention.
