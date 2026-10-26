@@ -99,3 +99,14 @@ The secret is entered at runtime and kept as a non-extractable CryptoKey on Nour
 
 ## ADR-026 Package managers: pnpm 10 workspaces, Node 24 LTS
 Status: Proposed, confirm with Nour in Phase 1.
+
+---
+
+## ADR-027 Phase 0 tooling rulings
+Status: Proposed (ruling made in Phase 0 by the agent), confirm with Nour in Phase 1.
+- Shell tests use **bats-core** (installed with Homebrew, no sudo); CI installs it with apt.
+- **DVC 3** is an `ml` dev dependency (`uv run --project ml dvc ...`) and also installed with `uv tool install dvc` for convenience.
+- **Vite 7** stays as planned, so `@vitejs/plugin-react` is pinned to 5 (version 6 needs Vite 8).
+- Python type checks run as `mypy --config-file ml/pyproject.toml ml/src` so strict mode applies from the repo root.
+- Runtime Ajv compilation is temporary; Ajv standalone validators replace it before the strict CSP lands.
+Cost if wrong: low; each is a one-line change. Details and the rest of the Phase 0 rulings are in the ledger.

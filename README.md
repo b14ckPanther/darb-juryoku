@@ -8,7 +8,7 @@ Everything runs on your device. Webcam frames never leave the browser, and there
 
 Darb Budokai role: **Stamina** (region: The Springs, stat: Vigor).
 
-Status: planning package. No code yet. Phase 0 creates the repo.
+Status: Phase 0 (repo bootstrap, CI, conventions) is built and green on `phase/00-bootstrap` and waits for Nour's approval to merge (5% once approved). No product UI yet: Phase 1 confirms the spec, Phase 2 builds the design system.
 
 ---
 
@@ -59,13 +59,19 @@ docs/OPEN_QUESTIONS.md what only Nour can decide
 docs/CONVENTIONS.md    code style, layout, tests, commits, PR template
 ```
 
-## How to start
+## Run it locally
 
-Open Claude Code in this folder and say:
+Requirements: Node 24 or newer, pnpm 11, Python 3.12 with uv, bats-core.
 
-> start Phase 0
+```bash
+pnpm install
+pnpm --filter web dev            # http://localhost:5173 (cross-origin isolated)
+pnpm check:all                   # every unit test, lint, typecheck, schema, emoji and hook check
+pnpm --filter web e2e            # Playwright smoke and axe scan against the production build
+uv sync --project ml && pnpm ml:test
+```
 
-The agent reads `CLAUDE.md`, then `docs/PLAN.md`, and works phase by phase. After a context reset it resumes from `docs/PROGRESS.md` and `git log`.
+Work proceeds phase by phase from `docs/PLAN.md`; `docs/PROGRESS.md` is the ledger.
 
 ## How it fits the universe
 

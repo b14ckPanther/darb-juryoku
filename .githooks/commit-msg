@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Reject commit messages that carry attribution text or emoji.
+# Enabled with: git config core.hooksPath .githooks
+set -euo pipefail
+
+msg_file="${1:?usage: commit-msg <message-file>}"
+# Read the message only: stop at the scissors line (git commit -v appends the diff below it),
+# then drop git's comment lines.
+body="$(sed -n '/^# -\{24\} >8 -\{24\}$/q;p' "$msg_file" | grep -v '^#' || true)"
+
+if printf '%s\n' "$body" | grep -qiE 'co-authored|claude|anthropic|generated with'; then
+  echo "commit-msg: rejected, the message contains attribution text (co-authored, tool or vendor names, 'generated with')." >&2
+  exit 1
+fi
+
+if printf '%s\n' "$body" | perl -CSD -ne 'BEGIN{$f=0} $f=1 if /[\x{1F000}-\x{1FAFF}\x{2600}-\x{27BF}\x{2B00}-\x{2BFF}\x{FE0F}]/; END{exit $f}'; then
+  exit 0
+fi
+echo "commit-msg: rejected, the message contains an emoji or pictograph code point." >&2
+exit 1

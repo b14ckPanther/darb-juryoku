@@ -1,2 +1,38 @@
+# OS and editors
 .DS_Store
+.idea/
+.vscode/
+
+# Node
 node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+playwright-report/
+test-results/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Data and models (tracked by DVC, never git)
+data/**
+!data/*.dvc
+!data/CHANGELOG.md
+!data/.gitignore
+models/**/*.pt
+models/**/*.onnx
+.dvc/cache
+.dvc/tmp
+
+# Agent local settings
+.claude/settings.local.json

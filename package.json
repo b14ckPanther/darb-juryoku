@@ -1,0 +1,21 @@
+{
+  "name": "darb-juryoku",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.24.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test:hooks": "bats tests/hooks tests/scripts",
+    "check:emoji": "bash scripts/check-emoji.sh",
+    "schemas:check": "pnpm --filter @darb-juryoku/schemas check",
+    "ml:test": "uv run --project ml pytest",
+    "ml:lint": "uv run --project ml ruff check ml && uv run --project ml ruff format --check ml",
+    "ml:typecheck": "uv run --project ml mypy --config-file ml/pyproject.toml ml/src",
+    "check:all": "pnpm -r test && pnpm lint && pnpm typecheck && pnpm schemas:check && pnpm check:emoji && pnpm test:hooks && pnpm ml:test && pnpm ml:lint && pnpm ml:typecheck"
+  }
+}

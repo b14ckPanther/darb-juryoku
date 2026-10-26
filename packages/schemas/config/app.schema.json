@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/app.schema.json",
+  "title": "App config (config/app.yaml)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "sample_hz", "camera", "classify_every_samples", "window_samples", "retention_days"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1, "description": "Product name shown in the app shell." },
+    "sample_hz": { "type": "number", "exclusiveMinimum": 0, "description": "Pose samples per second." },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "classify_every_samples": { "type": "integer", "minimum": 1, "description": "Run the classifier every N pose samples." },
+    "window_samples": { "type": "integer", "minimum": 1, "description": "Pose samples per classifier window." },
+    "retention_days": { "type": "integer", "minimum": 1, "description": "Days of minute buckets kept in IndexedDB." }
+  }
+}
