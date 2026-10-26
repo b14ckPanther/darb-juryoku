@@ -1,0 +1,197 @@
+# Design tokens: the single source for apps/web/src/design/tokens.css (run `pnpm --filter web tokens`).
+# Validated against packages/schemas/config/design/tokens.schema.json.
+# Colour values are a brand colour name (brand/src/tokens.json), a name from `palette`, or a hex.
+# "name/NN" means that colour at NN% opacity.
+
+palette:
+  # Derived from the approved brand in Phase 2. Contrast is measured by apps/web/src/design/tokens/contrast.test.ts.
+  amber: '#B8652B' # drift marks on night: warm, never red; OKLab distance 17 from gold (dataviz validator)
+  amber_light: '#D98F3E' # drift text on night surfaces (passes 4.5:1 on forest)
+  amber_deep: '#843E14' # drift marks and text on ivory; passes every dataviz validator check against gold_ledger
+  coral: '#E07A63' # destructive actions on night (never used for posture)
+  brick: '#B4462F' # destructive actions on ivory
+  gold_ledger: '#A0742A' # gold marks on ivory (gold itself is 2:1 there)
+  ink_soft: '#4A6157' # secondary text on ivory
+  paper: '#FFFDF8' # raised surface on ivory
+  paper_sunken: '#F1EBDA' # grouped-list background on ivory
+  ledger_grey: '#8C8778' # Ivory Ledger direction: drift drawn as soft grey
+
+themes:
+  dark:
+    surface: night
+    surface_raised: forestDeep
+    surface_overlay: forest
+    text: ivory
+    text_secondary: muted
+    accent: gold # marks: you, sitting well
+    accent_text: gold
+    accent_fill: gold # primary buttons, selected controls
+    on_accent: night
+    drift: amber
+    drift_text: amber_light
+    danger: coral
+    on_danger: night
+    focus: goldLight
+    control_border: muted
+    outline_ideal: goldLight
+    absent: forest
+    rule: ivory/12
+    material: night/78
+    scrim: night/60
+    shadow_tint: '#000000/45'
+  light:
+    surface: ivory
+    surface_raised: paper
+    surface_overlay: paper_sunken
+    text: ink
+    text_secondary: ink_soft
+    accent: gold_ledger
+    accent_text: goldDeep
+    accent_fill: goldDeep
+    on_accent: ivory
+    drift: amber_deep
+    drift_text: amber_deep
+    danger: brick
+    on_danger: ivory
+    focus: goldDeep
+    control_border: ink_soft
+    outline_ideal: goldDeep
+    absent: paper_sunken
+    rule: ink/12
+    material: ivory/80
+    scrim: ink/35
+    shadow_tint: ink/18
+
+# Theme roles every theme must define, and the contrast each pair must reach (WCAG 2.2 AA).
+contrast:
+  text_on_surfaces:
+    min: 4.5
+    foregrounds: [text, text_secondary, accent_text, drift_text]
+    backgrounds: [surface, surface_raised, surface_overlay]
+  marks_on_surfaces:
+    min: 3
+    foregrounds: [accent, drift, danger, focus, control_border, outline_ideal]
+    backgrounds: [surface, surface_raised, surface_overlay]
+  filled_controls:
+    min: 4.5
+    pairs:
+      - [on_accent, accent_fill]
+      - [on_danger, danger]
+      - [danger, surface_raised]
+  # Good and drift minutes sit side by side in the ribbon and charts, so they must differ by more than
+  # lightness: OKLab distance x100 (the dataviz skill's normal-vision floor is 15).
+distinguishable:
+  min_oklab_delta: 15
+  pairs:
+    - [accent, drift]
+
+# Phase 2 art directions shown side by side on /design. Each starts from a theme and overrides roles.
+directions:
+  instrument:
+    label: Night Instrument
+    theme: dark
+    overrides: {}
+    features: { frame_marks: false, scan_grid: false }
+  ledger:
+    label: Ivory Ledger
+    theme: light
+    overrides: { drift: ledger_grey, drift_text: ink_soft }
+    features: { frame_marks: false, scan_grid: false }
+  monitor:
+    label: Night Monitor
+    theme: dark
+    overrides: { surface_raised: night, rule: gold/18 }
+    features: { frame_marks: true, scan_grid: true }
+
+type:
+  families:
+    display: "'Zen Old Mincho', 'Hiragino Mincho ProN', serif"
+    ui: "'Geist', sans-serif"
+  weights: { regular: 400, medium: 500, semibold: 600 }
+  # size in rem, line height unitless, tracking in em. Steps follow the iOS text styles so the phone feels native.
+  scale:
+    caption: { size: 0.75, line: 1.35, tracking: 0.01 }
+    footnote: { size: 0.8125, line: 1.4, tracking: 0 }
+    subhead: { size: 0.9375, line: 1.45, tracking: 0 }
+    body: { size: 1.0625, line: 1.5, tracking: -0.005 }
+    title3: { size: 1.25, line: 1.3, tracking: -0.01 }
+    title2: { size: 1.375, line: 1.25, tracking: -0.01 }
+    title1: { size: 1.75, line: 1.2, tracking: -0.015 }
+    large_title: { size: 2.125, line: 1.12, tracking: -0.02 }
+    display: { size: 3.5, line: 1.05, tracking: -0.025 }
+    hero: { size: 4.75, line: 1, tracking: -0.03 }
+
+space:
+  base_px: 4 # Tailwind spacing unit: p-4 is 16px
+  gutter_px: 16
+  section_px: 48
+
+# Shape rule: interactive controls are pills; containers are 14; sheets and the mirror are larger.
+radius:
+  control: 999px
+  field: 10px
+  container: 14px
+  mirror: 24px
+  sheet: 28px
+
+elevation:
+  raised: '0 1px 2px {shadow_tint}, 0 8px 24px -14px {shadow_tint}'
+  sheet: '0 -16px 48px -20px {shadow_tint}'
+  popover: '0 12px 32px -12px {shadow_tint}'
+
+layers:
+  base: 0
+  sticky: 10
+  tabbar: 20
+  scrim: 30
+  sheet: 40
+  toast: 50
+  banner: 60
+
+touch:
+  min_target_px: 44
+  press_scale: 0.97
+
+material:
+  blur_px: 20
+  saturate: 1.4
+
+motion:
+  springs:
+    settle: { stiffness: 170, damping: 22, mass: 1 } # brand spring: outline, glow, cards
+    snappy: { stiffness: 420, damping: 38, mass: 1 } # sheets, tab switches, toggles
+    gentle: { stiffness: 120, damping: 22, mass: 1 } # critically damped: match strength m
+  durations_ms: { fast: 120, base: 180, slow: 240, chart_stagger: 300, align: 1400, reduced_fade: 150 }
+  easings:
+    out: 'cubic-bezier(0.22, 1, 0.36, 1)'
+    in_out: 'cubic-bezier(0.65, 0, 0.35, 1)'
+  sheet:
+    detents: [0.5, 0.92] # fraction of viewport height
+    dismiss_fraction: 0.3 # dragged past 30% of its height closes
+    dismiss_velocity_px_s: 650 # or flicked down faster than this
+  swipe:
+    reveal_px: 88 # width of each swipe action
+    commit_fraction: 0.5
+
+glow:
+  outline_width_px: 2
+  outline_opacity: 0.6
+  outline_dash: [6, 5]
+  rim_width_px: 3
+  rim_blur_px: 14 # 2D fallback shadow blur
+  drift_warm_from: 0.25 # match strength below this starts warming segments toward drift
+  motes_max: 10
+  bloom: { strength: 0.55, radius: 0.42, threshold: 0.86 } # from brand render settings
+  exposure: 0.95
+
+sound:
+  chime:
+    file: nudge-chime.wav
+    sample_rate: 44100
+    duration_s: 1.6
+    partials: # frequency in Hz, relative gain, decay time constant in s
+      - [659.25, 1.0, 0.55]
+      - [987.77, 0.42, 0.38]
+      - [1318.5, 0.18, 0.22]
+    attack_s: 0.012
+    peak_dbfs: -6

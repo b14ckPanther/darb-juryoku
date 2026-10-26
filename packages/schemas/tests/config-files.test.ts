@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020';
 import { parse } from 'yaml';
@@ -9,12 +9,17 @@ const repoRoot = fileURLToPath(new URL('../../..', import.meta.url));
 const configDir = join(repoRoot, 'config');
 const schemaDir = join(repoRoot, 'packages/schemas/config');
 
-const configFiles = readdirSync(configDir).filter((f) => f.endsWith('.yaml'));
-const schemaFor = (file: string) => join(schemaDir, `${basename(file, '.yaml')}.schema.json`);
+// Every YAML file under config/ (any depth) has a schema at the same relative path under packages/schemas/config/.
+const configFiles = (readdirSync(configDir, { recursive: true }) as string[])
+  .filter((f) => f.endsWith('.yaml'))
+  .map((f) => relative(configDir, join(configDir, f)))
+  .sort();
+const schemaFor = (file: string) => join(schemaDir, file.replace(/\.yaml$/, '.schema.json'));
 
 describe('config files', () => {
-  it('finds at least one config file', () => {
-    expect(configFiles.length).toBeGreaterThan(0);
+  it('finds the config files, including nested ones', () => {
+    expect(configFiles).toContain('app.yaml');
+    expect(configFiles).toContain('design/tokens.yaml');
   });
 
   it.each(configFiles)('%s has a schema and validates against it', (file) => {

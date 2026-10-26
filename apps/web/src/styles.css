@@ -1,42 +1,126 @@
-/* Approved brand tokens and self-hosted fonts from brand/ (do not redesign here). */
-@import '../../../brand/exports/tokens.css';
+/* Tokens are generated from config/design/tokens.yaml (pnpm --filter web tokens). */
 @import 'tailwindcss';
+@import './design/tokens.css';
+
+/* Approved brand faces, subset to the characters the app uses (apps/web/scripts/subset-fonts.sh). */
+@font-face {
+  font-family: 'Zen Old Mincho';
+  src: url('./design/fonts/ZenOldMincho-SemiBold.subset.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Zen Old Mincho';
-  src: url('../../../brand/fonts/ZenOldMincho-SemiBold.ttf') format('truetype');
-  font-weight: 600;
+  src: url('./design/fonts/ZenOldMincho-Regular.subset.woff2') format('woff2');
+  font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Geist';
-  src: url('../../../brand/fonts/Geist.ttf') format('truetype');
+  src: url('./design/fonts/Geist.subset.woff2') format('woff2');
   font-weight: 100 900;
   font-display: swap;
 }
 
-@theme {
-  --color-night: var(--night);
-  --color-forest: var(--forest);
-  --color-forest-deep: var(--forest-deep);
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --color-gold-deep: var(--gold-deep);
-  --color-ivory: var(--ivory);
-  --color-ink: var(--ink);
-  --color-muted: var(--muted);
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    letter-spacing: var(--text-body--letter-spacing);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 38%, transparent);
+    color: var(--text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  * {
+    scrollbar-color: color-mix(in srgb, var(--text-secondary) 45%, transparent) transparent;
+    scrollbar-width: thin;
+  }
 }
 
-body {
-  margin: 0;
-  min-height: 100dvh;
-  background: var(--night);
-  color: var(--ivory);
-  font-family: var(--font-ui);
+@layer components {
+  /* Numbers in data never jump: every figure is tabular. */
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Translucent system material; opaque when transparency is reduced or blur is unsupported. */
+  .material {
+    background: var(--material);
+    -webkit-backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturate));
+    backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturate));
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .material {
+      background: var(--surface-raised);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .material {
+      background: var(--surface-raised);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  /* Pressed-state scale feedback on every tappable element (agent manual 1.10). */
+  .pressable {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .pressable:active:not(:disabled, [aria-disabled='true']) {
+    transform: scale(var(--press-scale));
+  }
 }
 
-h1 {
-  font-family: var(--font-display);
-  font-weight: 600;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--duration-reduced-fade) !important;
+    scroll-behavior: auto !important;
+  }
+
+  .pressable:active:not(:disabled, [aria-disabled='true']) {
+    transform: none;
+  }
 }

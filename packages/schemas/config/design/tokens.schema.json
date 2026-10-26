@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/design/tokens.schema.json",
+  "title": "Darb Juryoku design tokens",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["palette", "themes", "contrast", "distinguishable", "directions", "type", "space", "radius", "elevation", "layers", "touch", "material", "motion", "glow", "sound"],
+  "$defs": {
+    "colourRef": { "type": "string", "pattern": "^(#[0-9A-Fa-f]{6}|[A-Za-z_][A-Za-z0-9_]*)(/[0-9]{1,3})?$" },
+    "hex": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+    "role": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "theme": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/role" },
+      "additionalProperties": { "$ref": "#/$defs/colourRef" },
+      "required": ["surface", "surface_raised", "surface_overlay", "text", "text_secondary", "accent", "accent_text", "accent_fill", "on_accent", "drift", "drift_text", "danger", "on_danger", "focus", "control_border", "outline_ideal", "absent", "rule", "material", "scrim", "shadow_tint"]
+    },
+    "contrastGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min"],
+      "properties": {
+        "min": { "type": "number", "minimum": 1, "maximum": 21 },
+        "foregrounds": { "type": "array", "items": { "$ref": "#/$defs/role" }, "minItems": 1 },
+        "backgrounds": { "type": "array", "items": { "$ref": "#/$defs/role" }, "minItems": 1 },
+        "pairs": { "type": "array", "items": { "type": "array", "items": { "$ref": "#/$defs/role" }, "minItems": 2, "maxItems": 2 } }
+      }
+    },
+    "spring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stiffness", "damping", "mass"],
+      "properties": {
+        "stiffness": { "type": "number", "exclusiveMinimum": 0 },
+        "damping": { "type": "number", "exclusiveMinimum": 0 },
+        "mass": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "typeStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["size", "line", "tracking"],
+      "properties": {
+        "size": { "type": "number", "exclusiveMinimum": 0, "maximum": 6 },
+        "line": { "type": "number", "minimum": 0.9, "maximum": 2 },
+        "tracking": { "type": "number", "minimum": -0.04, "maximum": 0.1 }
+      }
+    },
+    "cssLength": { "type": "string", "pattern": "^[0-9.]+(px|rem)$" }
+  },
+  "properties": {
+    "palette": { "type": "object", "propertyNames": { "$ref": "#/$defs/role" }, "additionalProperties": { "$ref": "#/$defs/hex" } },
+    "themes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dark", "light"],
+      "properties": { "dark": { "$ref": "#/$defs/theme" }, "light": { "$ref": "#/$defs/theme" } }
+    },
+    "contrast": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/contrastGroup" } },
+    "distinguishable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_oklab_delta", "pairs"],
+      "properties": {
+        "min_oklab_delta": { "type": "number", "exclusiveMinimum": 0 },
+        "pairs": { "type": "array", "items": { "type": "array", "items": { "$ref": "#/$defs/role" }, "minItems": 2, "maxItems": 2 } }
+      }
+    },
+    "directions": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/role" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "theme", "overrides", "features"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "theme": { "enum": ["dark", "light"] },
+          "overrides": { "type": "object", "additionalProperties": { "$ref": "#/$defs/colourRef" } },
+          "features": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["frame_marks", "scan_grid"],
+            "properties": { "frame_marks": { "type": "boolean" }, "scan_grid": { "type": "boolean" } }
+          }
+        }
+      }
+    },
+    "type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["families", "weights", "scale"],
+      "properties": {
+        "families": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["display", "ui"],
+          "properties": { "display": { "type": "string" }, "ui": { "type": "string" } }
+        },
+        "weights": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 100, "maximum": 900 } },
+        "scale": { "type": "object", "minProperties": 1, "additionalProperties": { "$ref": "#/$defs/typeStep" } }
+      }
+    },
+    "space": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_px", "gutter_px", "section_px"],
+      "properties": { "base_px": { "type": "number", "exclusiveMinimum": 0 }, "gutter_px": { "type": "number" }, "section_px": { "type": "number" } }
+    },
+    "radius": { "type": "object", "additionalProperties": { "$ref": "#/$defs/cssLength" } },
+    "elevation": { "type": "object", "additionalProperties": { "type": "string" } },
+    "layers": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "touch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_target_px", "press_scale"],
+      "properties": { "min_target_px": { "type": "number", "minimum": 44 }, "press_scale": { "type": "number", "minimum": 0.9, "maximum": 1 } }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blur_px", "saturate"],
+      "properties": { "blur_px": { "type": "number", "minimum": 0 }, "saturate": { "type": "number", "minimum": 0 } }
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["springs", "durations_ms", "easings", "sheet", "swipe"],
+      "properties": {
+        "springs": { "type": "object", "required": ["settle", "snappy", "gentle"], "additionalProperties": { "$ref": "#/$defs/spring" } },
+        "durations_ms": { "type": "object", "required": ["fast", "base", "slow", "reduced_fade"], "additionalProperties": { "type": "number", "minimum": 0 } },
+        "easings": { "type": "object", "additionalProperties": { "type": "string", "pattern": "^cubic-bezier\\(" } },
+        "sheet": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["detents", "dismiss_fraction", "dismiss_velocity_px_s"],
+          "properties": {
+            "detents": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }, "minItems": 1 },
+            "dismiss_fraction": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+            "dismiss_velocity_px_s": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "swipe": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reveal_px", "commit_fraction"],
+          "properties": { "reveal_px": { "type": "number", "minimum": 44 }, "commit_fraction": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 } }
+        }
+      }
+    },
+    "glow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outline_width_px", "outline_opacity", "outline_dash", "rim_width_px", "rim_blur_px", "drift_warm_from", "motes_max", "bloom", "exposure"],
+      "properties": {
+        "outline_width_px": { "type": "number", "exclusiveMinimum": 0 },
+        "outline_opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "outline_dash": { "type": "array", "items": { "type": "number", "minimum": 0 }, "minItems": 2, "maxItems": 2 },
+        "rim_width_px": { "type": "number", "exclusiveMinimum": 0 },
+        "rim_blur_px": { "type": "number", "minimum": 0 },
+        "drift_warm_from": { "type": "number", "minimum": 0, "maximum": 1 },
+        "motes_max": { "type": "integer", "minimum": 0 },
+        "bloom": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["strength", "radius", "threshold"],
+          "properties": { "strength": { "type": "number", "minimum": 0 }, "radius": { "type": "number", "minimum": 0 }, "threshold": { "type": "number", "minimum": 0, "maximum": 1 } }
+        },
+        "exposure": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "sound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chime"],
+      "properties": {
+        "chime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["file", "sample_rate", "duration_s", "partials", "attack_s", "peak_dbfs"],
+          "properties": {
+            "file": { "type": "string", "pattern": "^[a-z0-9-]+\\.wav$" },
+            "sample_rate": { "type": "integer", "minimum": 8000 },
+            "duration_s": { "type": "number", "exclusiveMinimum": 0, "maximum": 5 },
+            "partials": { "type": "array", "minItems": 1, "items": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0 }, "minItems": 3, "maxItems": 3 } },
+            "attack_s": { "type": "number", "exclusiveMinimum": 0 },
+            "peak_dbfs": { "type": "number", "maximum": 0 }
+          }
+        }
+      }
+    }
+  }
+}
