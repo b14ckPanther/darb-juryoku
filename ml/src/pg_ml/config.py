@@ -44,13 +44,13 @@ def repo_root() -> Path:
 @cache
 def _validator(schema_name: str) -> Draft202012Validator:
     schema_path = repo_root() / "packages" / "schemas" / "config" / f"{schema_name}.schema.json"
-    schema: dict[str, Any] = json.loads(schema_path.read_text())
+    schema: dict[str, Any] = json.loads(schema_path.read_text(encoding="utf-8"))
     return Draft202012Validator(schema)
 
 
 def _read_yaml(path: Path) -> Any:
     try:
-        return yaml.safe_load(path.read_text())
+        return yaml.safe_load(path.read_text(encoding="utf-8"))
     except (OSError, yaml.YAMLError) as exc:
         raise ConfigError(f"Cannot read config {path}: {exc}") from exc
 

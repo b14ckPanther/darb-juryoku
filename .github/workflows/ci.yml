@@ -54,6 +54,7 @@ jobs:
       - run: uv run --project ml ruff check ml
       - run: uv run --project ml ruff format --check ml
       - run: uv run --project ml mypy --config-file ml/pyproject.toml ml/src
+      - run: uv run --project ml dvc status
 
   emoji-and-hooks:
     runs-on: ubuntu-latest
