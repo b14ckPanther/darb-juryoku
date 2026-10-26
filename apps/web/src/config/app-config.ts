@@ -1,8 +1,6 @@
-import { parse } from 'yaml';
 import rawAppYaml from '../../../../config/app.yaml?raw';
+import { parseAppConfig } from './load-config';
 
-export interface AppConfig {
-  name: string;
-}
+export type { AppConfig } from './load-config';
 
-export const appConfig = parse(rawAppYaml) as AppConfig;
+export const appConfig = parseAppConfig(rawAppYaml, 'config/app.yaml');
