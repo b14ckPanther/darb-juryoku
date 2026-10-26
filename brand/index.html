@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Darb Juryoku brand</title>
+<link rel="icon" href="exports/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="exports/tokens.css">
+<style>
+  @font-face { font-family: 'Zen Old Mincho'; src: url(fonts/ZenOldMincho-SemiBold.ttf); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'Zen Old Mincho'; src: url(fonts/ZenOldMincho-Regular.ttf); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Geist'; src: url(fonts/Geist.ttf); font-weight: 100 900; font-display: swap; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--night); color: var(--ivory); font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
+  .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+  .hero.no-webgl canvas { display: none; } .hero.no-webgl .poster { display: block; }
+  .copy { position: absolute; left: max(16px, 6vw); bottom: max(32px, 9vh); max-width: 34rem; }
+  .darb { font: 500 1rem/1 var(--font-ui); color: var(--muted); margin: 0 0 .6rem; }
+  h1 { font: 600 clamp(3.6rem, 11vw, 8.5rem)/.9 var(--font-display); margin: 0; letter-spacing: -.01em; }
+  .line { font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.45; opacity: .82; margin: 1rem 0 1.6rem; max-width: 26ch; }
+  .jp { position: absolute; right: max(16px, 5vw); top: max(24px, 6vh); writing-mode: vertical-rl; font: 400 1.4rem/1 var(--font-display); letter-spacing: .4em; color: var(--gold); margin: 0; }
+  .again { display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; padding: 0 1.15rem; border-radius: 999px; border: 1px solid color-mix(in oklab, var(--gold) 55%, transparent); background: color-mix(in oklab, var(--forest) 70%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: var(--ivory); font: 500 1rem var(--font-ui); cursor: pointer; transition: transform .35s cubic-bezier(.2,.9,.3,1.3), border-color .2s; }
+  .again:hover { border-color: var(--gold); }
+  .again:active { transform: scale(.96); }
+  .again:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+  .again svg { width: 1.1rem; height: 1.1rem; }
+  main { padding: clamp(48px, 9vw, 120px) max(16px, 6vw); display: grid; gap: clamp(56px, 8vw, 104px); max-width: 1200px; margin: 0 auto; }
+  h2 { font: 600 clamp(1.8rem, 4vw, 2.6rem)/1.1 var(--font-display); margin: 0 0 .5rem; }
+  .lede { color: var(--muted); max-width: 60ch; line-height: 1.55; margin: 0 0 1.8rem; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  .sw { border-radius: 18px; overflow: hidden; background: var(--forest); }
+  .sw i { display: block; height: 110px; }
+  .sw p { margin: 0; padding: .7rem .85rem .9rem; font-size: .88rem; line-height: 1.4; }
+  .sw b { display: block; font-weight: 600; }
+  .sw span { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .icons { display: flex; flex-wrap: wrap; align-items: flex-end; gap: clamp(18px, 3vw, 36px); }
+  .icons figure { margin: 0; text-align: center; }
+  .icons img { display: block; margin: 0 auto .6rem; }
+  .icons figcaption { font-size: .82rem; color: var(--muted); }
+  .marks { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .marks div { border-radius: 22px; padding: 28px; display: grid; place-items: center; min-height: 200px; }
+  .marks img { max-width: 100%; max-height: 120px; }
+  .og { width: 100%; border-radius: 22px; display: block; }
+  .story { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .story img { width: 100%; border-radius: 16px; display: block; }
+  .story figcaption { color: var(--muted); font-size: .85rem; margin-top: .5rem; }
+  .story figure { margin: 0; }
+  footer { color: var(--muted); font-size: .85rem; padding: 0 max(16px, 6vw) 48px; max-width: 1200px; margin: 0 auto; }
+  @media (max-width: 640px) { .story { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .again { transition: none; } }
+</style>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<section class="hero" id="hero" aria-label="Darb Juryoku">
+  <canvas id="c" aria-hidden="true"></canvas>
+  <img class="poster" src="exports/social/hero-aligned.png" alt="">
+  <p class="jp" lang="ja">重力</p>
+  <div class="copy">
+    <p class="darb">Darb</p>
+    <h1>Juryoku</h1>
+    <p class="line" id="tagline"></p>
+    <button class="again" id="again" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4"/><path d="M16 4h4v4"/><path d="M4 16v4h4"/><path d="M20 16v4h-4"/><circle cx="12" cy="12" r="2.5"/></svg>
+      Check my posture
+    </button>
+  </div>
+</section>
+
+<main>
+  <section aria-labelledby="h-color">
+    <h2 id="h-color">Darb night, forest and gold</h2>
+    <p class="lede">Juryoku is a Darb product, so it wears Darb's colours: night and forest for surfaces, Darb gold for the outline of your best posture, ivory for text. Gold marks only what matters: you, and your spine when it is straight. Bad posture is never red, just dimmer gold.</p>
+    <div class="swatches" id="swatches"></div>
+  </section>
+
+  <section aria-labelledby="h-icons">
+    <h2 id="h-icons">App icons</h2>
+    <p class="lede">One 3D render, cut for every surface: the installed web app, Android's adaptive mask, the iOS home screen, a future desktop app, and the browser tab.</p>
+    <div class="icons">
+      <figure><img src="exports/icons/icon-desktop-1024.png" width="200" height="200" alt="Desktop app icon"><figcaption>Desktop 1024</figcaption></figure>
+      <figure><img src="exports/icons/icon-512.png" width="150" height="150" alt="Web app icon"><figcaption>PWA 512</figcaption></figure>
+      <figure><img src="exports/icons/icon-maskable-512.png" width="150" height="150" style="border-radius:50%" alt="Android adaptive icon, circle mask"><figcaption>Maskable</figcaption></figure>
+      <figure><img src="exports/icons/apple-touch-icon.png" width="120" height="120" style="border-radius:27px" alt="iOS home screen icon"><figcaption>iOS 180</figcaption></figure>
+      <figure><img src="exports/icons/favicon-32.png" width="32" height="32" alt="Browser tab icon"><figcaption>Tab 32</figcaption></figure>
+      <figure><img src="exports/icons/badge-96.png" width="48" height="48" alt="Notification badge"><figcaption>Badge</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-marks">
+    <h2 id="h-marks">The mark</h2>
+    <p class="lede">You, sitting straight at your laptop, in the camera&rsquo;s frame, with your spine lit in gold. That is the whole app: your webcam keeps an eye on your back, and good posture shows up as light.</p>
+    <div class="marks">
+      <div style="background:var(--forest)"><img src="exports/svg/wordmark-on-dark.svg" alt="Darb Juryoku wordmark on dark"></div>
+      <div style="background:var(--ivory)"><img src="exports/svg/wordmark-on-light.svg" alt="Darb Juryoku wordmark on light"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-story">
+    <h2 id="h-story">The moment</h2>
+    <p class="lede">The frame starts wide and dim while the camera looks for you. It tightens, focuses, and locks on, and your spine lights up.</p>
+    <div class="story">
+      <figure><img src="exports/social/align-1.png" alt="Searching: the frame is wide and dim"><figcaption>Searching</figcaption></figure>
+      <figure><img src="exports/social/align-2.png" alt="Focusing: the frame tightens"><figcaption>Focusing</figcaption></figure>
+      <figure><img src="exports/social/align-3.png" alt="Locked on: the frame is tight and the spine is lit"><figcaption>Locked on</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-share">
+    <h2 id="h-share">Sharing card</h2>
+    <img class="og" src="exports/social/og-image.png" alt="Darb Juryoku sharing card">
+  </section>
+</main>
+<footer>Everything here is generated from <code>src/tokens.json</code> and <code>src/mark.svg</code> by <code>npm run build</code>. Fonts: Zen Old Mincho and Geist, SIL Open Font License.</footer>
+
+<script type="module">
+import { createScene } from './src/scene.js'
+
+const tokens = await (await fetch('./src/tokens.json')).json()
+document.getElementById('tagline').textContent = tokens.tagline
+document.getElementById('swatches').innerHTML = Object.entries(tokens.color)
+  .map(([k, v]) => `<div class="sw"><i style="background:${v.hex}"></i><p><b>${k.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase())}</b><span>${v.hex}</span><br>${v.role}</p></div>`)
+  .join('')
+
+const hero = document.getElementById('hero')
+const canvas = document.getElementById('c')
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+let s
+try {
+  const dpr = Math.min(devicePixelRatio, 2)
+  s = await createScene(canvas, tokens, { width: hero.clientWidth, height: hero.clientHeight, view: innerWidth < 760 ? 'front' : 'hero', markScale: innerWidth < 760 ? 0.55 : 0.68, dpr })
+} catch {
+  hero.classList.add('no-webgl')
+}
+
+if (s) {
+  // spring the figure from slouched to aligned: the one orchestrated moment
+  const { stiffness, damping } = tokens.motion.spring
+  let x = reduced ? 1 : 0, v = 0, target = 1, last = performance.now(), visible = true, raf = 0
+  const ptr = { x: 0, y: 0, tx: 0, ty: 0 }
+  const loop = (t) => {
+    const dt = Math.min(0.033, (t - last) / 1000)
+    last = t
+    if (!reduced) {
+      const a = -stiffness * (x - target) - damping * v
+      v += a * dt
+      x += v * dt
+    }
+    ptr.x += (ptr.tx - ptr.x) * 0.06
+    ptr.y += (ptr.ty - ptr.y) * 0.06
+    s.setAlign(Math.max(0, Math.min(1.05, x)))
+    s.setPointer(ptr.x, ptr.y)
+    s.render()
+    raf = visible ? requestAnimationFrame(loop) : 0
+  }
+  const start = () => { if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop) } }
+  setTimeout(start, reduced ? 0 : 450)
+  addEventListener('pointermove', (e) => {
+    if (reduced || e.pointerType !== 'mouse') return
+    ptr.tx = (e.clientX / innerWidth) * 2 - 1
+    ptr.ty = -((e.clientY / innerHeight) * 2 - 1)
+  })
+  document.getElementById('again').addEventListener('click', () => {
+    if (reduced) return
+    x = 0; v = 0; start()
+  })
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting && !document.hidden; if (visible) start() }).observe(hero)
+  document.addEventListener('visibilitychange', () => { visible = !document.hidden; if (visible) start() })
+  addEventListener('resize', () => s.resize(hero.clientWidth, hero.clientHeight))
+}
+</script>
+</body>
+</html>

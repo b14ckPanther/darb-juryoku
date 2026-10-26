@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Juryoku renderer</title>
+<style>
+  @font-face { font-family: 'Zen Old Mincho'; src: url(fonts/ZenOldMincho-SemiBold.ttf); font-weight: 600; }
+  @font-face { font-family: 'Zen Old Mincho'; src: url(fonts/ZenOldMincho-Regular.ttf); font-weight: 400; }
+  @font-face { font-family: 'Geist'; src: url(fonts/Geist.ttf); font-weight: 100 900; }
+  html, body { margin: 0; background: transparent; }
+  #stage { position: relative; overflow: hidden; }
+  canvas { display: block; }
+  .og-copy { position: absolute; left: 84px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .og-darb { font: 500 26px/1 'Geist', sans-serif; letter-spacing: 0.02em; }
+  .og-name { font: 600 132px/0.9 'Zen Old Mincho', serif; letter-spacing: -0.01em; }
+  .og-line { font: 400 30px/1.35 'Geist', sans-serif; max-width: 13em; }
+  .og-jp { position: absolute; right: 70px; top: 64px; writing-mode: vertical-rl; font: 400 30px/1 'Zen Old Mincho', serif; letter-spacing: 0.35em; }
+</style>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js", "three/addons/": "./node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<div id="stage"><canvas id="c"></canvas></div>
+<script type="module">
+import { createScene } from './src/scene.js'
+const q = new URLSearchParams(location.search)
+const tokens = await (await fetch('./src/tokens.json')).json()
+const w = +q.get('w'), h = +q.get('h'), variant = q.get('variant')
+const stage = document.getElementById('stage')
+stage.style.width = w + 'px'; stage.style.height = h + 'px'
+const canvas = document.getElementById('c')
+canvas.style.width = w + 'px'; canvas.style.height = h + 'px'
+const isOg = variant === 'og'
+const s = await createScene(canvas, tokens, { width: w, height: h, markScale: +q.get('scale') || 0.7, view: isOg ? 'hero' : 'front' })
+s.setAlign(+(q.get('align') ?? 1))
+if (isOg) {
+  const C = tokens.color
+  stage.insertAdjacentHTML('beforeend', `
+    <div class="og-copy">
+      <div class="og-darb" style="color:${C.muted.hex}">Darb</div>
+      <div class="og-name" style="color:${C.ivory.hex}">Juryoku</div>
+      <div class="og-line" style="color:${C.ivory.hex};opacity:.82">${tokens.tagline}</div>
+    </div>
+    <div class="og-jp" style="color:${C.gold.hex}">${tokens.japanese}</div>`)
+  await document.fonts.ready
+}
+for (let i = 0; i < 3; i++) s.render()
+window.__ready = true
+</script>
+</body>
+</html>

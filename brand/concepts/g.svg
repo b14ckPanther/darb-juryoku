@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" rx="44" fill="#03110C"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M50 90 L54 132 H84" stroke="#0E3527" stroke-width="7"/><path d="M60 132 V162" stroke="#0E3527" stroke-width="7"/><path d="M100 107 H176" stroke="#0E3527" stroke-width="6"/><path d="M168 107 V162" stroke="#0E3527" stroke-width="6"/>
+<g stroke="#D9A54C" stroke-width="3.5"><path d="M76 66 V76"/><path d="M76 76 L94 104 L116 100"/><path d="M76 122 L114 124 L114 158"/></g>
+<path d="M76 66 V122" stroke="#FBE7BD" stroke-width="5"/>
+<circle cx="76" cy="48" r="12" stroke="#D9A54C" stroke-width="3.5"/>
+<g fill="#FBE7BD" stroke="none"><circle cx="76" cy="66" r="5"/><circle cx="76" cy="76" r="5"/><circle cx="94" cy="104" r="5"/><circle cx="116" cy="100" r="5"/><circle cx="76" cy="122" r="5.5"/><circle cx="114" cy="124" r="5"/><circle cx="114" cy="158" r="5"/><circle cx="76" cy="48" r="3"/></g>
+<path d="M110 101 H146 L156 62" stroke="#D9A54C" stroke-width="7"/><circle cx="157" cy="56" r="4.5" fill="#FBE7BD" stroke="none"/> <g stroke="#FBE7BD" stroke-width="4"><path d="M44 40 V28 H56"/><path d="M96 28 H108 V40"/><path d="M44 126 V138 H56"/><path d="M108 126 V138 H96"/></g></g></svg>

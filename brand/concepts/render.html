@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Shanto icon concepts</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "../node_modules/three/build/three.module.js", "three/addons/": "../node_modules/three/examples/jsm/" } }</script>
+</head><body><canvas id="c"></canvas>
+<script type="module">
+// Turns a flat concept SVG into a lit 3D icon: fills are bevelled extrusions, strokes are rounded gold rods.
+import * as THREE from 'three'
+import { SVGLoader } from 'three/addons/loaders/SVGLoader.js'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+
+const q = new URLSearchParams(location.search)
+const S = +q.get('size') || 1024
+const T = await (await fetch('../src/tokens.json')).json()
+const C = Object.fromEntries(Object.entries(T.color).map(([k, v]) => [k, new THREE.Color(v.hex)]))
+const canvas = document.getElementById('c')
+canvas.style.width = canvas.style.height = S + 'px'
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true })
+renderer.setSize(S, S, false)
+renderer.toneMapping = THREE.ACESFilmicToneMapping
+renderer.toneMappingExposure = 1.0
+const scene = new THREE.Scene()
+const pmrem = new THREE.PMREMGenerator(renderer)
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+scene.environmentIntensity = 0.8
+
+// background: night at the edges, forest rising behind the icon, fine grain
+const bg = new THREE.Mesh(new THREE.PlaneGeometry(600, 600), new THREE.ShaderMaterial({
+  uniforms: { uEdge: { value: C.night }, uCore: { value: C.forest }, uGold: { value: C.goldDeep } },
+  vertexShader: 'varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }',
+  fragmentShader: `uniform vec3 uEdge; uniform vec3 uCore; uniform vec3 uGold; varying vec2 vP;
+    float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }
+    void main(){ float d = length(vP) / 130.; vec3 c = mix(uCore * 1.15, uEdge * .6, smoothstep(0., 1.1, d));
+      c += uGold * .22 * exp(-d * d * 3.); c += (h(floor(vP * 6.)) - .5) * .008; gl_FragColor = vec4(c, 1.); }`,
+}))
+bg.position.z = -30
+scene.add(bg)
+
+const gold = new THREE.MeshPhysicalMaterial({ color: C.gold, metalness: 1, roughness: 0.22, clearcoat: 0.5, clearcoatRoughness: 0.15 })
+const light = new THREE.MeshPhysicalMaterial({ color: C.goldLight, metalness: 0.6, roughness: 0.25, emissive: C.goldLight, emissiveIntensity: 0.35 })
+const forest = new THREE.MeshPhysicalMaterial({ color: C.forest, metalness: 0.2, roughness: 0.45, clearcoat: 0.8, clearcoatRoughness: 0.2 })
+const pick = (hex) => {
+  const c = new THREE.Color(hex)
+  if (c.equals(C.goldLight)) return light
+  if (c.equals(C.forest)) return forest
+  if (c.equals(C.night)) return null
+  return gold
+}
+
+const group = new THREE.Group()
+const svg = new SVGLoader().parse(await (await fetch(`./${q.get('svg')}.svg`)).text())
+for (const path of svg.paths) {
+  const st = path.userData.style
+  // fills: bevelled extrusions (skip the night background rectangle)
+  if (st.fill && st.fill !== 'none') {
+    const m = pick(st.fill)
+    if (m) for (const shape of SVGLoader.createShapes(path)) {
+      const g = new THREE.ExtrudeGeometry(shape, { depth: 6, bevelEnabled: true, bevelThickness: 2.2, bevelSize: 1.6, bevelSegments: 6, curveSegments: 48 })
+      group.add(new THREE.Mesh(g, m))
+    }
+  }
+  // strokes: rods with round caps and joins
+  if (st.stroke && st.stroke !== 'none') {
+    const m = pick(st.stroke)
+    if (!m) continue
+    const r = (st.strokeWidth || 1) / 2
+    const z = m === light ? 6 : 4 // glowing parts sit just in front, never z-fight the gold
+    for (const sub of path.subPaths) {
+      const pts = []
+      for (const c of sub.curves) {
+        const n = c.isLineCurve ? 1 : 48
+        const p = c.getPoints(n)
+        if (pts.length) p.shift()
+        pts.push(...p)
+      }
+      const path3 = new THREE.CurvePath()
+      for (let i = 1; i < pts.length; i++) path3.add(new THREE.LineCurve3(new THREE.Vector3(pts[i - 1].x, pts[i - 1].y, z), new THREE.Vector3(pts[i].x, pts[i].y, z)))
+      group.add(new THREE.Mesh(new THREE.TubeGeometry(path3, Math.max(64, pts.length * 8), r, 24, false), m))
+      const ball = new THREE.SphereGeometry(r, 24, 16)
+      const joints = pts.filter((_, i) => i === 0 || i === pts.length - 1 || sub.curves.some((c) => c.isLineCurve))
+      for (const p of joints) { const s = new THREE.Mesh(ball, m); s.position.set(p.x, p.y, z); group.add(s) }
+    }
+  }
+}
+group.scale.set(1, -1, 1)
+group.position.set(-100, 100, 0)
+const holder = new THREE.Group()
+holder.add(group)
+holder.rotation.set(-0.08, 0.16, 0)
+scene.add(holder)
+
+const camera = new THREE.PerspectiveCamera(22, 1, 1, 2000)
+camera.position.set(0, 0, 100 / Math.tan(THREE.MathUtils.degToRad(11)) * 1.0)
+camera.lookAt(0, 0, 0)
+const key = new THREE.DirectionalLight(C.goldLight, 1.6); key.position.set(-120, 160, 220); scene.add(key)
+const rim = new THREE.DirectionalLight(0xffffff, 0.6); rim.position.set(160, -60, 120); scene.add(rim)
+
+const composer = new EffectComposer(renderer)
+composer.setSize(S, S)
+composer.addPass(new RenderPass(scene, camera))
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(S, S), 0.45, 0.5, 0.82))
+composer.addPass(new OutputPass())
+for (let i = 0; i < 3; i++) composer.render()
+window.__ready = true
+</script></body></html>

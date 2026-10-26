@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="g" x1="40" y1="20" x2="160" y2="180" gradientUnits="userSpaceOnUse">
+  <stop offset="0" stop-color="#FBE7BD"/><stop offset=".45" stop-color="#D9A54C"/><stop offset="1" stop-color="#6D4C17"/></linearGradient></defs>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M52 82 L56 136 H86" stroke="#0E3527" stroke-width="7"/><path d="M64 136 V166" stroke="#0E3527" stroke-width="7"/> <path d="M112 110 H178" stroke="#0E3527" stroke-width="6"/><path d="M170 110 V166" stroke="#0E3527" stroke-width="6"/>  <circle cx="82" cy="40" r="15" fill="url(#g)" stroke="none"/>
+<path d="M76 58 C70 76 68 100 70 124 L96 126 C98 110 100 90 96 72 C93 63 86 58 76 58 Z" fill="url(#g)" stroke="none"/>
+<path d="M78 120 L120 118" stroke="url(#g)" stroke-width="19"/>
+<path d="M120 118 L120 158" stroke="url(#g)" stroke-width="15"/>
+<path d="M118 160 H134" stroke="url(#g)" stroke-width="10"/>
+<path d="M90 74 L100 100 L124 100" stroke="url(#g)" stroke-width="12"/> <path id="spine" d="M74 62 C69 80 67 102 69 122" stroke="#FBE7BD" stroke-width="3.5"/> <path d="M120 104 H150 L160 66" stroke="url(#g)" stroke-width="6"/><circle id="lens" cx="161" cy="60" r="4.5" fill="#FBE7BD" stroke="none"/> <g id="frame" stroke="#FBE7BD" stroke-width="4"><path d="M38 32 V16 H54"/><path d="M134 16 H150 V32"/><path d="M38 160 V176 H54"/><path d="M150 160 V176 H134"/></g></g></svg>

@@ -1,0 +1,74 @@
+# Darb Juryoku
+
+A webcam app that runs in the browser while you code. MediaPipe tracks your neck and shoulders, and a small PyTorch model trained on **your own** good and bad posture decides when you are slouching. You get a gentle nudge in the moment and an honest daily report at the end of the day.
+
+Everything runs on your device. Webcam frames never leave the browser, and there is no cloud backend.
+
+**Signature moment:** a faint golden outline of your ideal posture sits over the live video. When your body matches it, your silhouette glows gold. In Darb Budokai, good posture refills your character's stamina.
+
+Darb Budokai role: **Stamina** (region: The Springs, stat: Vigor).
+
+Status: planning package. No code yet. Phase 0 creates the repo.
+
+---
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Pose estimation | MediaPipe Tasks Vision `PoseLandmarker` (web, `@mediapipe/tasks-vision` 0.10.x), self-hosted model and WASM files |
+| Posture model | PyTorch 2.x (2.8 or newer) classifier on landmark windows, exported to ONNX |
+| In-browser inference | ONNX Runtime Web (`onnxruntime-web` 1.22 or newer), WebGPU with a WASM fallback, running in a Web Worker |
+| Frontend | Vite 7, React 19, TypeScript 5.9, Tailwind CSS 4, Motion 12, WebGL2 shader for the glow |
+| Local storage | IndexedDB through Dexie 4 (sessions, daily stats, landmark recordings) |
+| Training pipeline | Python 3.12, uv, PyTorch, scikit-learn (metrics), DVC 3 (datasets and pipeline), DVCLive (experiments) |
+| Tests | Vitest 3, Playwright + `@axe-core/playwright`, pytest 8 |
+| Hosting | Static site, free tier (Vercel or Cloudflare Pages, proposed, confirm with Nour in Phase 1). Cost: $0/month. |
+
+Exact versions are pinned in Phase 0 to the latest stable release on that day.
+
+## Folder map (after Phase 0)
+
+```
+darb-juryoku/
+├── apps/web/              Vite + React app (the product)
+├── packages/schemas/      JSON Schemas: events, runtime config, dataset manifest
+├── ml/                    Python training pipeline (uv project)
+├── config/                Runtime config YAML (thresholds, nudge copy, report rules)
+├── data/                  DVC-tracked datasets (contents git-ignored)
+├── models/                DVC-tracked trained models and model cards
+├── eval/                  Committed evaluation and latency reports (JSON)
+├── dvc.yaml, params.yaml  Training pipeline stages and hyperparameters
+└── docs/                  This planning package, then specs, plans and the ledger
+```
+
+This planning folder holds:
+
+```
+README.md          this file
+CLAUDE.md          the agent operating manual (rules, workflow, commands)
+AGENTS.md          short pointer to CLAUDE.md
+docs/VISION.md         intent, goals, non-goals, anti-goals, why this stack
+docs/ARCHITECTURE.md   components, data flow, storage, ML pipeline, testing
+docs/UI_DESIGN.md      signature moment, screens, motion, art directions
+docs/INTEGRATION.md    events for Darb Budokai and the optional integration phase
+docs/PLAN.md           phases 0 to 11, from 0% to 100%
+docs/PROGRESS.md       the ledger
+docs/DECISIONS.md      ADR log
+docs/OPEN_QUESTIONS.md what only Nour can decide
+docs/CONVENTIONS.md    code style, layout, tests, commits, PR template
+```
+
+## How to start
+
+Open Claude Code in this folder and say:
+
+> start Phase 0
+
+The agent reads `CLAUDE.md`, then `docs/PLAN.md`, and works phase by phase. After a context reset it resumes from `docs/PROGRESS.md` and `git log`.
+
+## How it fits the universe
+
+Darb Juryoku is the **Stamina** source for [Darb Budokai](../darb-budokai/), the RPG that Nour's real life powers. At the end of each sitting it can send one `posture.session.recorded` v1 event (minutes of good and bad posture, never images or landmarks) to Darb Budokai's ingest API. Darb Budokai turns good minutes into stamina and Vigor XP.
+
+Darb Juryoku does not need Darb Budokai to work. The integration is an optional later phase (see `docs/INTEGRATION.md`). Darb Kaioken will later embed a reader-facing demo of the live outline, and Darb Enmacho reads the same events from Darb Budokai.

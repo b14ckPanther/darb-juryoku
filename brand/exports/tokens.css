@@ -1,0 +1,17 @@
+/* Generated from src/tokens.json by scripts/build.mjs. Edit the JSON, not this file. */
+:root {
+  --night: #03110C; /* Base surface: Darb night */
+  --forest: #0E3527; /* Furniture, raised surfaces, the light behind the figure */
+  --forest-deep: #08241A; /* Cards and panels on night */
+  --gold: #D9A54C; /* Darb gold: you, the figure, hero numbers */
+  --gold-light: #FBE7BD; /* The camera frame, the lens and your lit spine */
+  --gold-deep: #6D4C17; /* Gold in shadow; pressed states */
+  --ivory: #FBF7EC; /* Text on night; light-theme surface */
+  --ink: #0B2219; /* Text on ivory */
+  --muted: #8FA399; /* Secondary text on night */
+  --font-display: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
+  --font-ui: 'Geist', system-ui, sans-serif;
+  --spring-stiffness: 170;
+  --spring-damping: 22;
+  --align-ms: 1400ms;
+}
