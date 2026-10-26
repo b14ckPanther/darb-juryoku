@@ -63,6 +63,7 @@ export interface DesignTokensFile {
     rim_blur_px: number;
     drift_warm_from: number;
     motes_max: number;
+    match_moment_from: number;
     bloom: { strength: number; radius: number; threshold: number };
     exposure: number;
   };

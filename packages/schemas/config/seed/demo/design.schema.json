@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/seed/demo/design.schema.json",
+  "title": "Demo copy and sample data for the design routes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["banner", "nav", "home", "theme_switch", "directions", "mirror", "today", "gallery", "history", "model", "permission", "empty", "glyphs", "overlay", "mobile"],
+  "$defs": {
+    "text": { "type": "string", "minLength": 1 },
+    "strings": { "type": "object", "additionalProperties": { "$ref": "#/$defs/text" } },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "value"],
+      "properties": { "label": { "$ref": "#/$defs/text" }, "value": { "$ref": "#/$defs/text" } }
+    },
+    "facts": { "type": "array", "items": { "$ref": "#/$defs/fact" }, "minItems": 1 },
+    "percent": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "body", "action"],
+      "properties": { "title": { "$ref": "#/$defs/text" }, "body": { "$ref": "#/$defs/text" }, "action": { "$ref": "#/$defs/text" } }
+    }
+  },
+  "properties": {
+    "banner": { "$ref": "#/$defs/strings", "required": ["demo", "demo_detail"] },
+    "nav": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "home", "links"],
+      "properties": {
+        "label": { "$ref": "#/$defs/text" },
+        "home": { "$ref": "#/$defs/text" },
+        "links": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["href", "label"],
+            "properties": { "href": { "type": "string", "pattern": "^/" }, "label": { "$ref": "#/$defs/text" } }
+          }
+        }
+      }
+    },
+    "home": { "$ref": "#/$defs/strings", "required": ["intro", "cta"] },
+    "theme_switch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "options"],
+      "properties": { "label": { "$ref": "#/$defs/text" }, "options": { "$ref": "#/$defs/strings", "required": ["dark", "light"] } }
+    },
+    "directions": {
+      "type": "object",
+      "required": ["title", "intro", "match_label", "pick_label", "notes", "decision"],
+      "properties": {
+        "notes": { "$ref": "#/$defs/strings" },
+        "decision": { "$ref": "#/$defs/strings", "required": ["title", "body"] }
+      }
+    },
+    "mirror": {
+      "type": "object",
+      "required": ["states", "session_label", "session_value", "open_sentinel", "pause", "image_label"],
+      "properties": { "states": { "$ref": "#/$defs/strings", "required": ["upright", "drifting", "forward_head"] } }
+    },
+    "today": {
+      "type": "object",
+      "required": ["title", "date", "hero_value", "hero_unit", "hero_label", "ribbon", "facts", "observation", "tabs"],
+      "properties": {
+        "ribbon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "bucket_minutes", "states", "labels", "title"],
+          "properties": {
+            "start": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
+            "bucket_minutes": { "type": "integer", "minimum": 1 },
+            "states": { "type": "string", "pattern": "^[GDA]+$" },
+            "labels": { "$ref": "#/$defs/strings", "required": ["G", "D", "A"] },
+            "title": { "$ref": "#/$defs/text" }
+          }
+        },
+        "facts": { "$ref": "#/$defs/facts" },
+        "tabs": { "$ref": "#/$defs/strings", "required": ["today", "history", "live", "settings"] }
+      }
+    },
+    "gallery": { "type": "object", "required": ["title", "intro", "sections", "buttons", "segmented", "toggle", "slider", "rows", "history_rows", "swipe_actions", "sheet", "nudge", "toast", "banner_warning", "chart_table_toggle"] },
+    "history": {
+      "type": "object",
+      "required": ["bars_title", "bars", "heatmap_title", "heatmap"],
+      "properties": {
+        "bars": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "value"],
+            "properties": { "label": { "$ref": "#/$defs/text" }, "value": { "$ref": "#/$defs/percent" } }
+          }
+        },
+        "heatmap": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rows", "columns", "values"],
+          "properties": {
+            "rows": { "type": "array", "items": { "$ref": "#/$defs/text" }, "minItems": 1 },
+            "columns": { "type": "array", "items": { "$ref": "#/$defs/text" }, "minItems": 1 },
+            "values": { "type": "array", "items": { "type": "array", "items": { "$ref": "#/$defs/percent" } } }
+          }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "required": ["title", "name", "version", "data_version", "classes", "class_labels", "facts", "confusion_title", "confusion_axis", "confusion"],
+      "properties": {
+        "classes": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+        "facts": { "$ref": "#/$defs/facts" },
+        "confusion": { "type": "array", "items": { "type": "array", "items": { "type": "integer", "minimum": 0 } } }
+      }
+    },
+    "permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt", "denied", "missing"],
+      "properties": { "prompt": { "$ref": "#/$defs/prompt" }, "denied": { "$ref": "#/$defs/prompt" }, "missing": { "$ref": "#/$defs/prompt" } }
+    },
+    "empty": { "$ref": "#/$defs/prompt" },
+    "glyphs": { "$ref": "#/$defs/strings", "required": ["upright", "slouch", "forward_head", "lean_side"] },
+    "overlay": { "type": "object", "required": ["title", "intro", "match_label", "renderer_label", "renderers", "motion_label", "motion_options", "figure_label"] },
+    "mobile": { "type": "object", "required": ["title", "compact_title", "sections"] }
+  }
+}

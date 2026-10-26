@@ -179,8 +179,9 @@ glow:
   outline_dash: [6, 5]
   rim_width_px: 3
   rim_blur_px: 14 # 2D fallback shadow blur
-  drift_warm_from: 0.25 # match strength below this starts warming segments toward drift
+  drift_warm_from: 0.25 # drift (1 - match) above this warms the most-deviating outline segments toward drift
   motes_max: 10
+  match_moment_from: 0.9 # match above this plays the brief brighten and gold motes
   bloom: { strength: 0.55, radius: 0.42, threshold: 0.86 } # from brand render settings
   exposure: 0.95
 

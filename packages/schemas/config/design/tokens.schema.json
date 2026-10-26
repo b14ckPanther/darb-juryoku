@@ -152,7 +152,7 @@
     "glow": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["outline_width_px", "outline_opacity", "outline_dash", "rim_width_px", "rim_blur_px", "drift_warm_from", "motes_max", "bloom", "exposure"],
+      "required": ["outline_width_px", "outline_opacity", "outline_dash", "rim_width_px", "rim_blur_px", "drift_warm_from", "motes_max", "match_moment_from", "bloom", "exposure"],
       "properties": {
         "outline_width_px": { "type": "number", "exclusiveMinimum": 0 },
         "outline_opacity": { "type": "number", "minimum": 0, "maximum": 1 },
@@ -161,6 +161,7 @@
         "rim_blur_px": { "type": "number", "minimum": 0 },
         "drift_warm_from": { "type": "number", "minimum": 0, "maximum": 1 },
         "motes_max": { "type": "integer", "minimum": 0 },
+        "match_moment_from": { "type": "number", "minimum": 0, "maximum": 1 },
         "bloom": {
           "type": "object",
           "additionalProperties": false,
