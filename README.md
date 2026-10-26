@@ -8,7 +8,7 @@ Everything runs on your device. Webcam frames never leave the browser, and there
 
 Darb Budokai role: **Stamina** (region: The Springs, stat: Vigor).
 
-Status: Phase 0 (repo bootstrap, CI, conventions) is built and green on `phase/00-bootstrap` and waits for Nour's approval to merge (5% once approved). No product UI yet: Phase 1 confirms the spec, Phase 2 builds the design system.
+Status: Phase 0 (repo bootstrap, CI, conventions) is merged; Phase 1 settled the product spec (`docs/specs/2026-10-26-phase-01-product-spec.md`). 8% done. Next: Phase 2 builds the design system.
 
 ---
 
@@ -23,7 +23,7 @@ Status: Phase 0 (repo bootstrap, CI, conventions) is built and green on `phase/0
 | Local storage | IndexedDB through Dexie 4 (sessions, daily stats, landmark recordings) |
 | Training pipeline | Python 3.12, uv, PyTorch, scikit-learn (metrics), DVC 3 (datasets and pipeline), DVCLive (experiments) |
 | Tests | Vitest 3, Playwright + `@axe-core/playwright`, pytest 8 |
-| Hosting | Static site, free tier (Vercel or Cloudflare Pages, proposed, confirm with Nour in Phase 1). Cost: $0/month. |
+| Hosting | Static site on the Vercel free tier (decided in Phase 1; deploying waits for launch). Cost: $0/month. |
 
 Exact versions are pinned in Phase 0 to the latest stable release on that day.
 
@@ -55,7 +55,8 @@ docs/INTEGRATION.md    events for Darb Budokai and the optional integration phas
 docs/PLAN.md           phases 0 to 11, from 0% to 100%
 docs/PROGRESS.md       the ledger
 docs/DECISIONS.md      ADR log
-docs/OPEN_QUESTIONS.md what only Nour can decide
+docs/OPEN_QUESTIONS.md the 20 Phase 1 questions and their answers
+docs/specs/            approved phase specs
 docs/CONVENTIONS.md    code style, layout, tests, commits, PR template
 ```
 
@@ -78,3 +79,7 @@ Work proceeds phase by phase from `docs/PLAN.md`; `docs/PROGRESS.md` is the ledg
 Darb Juryoku is the **Stamina** source for [Darb Budokai](../darb-budokai/), the RPG that Nour's real life powers. At the end of each sitting it can send one `posture.session.recorded` v1 event (minutes of good and bad posture, never images or landmarks) to Darb Budokai's ingest API. Darb Budokai turns good minutes into stamina and Vigor XP.
 
 Darb Juryoku does not need Darb Budokai to work. The integration is an optional later phase (see `docs/INTEGRATION.md`). Darb Kaioken will later embed a reader-facing demo of the live outline, and Darb Enmacho reads the same events from Darb Budokai.
+
+## Licence
+
+Code is MIT (`LICENSE`). Fonts keep their SIL OFL licences. The Darb Juryoku name, mark and brand renders in `brand/` identify this project and are not licensed for reuse as another product's brand (see `ASSETS.md`).

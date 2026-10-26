@@ -1,4 +1,32 @@
-# Open questions (only Nour can decide)
+# Open questions: closed in Phase 1
+
+**All 20 answered on 2026-10-26.** Decided by Claude under Nour's delegation (2026-10-26). Answers and reasons are in `docs/specs/2026-10-26-phase-01-product-spec.md`; the ADRs in `docs/DECISIONS.md` are Accepted. Nothing below blocks Phases 2 to 6. Outward actions (repo creation, push, deploy, DNS, publishing data) still need Nour's yes.
+
+| # | Answer | Spec section | Changed from the review sheet? |
+|---|---|---|---|
+| 1 | One MacBook, built-in camera, 2 to 4 hour sittings, under 10% of one core (assumed, in config) | 2 | no |
+| 2 | Silent by default: glow, then one notification after 4 min, chime opt-in; two actions | 4 | yes: two actions, not three |
+| 3 | Hero number, ribbon, three facts, one sentence; History views | 5 | no |
+| 4 | Forward head and slouching first, leaning second | 3 | no |
+| 5 | A calm instrument | 10 | no |
+| 6 | 32 guided runs on 8 days plus 4 passive hours; 30 sessions, 6 hours target | 8 | yes: the old plan gave about 6 sessions |
+| 7 | Summary, GIF, live demo link, eval tables, latency, privacy | 14 | yes: live demo link added |
+| 8 | `upright`, `slouch`, `forward_head`, `lean_side`; `absent` is a rule | 3 | no |
+| 9 | Three brand-faithful variants in Phase 2; dark and light both ship | 10 | yes: variants rebuilt on the brand |
+| 10 | Lucide | 11 | no |
+| 11 | Vite + React | 16 | no |
+| 12 | Document Picture-in-Picture; Tauri only if PiP fails | 7 | no |
+| 13 | Installable PWA fed by a user-started aggregates handoff | 6 | yes: fixes an empty phone report |
+| 14 | Raw private; aggregates, cards and labelled synthetic fixture public | 12 | yes: fixture added |
+| 15 | Local folder outside the repo, path in `.dvc/config.local` | 13 | yes: path kept out of git |
+| 16 | Proposed gates kept, plus two latency gates | 9 | yes: latency gates added |
+| 17 | Vercel free tier; domain set at launch with Nour | 14 | yes: domain deferred, outward action |
+| 18 | Demo by default plus "Try it on yourself", nothing stored | 14 | no |
+| 19 | Opt-in, off by default | 15 | no |
+| 20 | `darb-juryoku`, code MIT, brand excluded | 16 | yes: brand excluded |
+
+## The original questions
+
 
 The Phase 1 session asks these **one at a time**, open-ended questions first, and records each answer in `DECISIONS.md` (turning the matching ADR into Accepted or replacing it) and in the ledger's "Rulings" table.
 
