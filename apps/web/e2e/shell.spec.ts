@@ -13,6 +13,7 @@ test('serves the shell cross-origin isolated with the configured name', async ({
   expect(response?.headers()['cross-origin-opener-policy']).toBe('same-origin');
   expect(response?.headers()['cross-origin-embedder-policy']).toBe('require-corp');
   await expect(page.getByRole('heading', { level: 1, name: appYaml.name })).toBeVisible();
+  await expect(page).toHaveTitle(appYaml.name);
   expect(await page.evaluate(() => window.crossOriginIsolated)).toBe(true);
 });
 

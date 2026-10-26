@@ -7,6 +7,7 @@ interface AppProps {
 export function App({ config }: AppProps) {
   return (
     <main>
+      <title>{config.name}</title>
       <h1>{config.name}</h1>
     </main>
   );

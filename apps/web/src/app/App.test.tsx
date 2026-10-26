@@ -13,4 +13,9 @@ describe('App', () => {
     render(<App config={{ ...appConfig, name: 'Fixture Name' }} />);
     expect(screen.getByRole('heading', { level: 1, name: 'Fixture Name' })).toBeInTheDocument();
   });
+
+  it('sets the document title from config', () => {
+    render(<App config={{ ...appConfig, name: 'Fixture Title' }} />);
+    expect(document.title).toBe('Fixture Title');
+  });
 });
