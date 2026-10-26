@@ -182,7 +182,7 @@ pnpm schemas:check                    # validate config + examples against JSON 
 uv sync --project ml
 uv run --project ml pytest                         # unit + smoke tests
 uv run --project ml ruff check ml && uv run --project ml ruff format --check ml
-uv run --project ml mypy ml/src
+uv run --project ml mypy --config-file ml/pyproject.toml ml/src
 dvc pull                                           # fetch datasets/models from the DVC remote
 dvc repro                                          # run prepare -> features -> train -> evaluate -> export
 dvc exp run -S train.model=tcn -S train.lr=0.001   # one experiment with overrides
