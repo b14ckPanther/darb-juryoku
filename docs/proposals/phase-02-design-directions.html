@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Juryoku Design Directions</title>
+<!-- Proposal, not approved. Phase 2 exploration on the approved brand (brand/). Static page, no network requests. -->
+<style>
+  @font-face { font-family: 'Zen Old Mincho'; src: url('../../brand/fonts/ZenOldMincho-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'Zen Old Mincho'; src: url('../../brand/fonts/ZenOldMincho-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Geist'; src: url('../../brand/fonts/Geist.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+
+  :root {
+    /* Approved brand tokens (brand/exports/tokens.css) */
+    --night: #03110C; --forest: #0E3527; --forest-deep: #08241A;
+    --gold: #D9A54C; --gold-light: #FBE7BD; --gold-deep: #6D4C17;
+    --ivory: #FBF7EC; --ink: #0B2219; --muted: #8FA399;
+    --font-display: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
+    --font-ui: 'Geist', system-ui, sans-serif;
+    /* Proposed derived tokens */
+    --amber: #C9822F;            /* drift warning, never red */
+    --rule: rgba(251, 247, 236, 0.12);
+    --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+    --step--1: 0.8125rem; --step-0: 1rem; --step-1: 1.25rem; --step-2: 1.75rem; --step-3: 2.5rem; --step-4: 4rem;
+    --radius-s: 10px; --radius-m: 16px; --radius-l: 28px;
+    --page-bg: var(--night); --page-fg: var(--ivory);
+  }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --page-bg: var(--night); --page-fg: var(--ivory); } }
+  :root[data-theme="dark"] { --page-bg: var(--night); --page-fg: var(--ivory); }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--page-bg); color: var(--page-fg); font-family: var(--font-ui); font-size: var(--step-0); line-height: 1.5; font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; border-radius: 4px; }
+
+  .proposal { position: sticky; top: 0; z-index: 10; background: var(--gold); color: var(--night); padding: 10px 16px; font-weight: 600; font-size: var(--step--1); text-align: center; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+
+  header.intro { padding: 72px 0 40px; display: grid; gap: 20px; grid-template-columns: 1fr; }
+  .intro h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.5rem, 6vw, var(--step-4)); line-height: 1.05; margin: 0; letter-spacing: -0.01em; }
+  .intro h1 .jp { display: block; font-weight: 400; color: var(--gold); font-size: 0.5em; margin-top: 10px; letter-spacing: 0.2em; }
+  .intro p { max-width: 60ch; color: var(--muted); margin: 0; }
+
+  section { padding: 48px 0; border-top: 1px solid var(--rule); }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: var(--step-3); line-height: 1.1; margin: 0 0 8px; }
+  .lede { color: var(--muted); max-width: 62ch; margin: 0 0 32px; }
+
+  /* Tokens */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .swatch { border: 1px solid var(--rule); border-radius: var(--radius-m); overflow: hidden; background: var(--forest-deep); }
+  .swatch .chip { height: 72px; }
+  .swatch dl { margin: 0; padding: 10px 12px 12px; font-size: var(--step--1); }
+  .swatch dt { font-weight: 600; }
+  .swatch dd { margin: 0; color: var(--muted); }
+  .swatch .ratio { color: var(--ivory); }
+  .type-scale { margin-top: 32px; display: grid; gap: 14px; }
+  .type-row { display: grid; grid-template-columns: 110px 1fr; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 12px; }
+  .type-row span { color: var(--muted); font-size: var(--step--1); }
+  .display { font-family: var(--font-display); font-weight: 600; line-height: 1.1; }
+
+  /* Live mirror */
+  .mirror-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+  @media (min-width: 900px) { .mirror-grid { grid-template-columns: 1.6fr 1fr; } }
+  .mirror { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-l); overflow: hidden; background: radial-gradient(120% 90% at 50% 100%, var(--forest) 0%, var(--forest-deep) 45%, var(--night) 100%); border: 1px solid var(--rule); }
+  .mirror svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .mirror .status { position: absolute; left: 20px; bottom: 18px; right: 20px; display: flex; justify-content: space-between; align-items: end; gap: 12px; }
+  .state-word { font-family: var(--font-display); font-size: var(--step-2); font-weight: 600; transition: color 240ms ease; }
+  .session { color: var(--muted); font-size: var(--step--1); text-align: right; }
+  .controls { display: grid; gap: 18px; }
+  .control-card { background: var(--forest-deep); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: 18px; }
+  .control-card label { display: block; font-weight: 600; margin-bottom: 4px; }
+  .control-card p { margin: 0 0 12px; color: var(--muted); font-size: var(--step--1); }
+  input[type=range] { width: 100%; accent-color: var(--gold); min-height: 44px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 0; font: 600 var(--step-0) var(--font-ui); cursor: pointer; transition: transform 160ms var(--ease-spring); }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--gold); color: var(--night); }
+  .btn-quiet { background: transparent; color: var(--ivory); border: 1px solid var(--rule); }
+  .btn svg { width: 20px; height: 20px; }
+
+  /* Phones */
+  .phones { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+  .phone-col { display: grid; gap: 12px; justify-items: center; }
+  .phone-col figcaption { color: var(--muted); font-size: var(--step--1); max-width: 320px; text-align: center; }
+  .phone { width: min(340px, 100%); aspect-ratio: 390 / 844; border-radius: 48px; padding: 10px; background: #000; box-shadow: 0 0 0 1px var(--rule), 0 30px 60px -20px rgba(0,0,0,0.6); }
+  .screen { position: relative; height: 100%; border-radius: 40px; overflow: hidden; display: flex; flex-direction: column; }
+  .screen.night { background: var(--night); color: var(--ivory); --s-muted: var(--muted); --s-card: var(--forest-deep); --s-rule: var(--rule); --s-accent: var(--gold); --s-bad: var(--amber); --s-good: var(--gold); --s-empty: rgba(251,247,236,0.08); }
+  .screen.ivory { background: var(--ivory); color: var(--ink); --s-muted: #4A6157; --s-card: #FFFFFF; --s-rule: rgba(11,34,25,0.1); --s-accent: var(--gold-deep); --s-bad: #A8A49A; --s-good: var(--gold); --s-empty: rgba(11,34,25,0.06); }
+  .statusbar { height: 44px; flex: none; }
+  .scroll { flex: 1; overflow: hidden; padding: 4px 20px 0; }
+  .large-title { font-family: var(--font-display); font-weight: 600; font-size: 2.125rem; line-height: 1.1; margin: 6px 0 2px; }
+  .date { color: var(--s-muted); font-size: var(--step--1); margin: 0 0 18px; }
+  .hero-num { font-family: var(--font-display); font-weight: 600; font-size: 4.25rem; line-height: 1; color: var(--s-accent); }
+  .hero-num small { font-size: 0.45em; }
+  .hero-label { color: var(--s-muted); font-size: var(--step--1); margin: 6px 0 18px; }
+  .ribbon { display: grid; grid-template-columns: repeat(48, 1fr); gap: 1px; height: 34px; border-radius: 6px; overflow: hidden; }
+  .ribbon i { display: block; }
+  .ribbon-axis { display: flex; justify-content: space-between; color: var(--s-muted); font-size: 0.6875rem; margin: 6px 0 18px; }
+  .grouped { background: var(--s-card); border-radius: var(--radius-s); overflow: hidden; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; min-height: 44px; font-size: 0.9375rem; }
+  .row + .row { border-top: 1px solid var(--s-rule); }
+  .row b { font-weight: 600; }
+  .observation { margin: 16px 0 0; font-family: var(--font-display); font-size: 1.0625rem; line-height: 1.5; }
+  .tabbar { flex: none; display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px 8px calc(22px + env(safe-area-inset-bottom)); border-top: 1px solid var(--s-rule); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); }
+  .screen.night .tabbar { background: rgba(3, 17, 12, 0.82); }
+  .screen.ivory .tabbar { background: rgba(251, 247, 236, 0.86); }
+  .tab { display: grid; justify-items: center; gap: 2px; font-size: 0.6875rem; color: var(--s-muted); min-height: 44px; }
+  .tab svg { width: 24px; height: 24px; }
+  .tab[aria-current="page"] { color: var(--s-accent); }
+  .demo-flag { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); font-size: 0.6875rem; padding: 2px 10px; border-radius: 999px; background: var(--s-card); color: var(--s-muted); border: 1px solid var(--s-rule); }
+
+  .open-points { display: grid; gap: 10px; max-width: 70ch; padding-left: 20px; color: var(--muted); }
+  .open-points li::marker { color: var(--gold); }
+  footer { padding: 40px 0 64px; color: var(--muted); font-size: var(--step--1); border-top: 1px solid var(--rule); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="proposal" role="note">Proposal, not approved. Phase 2 exploration for Nour to review. All numbers are demo data.</div>
+
+<div class="wrap">
+  <header class="intro">
+    <h1>Darb Juryoku design directions<span class="jp" lang="ja">重力</span></h1>
+    <p>Two directions built on the approved brand: night, forest and gold, set in Zen Old Mincho and Geist. Gold means one thing only: you, sitting well. Drift warms toward amber and is never red.</p>
+  </header>
+
+  <section aria-labelledby="tokens-h">
+    <h2 id="tokens-h">Colour and type</h2>
+    <p class="lede">The approved palette, with the contrast of each colour against the night surface measured on this page. Gold passes for large text and marks; small text on night uses ivory or muted.</p>
+    <div class="swatches" id="swatches"></div>
+    <div class="type-scale">
+      <div class="type-row"><span>Hero number</span><div class="display" style="font-size:var(--step-4); color:var(--gold)">74%</div></div>
+      <div class="type-row"><span>Large title</span><div class="display" style="font-size:var(--step-3)">Today</div></div>
+      <div class="type-row"><span>Section</span><div class="display" style="font-size:var(--step-2)">Longest drift</div></div>
+      <div class="type-row"><span>Body</span><div style="font-size:var(--step-0)">Shoulders forward for 4 minutes. Roll them back?</div></div>
+      <div class="type-row"><span>Caption</span><div style="font-size:var(--step--1); color:var(--muted)">Landmarks only. No images are recorded.</div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="mirror-h">
+    <h2 id="mirror-h">Night instrument: the live mirror</h2>
+    <p class="lede">The golden line stays where your good posture would be. Move the drift control to see what happens when you slide forward: the glow fades, the neck segment warms, and the state word changes. Nothing else on the screen moves.</p>
+    <div class="mirror-grid">
+      <div class="mirror" role="img" aria-labelledby="state-word" id="mirror">
+        <svg viewBox="0 0 400 300" aria-hidden="true">
+          <defs>
+            <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="6" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Body silhouette (stand-in for the darkened camera image) -->
+          <g id="body">
+            <path id="body-shape" fill="#0E3527" stroke="none" d=""/>
+            <path id="body-rim" fill="none" stroke="#D9A54C" stroke-width="3" filter="url(#glow)" d=""/>
+          </g>
+          <!-- Ideal outline from calibration: fixed -->
+          <path id="ideal" fill="none" stroke="#FBE7BD" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.6" d=""/>
+          <path id="ideal-neck" fill="none" stroke="#FBE7BD" stroke-width="2" stroke-dasharray="6 5" opacity="0.7" d=""/>
+        </svg>
+        <div class="status">
+          <div class="state-word" id="state-word" aria-live="polite">Upright</div>
+          <div class="session">Good posture this session<br><b id="session-min">38 min</b> of 52</div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="control-card">
+          <label for="drift">Drift (demo control)</label>
+          <p>Stands in for the classifier's match strength. Real values come from the model, smoothed by a spring.</p>
+          <input type="range" id="drift" min="0" max="100" value="0" aria-describedby="drift-val">
+          <p id="drift-val" style="margin:6px 0 0">Match 100%</p>
+        </div>
+        <div class="control-card">
+          <label>Session controls</label>
+          <p>One primary action: keep watching while you code.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px">
+            <button class="btn btn-primary" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><rect x="12" y="11" width="7" height="5" rx="1"/></svg>
+              Open sentinel
+            </button>
+            <button class="btn btn-quiet" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+              Pause
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="phones-h">
+    <h2 id="phones-h">Today on the phone, in two directions</h2>
+    <p class="lede">The daily report as an installable app: large title, one hero number, the day as a ribbon of minutes, three facts in a grouped list, one plain sentence, and a translucent tab bar. Left is Night instrument; right is Ivory ledger, the light theme of the same system.</p>
+    <div class="phones">
+      <figure class="phone-col" style="margin:0">
+        <div class="phone"><div class="screen night" id="phone-night"></div></div>
+        <figcaption>Night instrument. Gold carries the good minutes; drift minutes are amber.</figcaption>
+      </figure>
+      <figure class="phone-col" style="margin:0">
+        <div class="phone"><div class="screen ivory" id="phone-ivory"></div></div>
+        <figcaption>Ivory ledger. Drift minutes turn to soft grey, so the gold reads like a seam of good time.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="open-h">
+    <h2 id="open-h">What this proposal leaves open</h2>
+    <ul class="open-points">
+      <li>Which direction leads: Night instrument for the live view is recommended, with Ivory ledger as the light theme.</li>
+      <li>Icon set: these icons are hand-drawn strokes in the style of Lucide (question 10 in the Phase 1 review).</li>
+      <li>The real outline is a three.js line and a shader glow on the camera mask; this page uses a static SVG figure.</li>
+      <li>Fonts load the full files here; the app will subset Zen Old Mincho to the characters it uses.</li>
+    </ul>
+  </section>
+
+  <footer>Phase 2 proposal for Nour. Not approved. Opened as a local file; makes no network requests.</footer>
+</div>
+
+<script>
+  // Demo data for this proposal only.
+  const demo = {
+    goodShare: 74, date: 'Monday, 26 October',
+    ribbon: '0000GGGGGGGGBBGGGGGGGGGGGBBBBGGGGGGG--GGGGGGBGGGG', // 48 half-hour-ish buckets: G good, B drift, - away
+    rows: [['Longest drift', '23 min'], ['Worst hour', '15:00 to 16:00'], ['Against last 7 days', '+6 points']],
+    observation: 'Your drift starts after lunch. A short stand at three may help.',
+  };
+
+  // Swatches with live contrast against night
+  const palette = [
+    ['night', '#03110C', 'Base surface'], ['forest', '#0E3527', 'Raised surfaces'], ['forest-deep', '#08241A', 'Cards on night'],
+    ['gold', '#D9A54C', 'You, the figure, hero numbers'], ['gold-light', '#FBE7BD', 'Frame, lens, lit spine'],
+    ['gold-deep', '#6D4C17', 'Gold in shadow, pressed'], ['ivory', '#FBF7EC', 'Text on night'],
+    ['ink', '#0B2219', 'Text on ivory'], ['muted', '#8FA399', 'Secondary text'],
+  ];
+  const lum = (hex) => {
+    const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+      .map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  document.getElementById('swatches').innerHTML = palette.map(([name, hex, role]) => {
+    const r = ratio(hex, '#03110C');
+    const verdict = r >= 4.5 ? 'body text' : r >= 3 ? 'large text and marks' : 'surface only';
+    return `<div class="swatch"><div class="chip" style="background:${hex}"></div><dl><dt>${name}</dt><dd>${hex}</dd><dd>${role}</dd><dd class="ratio">${r.toFixed(1)}:1 on night, ${verdict}</dd></dl></div>`;
+  }).join('');
+
+  // Live mirror figure
+  const ideal = { headX: 200, headY: 92, neckX: 200 };
+  function bodyPath(f) {
+    // Seen from a front webcam, a forward head drops and grows (closer to the lens) and the neck shortens.
+    const hx = ideal.headX, s = 1 + f * 0.2, hy = ideal.headY + f * 30, sh = f * 8, w = 52 * s, t = 52 * s;
+    return `M60 300 C70 230 110 210 ${150 + sh} ${200 + sh} C170 ${190 + sh} ${hx - 18} ${168 + f * 6} ${hx - 22 * s} ${hy + 40 * s}
+      C${hx - w} ${hy + 30 * s} ${hx - w} ${hy - t + 2} ${hx} ${hy - t} C${hx + w} ${hy - t + 2} ${hx + w} ${hy + 30 * s} ${hx + 22 * s} ${hy + 40 * s}
+      C${hx + 18} ${168 + f * 6} 230 ${190 + sh} ${250 - sh} ${200 + sh} C290 210 330 230 340 300 Z`;
+  }
+  const idealPath = bodyPath(0);
+  document.getElementById('ideal').setAttribute('d', idealPath);
+  document.getElementById('ideal-neck').setAttribute('d', 'M178 132 C182 150 184 160 190 176 M222 132 C218 150 216 160 210 176');
+  const shape = document.getElementById('body-shape');
+  const rim = document.getElementById('body-rim');
+  const neck = document.getElementById('ideal-neck');
+  const word = document.getElementById('state-word');
+  const driftVal = document.getElementById('drift-val');
+  const mix = (a, b, t) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(a.slice(i, i + 2), 16) * (1 - t) + parseInt(b.slice(i, i + 2), 16) * t).toString(16).padStart(2, '0')).join('');
+  function render(f) {
+    const d = bodyPath(f);
+    shape.setAttribute('d', d); rim.setAttribute('d', d);
+    const m = 1 - f;
+    rim.setAttribute('opacity', Math.max(0, m * m).toFixed(2));
+    neck.setAttribute('stroke', mix('#FBE7BD', '#C9822F', Math.min(1, f * 1.4)));
+    word.textContent = f < 0.25 ? 'Upright' : f < 0.6 ? 'Drifting' : 'Head forward';
+    word.style.color = f < 0.25 ? '#D9A54C' : mix('#FBF7EC', '#C9822F', f);
+    driftVal.textContent = `Match ${Math.round(m * 100)}%`;
+  }
+  // Spring toward the target so the figure settles instead of jumping (skipped with reduced motion)
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let pos = 0, vel = 0, target = 0, raf = 0;
+  const k = 170, c = 22; // brand spring tokens
+  function step() {
+    const dt = 1 / 60; const a = -k * (pos - target) - c * vel; vel += a * dt; pos += vel * dt;
+    render(Math.max(0, Math.min(1, pos)));
+    if (Math.abs(pos - target) > 0.001 || Math.abs(vel) > 0.001) raf = requestAnimationFrame(step); else raf = 0;
+  }
+  document.getElementById('drift').addEventListener('input', (e) => {
+    target = e.target.value / 100;
+    if (reduce) { pos = target; render(pos); return; }
+    if (!raf) raf = requestAnimationFrame(step);
+  });
+  render(0);
+
+  // Phones
+  const icons = {
+    today: '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/>',
+    history: '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+    live: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 9v6M9 12c0-1.7 1.3-3 3-3"/>',
+    settings: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+  };
+  const tab = (key, label, current) => `<div class="tab"${current ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[key]}</svg>${label}</div>`;
+  function today(el) {
+    const cells = [...demo.ribbon].map((ch) => `<i style="background:var(${ch === 'G' ? '--s-good' : ch === 'B' ? '--s-bad' : '--s-empty'})"></i>`).join('');
+    el.innerHTML = `
+      <div class="statusbar"></div>
+      <div class="demo-flag">Demo data</div>
+      <div class="scroll">
+        <div class="large-title">Today</div>
+        <p class="date">${demo.date}</p>
+        <div class="hero-num">${demo.goodShare}<small>%</small></div>
+        <p class="hero-label">of sitting time in good posture</p>
+        <div class="ribbon" role="img" aria-label="Day timeline: mostly good posture, drift around mid-afternoon">${cells}</div>
+        <div class="ribbon-axis"><span>09:00</span><span>13:00</span><span>17:00</span></div>
+        <div class="grouped">${demo.rows.map(([k, v]) => `<div class="row"><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+        <p class="observation">${demo.observation}</p>
+      </div>
+      <nav class="tabbar" aria-label="Main">${tab('today', 'Today', true)}${tab('history', 'History')}${tab('live', 'Live')}${tab('settings', 'Settings')}</nav>`;
+  }
+  today(document.getElementById('phone-night'));
+  today(document.getElementById('phone-ivory'));
+</script>
+</body>
+</html>
