@@ -1,0 +1,15 @@
+{
+  "name": "darb-juryoku",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.24.0",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test:hooks": "bats tests/hooks tests/scripts",
+    "check:emoji": "bash scripts/check-emoji.sh",
+    "schemas:check": "pnpm --filter @darb-juryoku/schemas check"
+  }
+}

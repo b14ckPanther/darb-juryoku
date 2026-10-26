@@ -1,0 +1,10 @@
+# Runtime app config. Validated at load against packages/schemas/config/app.schema.json.
+# Values are proposals until Phase 1 confirms them (docs/ARCHITECTURE.md section 8).
+name: Darb Juryoku
+sample_hz: 5
+camera:
+  width: 640
+  height: 480
+classify_every_samples: 1
+window_samples: 10
+retention_days: 365

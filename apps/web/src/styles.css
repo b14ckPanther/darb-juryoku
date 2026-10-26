@@ -1,0 +1,42 @@
+/* Approved brand tokens and self-hosted fonts from brand/ (do not redesign here). */
+@import '../../../brand/exports/tokens.css';
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Zen Old Mincho';
+  src: url('../../../brand/fonts/ZenOldMincho-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../../../brand/fonts/Geist.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --color-night: var(--night);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-deep: var(--gold-deep);
+  --color-ivory: var(--ivory);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--night);
+  color: var(--ivory);
+  font-family: var(--font-ui);
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
