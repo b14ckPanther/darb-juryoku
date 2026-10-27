@@ -264,8 +264,8 @@ history:
   heatmap_title: Good posture by hour and weekday
   weekdays: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
   streaks_title: Streaks
-  current: Current streak
-  best: Best streak
+  current: Days in the current streak
+  best: Days in the best streak
   streak_note: A day counts when at least {goal} of its sitting time is good posture. Days off do not break a streak.
   days_title: Days
   swipe_hint: Swipe a day left, or tab to its actions.
@@ -323,6 +323,7 @@ studio:
   saved: Recording saved
   stopped: Recording stopped, nothing saved
   recordings_title: Recordings
+  swipe_hint: Swipe a recording left, or tab to its actions.
   recording_row: '{date}, {protocol}'
   recording_value: '{duration}, {size}'
   protocol_guided: guided

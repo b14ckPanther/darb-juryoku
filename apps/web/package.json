@@ -12,7 +12,8 @@
     "e2e": "playwright test",
     "tokens": "vite-node scripts/tokens.ts",
     "seed": "vite-node scripts/seed.ts",
-    "copy:types": "vite-node scripts/copy-types.ts"
+    "copy:types": "vite-node scripts/copy-types.ts",
+    "screens": "vite-node scripts/screens.ts"
   },
   "dependencies": {
     "ajv": "^8.20.0",

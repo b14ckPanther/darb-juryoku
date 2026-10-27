@@ -18,7 +18,6 @@ import { Stat } from '../ui/stat';
 import { Notice, Page } from './Page';
 
 const toggle = { show: copy.charts.show_table, hide: copy.charts.hide_table };
-const days = (n: number) => (n === 1 ? copy.units.day : t(copy.units.days, { n }));
 
 /** Week and month views: daily good share, the hour by weekday heatmap, streaks and the days. */
 export default function History() {
@@ -64,12 +63,14 @@ export default function History() {
   return (
     <Page title={copy.history.title}>
       <div className="grid gap-8">
-        <SegmentedControl
-          label={copy.history.range_label}
-          options={[copy.history.week, copy.history.month]}
-          value={range}
-          onChange={setRange}
-        />
+        <div className="justify-self-start">
+          <SegmentedControl
+            label={copy.history.range_label}
+            options={[copy.history.week, copy.history.month]}
+            value={range}
+            onChange={setRange}
+          />
+        </div>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
           <section className="rounded-container bg-surface-raised p-4 sm:p-5">
             <BarChart
@@ -106,7 +107,7 @@ export default function History() {
               ] as const
             ).map(([label, n]) => (
               <div key={label} className="rounded-container bg-surface-raised p-4">
-                <Stat size="display" value={String(n)} label={`${label}, ${days(n)}`} />
+                <Stat size="display" value={String(n)} label={label} />
               </div>
             ))}
           </div>

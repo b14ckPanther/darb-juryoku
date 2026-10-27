@@ -1,8 +1,16 @@
-import { createContext, use, useCallback, useEffect, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  lazy,
+  Suspense,
+  use,
+  useCallback,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 import { createPortal } from 'react-dom';
 import { settingsConfig } from '../config/runtime';
 import { copy } from '../copy';
-import { SentinelView } from '../live/SentinelView';
 
 interface PipApi {
   requestWindow(options: { width: number; height: number }): Promise<Window>;
@@ -14,6 +22,11 @@ interface SentinelValue {
   open: () => Promise<void>;
   close: () => void;
 }
+
+// The view (and three.js with it) loads only when the window opens.
+const SentinelView = lazy(() =>
+  import('../live/SentinelView').then((m) => ({ default: m.SentinelView })),
+);
 
 const SentinelContext = createContext<SentinelValue | null>(null);
 
@@ -82,7 +95,9 @@ export function SentinelProvider({
       {pip &&
         createPortal(
           <div className="h-dvh w-dvw bg-surface">
-            <SentinelView />
+            <Suspense>
+              <SentinelView />
+            </Suspense>
           </div>,
           pip.document.body,
         )}

@@ -6,7 +6,7 @@ import { useToast } from '../app/toast';
 import { protocolConfig } from '../config/runtime';
 import { copy, t } from '../copy';
 import type { Recording } from '../data/types';
-import { duration, longDate } from '../report/format';
+import { duration, shortDate } from '../report/format';
 import { Button } from '../ui/button';
 import { SegmentedControl, Slider } from '../ui/controls';
 import { cx } from '../ui/cx';
@@ -269,12 +269,12 @@ export default function Studio() {
           <>
             <GroupedList
               title={copy.studio.recordings_title}
-              footer={copy.history.swipe_hint}
+              footer={copy.studio.swipe_hint}
               level={2}
             >
               {[...lib.recordings].reverse().map((r) => {
                 const name = t(copy.studio.recording_row, {
-                  date: longDate(r.date, copy.locale),
+                  date: shortDate(r.date, copy.locale),
                   protocol:
                     r.protocol === 'guided'
                       ? copy.studio.protocol_guided

@@ -6,9 +6,9 @@ import { useRouter } from '../app/router';
 import { useToast } from '../app/toast';
 import { settingsConfig } from '../config/runtime';
 import { copy, t } from '../copy';
-import { poseFixture } from '../demo/seed';
+import { poseFixture } from '../demo/pose';
 import { GoldenOutline } from '../overlay/GoldenOutline';
-import { longDate } from '../report/format';
+import { shortDate } from '../report/format';
 import { Button } from '../ui/button';
 import { cx } from '../ui/cx';
 import { GroupedList, ListRow } from '../ui/list';
@@ -132,25 +132,6 @@ export default function Calibrate() {
                 </mask>
               </defs>
               <rect width="400" height="300" className="fill-surface/55" mask="url(#guide-cut)" />
-              <ellipse
-                cx="200"
-                cy="82"
-                rx="54"
-                ry="66"
-                fill="none"
-                className="stroke-outline-ideal/70"
-                strokeDasharray="4 6"
-                strokeWidth="1.2"
-                vectorEffect="non-scaling-stroke"
-              />
-              <path
-                d="M40 300 C 60 200, 120 178, 200 172 C 280 178, 340 200, 360 300"
-                fill="none"
-                className="stroke-outline-ideal/70"
-                strokeDasharray="4 6"
-                strokeWidth="1.2"
-                vectorEffect="non-scaling-stroke"
-              />
             </svg>
           )}
           {step === 'hold' && <HoldRing left={left} />}
@@ -225,7 +206,7 @@ export default function Calibrate() {
               value={
                 c.active
                   ? copy.calibrate.in_use
-                  : t(copy.calibrate.created, { date: longDate(c.created, copy.locale) })
+                  : t(copy.calibrate.created, { date: shortDate(c.created, copy.locale) })
               }
               onPress={
                 c.active

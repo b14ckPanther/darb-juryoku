@@ -1,4 +1,4 @@
-import { poseFixture } from '../demo/seed';
+import { poseFixture } from '../demo/pose';
 import { GoldenOutline } from '../overlay/GoldenOutline';
 import { cx } from '../ui/cx';
 import { PostureGlyph, type PostureClass } from '../ui/glyphs';
@@ -69,7 +69,7 @@ export function Mirror({
       <div
         className={cx(
           'absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-surface/90 to-transparent',
-          mini ? 'px-2.5 pt-6 pb-2' : 'px-5 pt-14 pb-4',
+          mini ? 'px-2.5 pt-6 pb-2' : 'px-8 pt-14 pb-7',
         )}
       >
         <p

@@ -17,7 +17,7 @@ export function Page({
   children: ReactNode;
 }) {
   return (
-    <div className="pt-2 lg:pt-6">
+    <div className="lg:pt-2">
       <LargeTitle title={title} subtitle={subtitle} trailing={trailing} />
       {children}
     </div>
@@ -81,7 +81,12 @@ export function Notice({
 /** A quiet placeholder while a screen loads: the shapes of what is coming, never a spinner alone. */
 export function PageSkeleton({ label }: { label: string }) {
   return (
-    <div aria-busy="true" aria-label={label} className="grid gap-6 pt-14 motion-safe:animate-pulse">
+    <div
+      role="status"
+      aria-busy="true"
+      aria-label={label}
+      className="grid gap-6 pt-14 motion-safe:animate-pulse"
+    >
       <span className="h-9 w-40 rounded-container bg-surface-raised" />
       <span className="h-28 w-56 rounded-container bg-surface-raised" />
       <span className="h-40 rounded-container bg-surface-raised" />

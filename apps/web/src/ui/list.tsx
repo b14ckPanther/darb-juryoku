@@ -56,8 +56,12 @@ export function ListRow({ label, value, icon: Icon, onPress, accessory }: ListRo
           className="shrink-0 text-accent-text"
         />
       )}
-      <span className="min-w-0 flex-1 text-body">{label}</span>
-      {value && <span className="num shrink-0 text-body text-text-secondary">{value}</span>}
+      <span className={cx('text-body', value ? 'shrink-0' : 'min-w-0 flex-1')}>{label}</span>
+      {value && (
+        <span className="num min-w-0 flex-1 truncate text-right text-body text-text-secondary">
+          {value}
+        </span>
+      )}
       {accessory}
       {onPress && (
         <ChevronRight

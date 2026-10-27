@@ -1,4 +1,5 @@
 import {
+  CircleStop,
   CirclePause,
   PictureInPicture2,
   Pause,
@@ -18,7 +19,7 @@ import { Nudge } from '../ui/feedback';
 import { PostureGlyph } from '../ui/glyphs';
 import { useData } from '../app/data';
 import { previewState } from '../app/preview';
-import { Link, useRouter } from '../app/router';
+import { useRouter } from '../app/router';
 import { useSentinel } from '../app/sentinel';
 import { useLiveMatch, useSession } from '../app/session';
 import { copy, t } from '../copy';
@@ -207,17 +208,9 @@ export default function Live() {
             onClick={() => setConfirmEnd(true)}
             className="pressable inline-flex min-h-(--touch-min) w-fit items-center gap-2 text-subhead text-text-secondary hover:text-text"
           >
-            <Square aria-hidden size={16} strokeWidth={1.75} />
+            <CircleStop aria-hidden size={18} strokeWidth={1.75} />
             {copy.live.end}
           </button>
-          <p className="m-0 hidden text-footnote text-text-secondary lg:block">
-            <Link
-              href="/nudges"
-              className="text-text-secondary underline decoration-rule underline-offset-4 hover:text-text"
-            >
-              {copy.nudge.title}
-            </Link>
-          </p>
         </div>
       </div>
       <Sheet open={confirmEnd} onClose={() => setConfirmEnd(false)} title={copy.live.end_title}>

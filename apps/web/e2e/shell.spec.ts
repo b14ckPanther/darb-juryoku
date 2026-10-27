@@ -7,12 +7,16 @@ const appYaml = parse(
 ) as {
   name: string;
 };
+const copyYaml = parse(
+  readFileSync(new URL('../../../config/copy/en.yaml', import.meta.url), 'utf8'),
+) as { welcome: { title: string } };
 
 test('serves the shell cross-origin isolated with the configured name', async ({ page }) => {
   const response = await page.goto('/');
   expect(response?.headers()['cross-origin-opener-policy']).toBe('same-origin');
   expect(response?.headers()['cross-origin-embedder-policy']).toBe('require-corp');
-  await expect(page.getByRole('heading', { level: 1, name: appYaml.name })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: copyYaml.welcome.title })).toBeVisible();
+  await expect(page.getByRole('link', { name: appYaml.name }).first()).toBeAttached();
   await expect(page).toHaveTitle(appYaml.name);
   expect(await page.evaluate(() => window.crossOriginIsolated)).toBe(true);
 });

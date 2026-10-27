@@ -139,14 +139,16 @@ export default function Nudges() {
             ))}
           </ol>
         </section>
-        <GroupedList title={copy.nudge.rules_title} level={2}>
-          <ListRow
-            icon={Timer}
-            label={t(copy.nudge.cooldown, { minutes: nudgeConfig.cooldown_minutes })}
-          />
-          <ListRow icon={Moon} label={t(copy.nudge.quiet, { from: quiet.from, to: quiet.to })} />
-          <ListRow icon={Layers} label={copy.nudge.one_at_a_time} />
-        </GroupedList>
+        <div className="self-start">
+          <GroupedList title={copy.nudge.rules_title} level={2}>
+            <ListRow
+              icon={Timer}
+              label={t(copy.nudge.cooldown, { minutes: nudgeConfig.cooldown_minutes })}
+            />
+            <ListRow icon={Moon} label={t(copy.nudge.quiet, { from: quiet.from, to: quiet.to })} />
+            <ListRow icon={Layers} label={copy.nudge.one_at_a_time} />
+          </GroupedList>
+        </div>
       </div>
     </Page>
   );

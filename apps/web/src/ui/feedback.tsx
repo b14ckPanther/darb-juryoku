@@ -33,7 +33,7 @@ export function Banner({ tone, children, detail }: BannerProps) {
       />
       <p className="m-0">
         <span className="font-medium text-text">{children}</span>
-        {detail && <span> {detail}</span>}
+        {detail && <span className="hidden sm:inline"> {detail}</span>}
       </p>
     </div>
   );

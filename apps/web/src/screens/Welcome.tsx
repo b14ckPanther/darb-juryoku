@@ -37,7 +37,7 @@ function Node({
   kept?: boolean;
 }) {
   return (
-    <li className="relative grid justify-items-center gap-2 text-center">
+    <li className="relative grid content-start justify-items-center gap-2 text-center">
       <span
         className={
           kept

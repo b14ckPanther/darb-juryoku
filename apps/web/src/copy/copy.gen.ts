@@ -328,6 +328,7 @@ export interface Copy {
     saved: string;
     stopped: string;
     recordings_title: string;
+    swipe_hint: string;
     recording_row: string;
     recording_value: string;
     protocol_guided: string;

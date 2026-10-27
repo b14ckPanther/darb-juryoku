@@ -178,7 +178,7 @@ export default function Settings() {
         </section>
 
         <GroupedList title={s.groups.data} level={2}>
-          <li className="flex min-h-(--touch-min) items-center justify-between gap-4 px-4 py-2">
+          <li className="grid gap-2 px-4 py-3">
             <span className="text-body">{s.retention}</span>
             <SegmentedControl
               label={s.retention}

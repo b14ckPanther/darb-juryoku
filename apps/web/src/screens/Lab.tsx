@@ -44,8 +44,9 @@ export default function Lab() {
   }
 
   const label = (m: { name: string; version: string }) => `${m.name} ${m.version}`;
-  const options = [...lib.models.map(label), copy.lab.heuristic];
-  const model = lib.models.find((m) => label(m) === viewing || m.name === viewing);
+  // The switcher names versions only, so it fits a phone; the heading names the model in full.
+  const options = [...lib.models.map((m) => m.version), copy.lab.heuristic];
+  const model = lib.models.find((m) => m.version === viewing || m.name === viewing);
   const isHeuristic = !model;
   const confusion = model?.confusion ?? lib.heuristic.confusion;
   const metrics = classMetrics(confusion);
@@ -78,7 +79,7 @@ export default function Lab() {
           <SegmentedControl
             label={copy.lab.switcher_label}
             options={options}
-            value={model ? label(model) : copy.lab.heuristic}
+            value={model ? model.version : copy.lab.heuristic}
             onChange={(v) => {
               setViewing(v);
               setBench('idle');
@@ -105,6 +106,9 @@ export default function Lab() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
           <div className="grid content-start gap-8">
             <div className="grid gap-1">
+              <h2 className="font-ui text-subhead font-medium text-text-secondary">
+                {model ? label(model) : copy.lab.heuristic}
+              </h2>
               <p className="num m-0 font-display text-hero text-accent-text">
                 {two(metrics.macroF1)}
               </p>
@@ -206,20 +210,20 @@ export default function Lab() {
                 <table className="num w-full border-collapse text-subhead">
                   <thead>
                     <tr className="text-left text-footnote text-text-secondary">
-                      <th scope="col" className="px-4 py-2.5 font-medium">
+                      <th scope="col" className="px-3 py-2.5 sm:px-4 font-medium">
                         {copy.lab.class}
                       </th>
-                      <th scope="col" className="px-3 py-2.5 font-medium">
+                      <th scope="col" className="px-2 py-2.5 sm:px-3 font-medium">
                         {copy.lab.precision}
                       </th>
-                      <th scope="col" className="px-3 py-2.5 font-medium">
+                      <th scope="col" className="px-2 py-2.5 sm:px-3 font-medium">
                         {copy.lab.recall}
                       </th>
-                      <th scope="col" className="px-3 py-2.5 font-medium">
+                      <th scope="col" className="px-2 py-2.5 sm:px-3 font-medium">
                         {copy.lab.f1}
                       </th>
                       {!isHeuristic && (
-                        <th scope="col" className="px-4 py-2.5 font-medium">
+                        <th scope="col" className="px-3 py-2.5 sm:px-4 font-medium">
                           {copy.lab.compare_heuristic}
                         </th>
                       )}
@@ -231,17 +235,19 @@ export default function Lab() {
                       const h = heuristic.perClass[i];
                       return (
                         <tr key={c} className="border-t border-rule">
-                          <th scope="row" className="px-4 py-2.5 text-left font-normal">
+                          <th scope="row" className="px-3 py-2.5 sm:px-4 text-left font-normal">
                             <span className="flex items-center gap-2">
                               <PostureGlyph posture={c} size={18} />
                               {className(c)}
                             </span>
                           </th>
-                          <td className="px-3 py-2.5">{two(m?.precision ?? 0)}</td>
-                          <td className="px-3 py-2.5">{two(m?.recall ?? 0)}</td>
-                          <td className="px-3 py-2.5 font-medium">{two(m?.f1 ?? 0)}</td>
+                          <td className="px-2 py-2.5 sm:px-3">{two(m?.precision ?? 0)}</td>
+                          <td className="px-2 py-2.5 sm:px-3">{two(m?.recall ?? 0)}</td>
+                          <td className="px-2 py-2.5 sm:px-3 font-medium">{two(m?.f1 ?? 0)}</td>
                           {!isHeuristic && (
-                            <td className="px-4 py-2.5 text-text-secondary">{two(h?.f1 ?? 0)}</td>
+                            <td className="px-3 py-2.5 sm:px-4 text-text-secondary">
+                              {two(h?.f1 ?? 0)}
+                            </td>
                           )}
                         </tr>
                       );
@@ -274,9 +280,9 @@ export default function Lab() {
                       <table className="num w-full border-collapse text-subhead">
                         <thead>
                           <tr className="text-left text-footnote text-text-secondary">
-                            <td className="px-4 py-2.5" />
+                            <td className="px-3 py-2.5 sm:px-4" />
                             {(['p50', 'p95', 'p99'] as const).map((p) => (
-                              <th key={p} scope="col" className="px-3 py-2.5 font-medium">
+                              <th key={p} scope="col" className="px-2 py-2.5 sm:px-3 font-medium">
                                 {copy.lab[p]}
                               </th>
                             ))}
@@ -287,11 +293,14 @@ export default function Lab() {
                             .filter((b) => !(b === 'webgpu' && preview === 'nogpu'))
                             .map((b) => (
                               <tr key={b} className="border-t border-rule">
-                                <th scope="row" className="px-4 py-2.5 text-left font-normal">
+                                <th
+                                  scope="row"
+                                  className="px-3 py-2.5 sm:px-4 text-left font-normal"
+                                >
                                   {copy.lab[b]}
                                 </th>
                                 {(['p50', 'p95', 'p99'] as const).map((p) => (
-                                  <td key={p} className="px-3 py-2.5">
+                                  <td key={p} className="px-2 py-2.5 sm:px-3">
                                     {t(copy.units.ms, { n: model.latency_ms[b][p] })}
                                   </td>
                                 ))}
