@@ -50,7 +50,7 @@ export function ListRow({ label, value, icon: Icon, onPress, accessory }: ListRo
           className="shrink-0 text-accent-text"
         />
       )}
-      <span className="min-w-0 flex-1 truncate text-body">{label}</span>
+      <span className="min-w-0 flex-1 text-body">{label}</span>
       {value && <span className="num shrink-0 text-body text-text-secondary">{value}</span>}
       {accessory}
       {onPress && (

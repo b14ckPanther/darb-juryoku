@@ -182,7 +182,9 @@ glow:
   drift_warm_from: 0.25 # drift (1 - match) above this warms the most-deviating outline segments toward drift
   motes_max: 10
   match_moment_from: 0.9 # match above this plays the brief brighten and gold motes
-  bloom: { strength: 0.55, radius: 0.42, threshold: 0.86 } # from brand render settings
+  # Strength and radius from the brand render. The brand's 0.86 threshold was tuned for the 3D mark; in
+  # linear light the gold rim peaks near 0.55 luminance, so the overlay blooms from 0.4: only near a match.
+  bloom: { strength: 0.55, radius: 0.42, threshold: 0.4 }
   exposure: 0.95
 
 sound:

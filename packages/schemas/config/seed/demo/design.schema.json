@@ -84,7 +84,7 @@
         "tabs": { "$ref": "#/$defs/strings", "required": ["today", "history", "live", "settings"] }
       }
     },
-    "gallery": { "type": "object", "required": ["title", "intro", "sections", "buttons", "segmented", "toggle", "slider", "rows", "history_rows", "swipe_actions", "sheet", "nudge", "toast", "banner_warning", "chart_table_toggle"] },
+    "gallery": { "type": "object", "required": ["title", "intro", "sections", "buttons", "segmented", "toggle", "slider", "rows", "history_rows", "swipe_actions", "sheet", "nudge", "toast", "chime", "banner_warning", "chart_table_toggle"] },
     "history": {
       "type": "object",
       "required": ["bars_title", "bars", "heatmap_title", "heatmap"],

@@ -121,6 +121,7 @@ gallery:
     primary: Sitting up
     secondary: Snooze 15 min
   toast: Calibration saved
+  chime: Play the nudge chime
   banner_warning: WebGPU is not available in this browser, so the model runs on WASM.
   chart_table_toggle: { show: Show as table, hide: Hide table }
 

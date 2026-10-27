@@ -3,26 +3,33 @@ import { ICON_STROKE } from './button';
 export type PostureClass = 'upright' | 'slouch' | 'forward_head' | 'lean_side';
 
 // Custom posture glyphs drawn on Lucide's 24 px grid with its stroke width, round caps and joins,
-// so they sit beside Lucide icons as one set. Seen from the side, except the lean (from the front).
+// so they sit beside Lucide icons as one set. A seated figure seen from the side (head, back, thigh,
+// shin, chair back), except the lean, seen from the front.
 const paths: Record<PostureClass, string[]> = {
-  upright: ['M12 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z', 'M12 9.5v7', 'M12 16.5h4.5v4', 'M7 20.5h11'],
+  upright: [
+    'M10 2.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5Z',
+    'M10 8.5v6.5',
+    'M10 15h6.5v6',
+    'M6.5 9v12',
+  ],
   slouch: [
-    'M14.2 5a2 2 0 1 1-.1 4 2 2 0 0 1 .1-4Z',
-    'M13 10.5c-1.8 1.4-2.6 3.4-2 6',
-    'M11 16.5h4.5v4',
-    'M7 20.5h11',
+    'M13.5 4.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5Z',
+    'M12.5 10.5C9.5 11.5 8.5 13 9 15',
+    'M9 15h7.5v6',
+    'M6.5 9v12',
   ],
   forward_head: [
-    'M16.5 4.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z',
-    'M15 9.5 12 11v5.5',
-    'M12 16.5h4.5v4',
-    'M7 20.5h11',
+    'M15.5 3.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5Z',
+    'M10 9.5l3.5-2',
+    'M10 9.5V15',
+    'M10 15h6.5v6',
+    'M6.5 9v12',
   ],
   lean_side: [
-    'M9.6 4a2 2 0 1 1 .2 4 2 2 0 0 1-.2-4Z',
-    'M10.6 9.4 12 16.5',
-    'M7 16.5h10',
-    'M7 20.5h10',
+    'M9 2.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5Z',
+    'M9.8 8.5 12 15',
+    'M7.5 15h9',
+    'M8.5 15v6M15.5 15v6',
   ],
 };
 

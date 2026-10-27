@@ -55,6 +55,7 @@ jobs:
       - run: uv run --project ml ruff format --check ml
       - run: uv run --project ml mypy --config-file ml/pyproject.toml ml/src
       - run: uv run --project ml dvc status
+      - run: uv run --with numpy --with pyyaml python scripts/audio/make_chime.py --check
 
   emoji-and-hooks:
     runs-on: ubuntu-latest

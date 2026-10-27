@@ -8,10 +8,18 @@ interface SegmentedProps {
   options: string[];
   value: string;
   onChange: (value: string) => void;
+  /** Vertical stacks long options full width, for sheets on a phone. */
+  orientation?: 'horizontal' | 'vertical';
 }
 
 /** A segmented control: one radio group, arrow keys move the choice, the thumb springs across. */
-export function SegmentedControl({ label, options, value, onChange }: SegmentedProps) {
+export function SegmentedControl({
+  label,
+  options,
+  value,
+  onChange,
+  orientation = 'horizontal',
+}: SegmentedProps) {
   const reduce = useReducedMotion();
   const group = useId();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -54,7 +62,10 @@ export function SegmentedControl({ label, options, value, onChange }: SegmentedP
             onClick={() => onChange(option)}
             onKeyDown={(e) => move(e, i)}
             className={cx(
-              'pressable relative min-h-[calc(var(--touch-min)-0.5rem)] rounded-control px-4 text-subhead font-medium',
+              'pressable relative min-h-[calc(var(--touch-min)-0.5rem)] px-4 text-subhead font-medium',
+              orientation === 'horizontal'
+                ? 'rounded-control'
+                : 'min-h-(--touch-min) rounded-[calc(var(--radius-container)-4px)] text-left',
               'transition-colors duration-(--duration-base)',
               selected ? 'text-on-accent' : 'text-text-secondary hover:text-text',
             )}
@@ -63,7 +74,12 @@ export function SegmentedControl({ label, options, value, onChange }: SegmentedP
               <motion.span
                 layoutId={`${group}-thumb`}
                 transition={springTransition('snappy', reduce)}
-                className="absolute inset-0 rounded-control bg-accent-fill shadow-raised"
+                className={cx(
+                  'absolute inset-0 bg-accent-fill shadow-raised',
+                  orientation === 'horizontal'
+                    ? 'rounded-control'
+                    : 'rounded-[calc(var(--radius-container)-4px)]',
+                )}
                 aria-hidden
               />
             )}

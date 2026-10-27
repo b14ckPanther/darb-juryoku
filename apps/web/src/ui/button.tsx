@@ -42,7 +42,7 @@ export function Button({
         'pressable inline-flex min-h-(--touch-min) items-center justify-center gap-2 rounded-control px-5',
         'text-subhead font-medium whitespace-nowrap select-none',
         'transition-[background-color,color,filter,transform] duration-(--duration-fast) ease-out',
-        'disabled:cursor-not-allowed disabled:opacity-45',
+        loading ? 'cursor-progress' : 'disabled:cursor-not-allowed disabled:opacity-45',
         variants[variant],
         className,
       )}

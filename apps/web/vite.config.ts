@@ -12,6 +12,7 @@ const allowedOutsideApp = [
   'config',
   'packages/schemas',
   'brand/src',
+  'brand/exports/svg',
 ].map(fromRoot);
 
 // COOP/COEP are required for multi-threaded WASM (SharedArrayBuffer), see ARCHITECTURE section 10.

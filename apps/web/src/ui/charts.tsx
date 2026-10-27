@@ -232,7 +232,7 @@ interface HeatmapProps {
 }
 
 const ramp = (t: number) =>
-  `color-mix(in oklab, var(--accent) ${Math.round(8 + t * 92)}%, var(--surface-raised))`;
+  `color-mix(in oklab, var(--accent) ${Math.round(22 + t * 78)}%, var(--surface-raised))`;
 
 /** Hour by weekday, one sequential gold ramp from faint (low) to full (high). */
 export function Heatmap({ title, rows, columns, values, unit, toggle }: HeatmapProps) {
@@ -388,7 +388,7 @@ export function ConfusionMatrix({ title, classes, labels, matrix, axis, toggle }
                         share > 0.5 ? 'text-on-accent' : 'text-text',
                       )}
                       style={{
-                        background: `color-mix(in oklab, var(--accent-fill) ${Math.round(6 + share * 94)}%, var(--surface-raised))`,
+                        background: `color-mix(in oklab, var(--accent-fill) ${Math.round(8 + share * 92)}%, var(--surface-raised))`,
                       }}
                     >
                       {v}

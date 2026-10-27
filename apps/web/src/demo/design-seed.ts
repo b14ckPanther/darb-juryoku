@@ -81,6 +81,7 @@ export interface DesignSeed {
     sheet: { open: string; title: string; body: string; close: string; options: string[] };
     nudge: Strings<'title' | 'body' | 'primary' | 'secondary'>;
     toast: string;
+    chime: string;
     banner_warning: string;
     chart_table_toggle: Strings<'show' | 'hide'>;
   };
