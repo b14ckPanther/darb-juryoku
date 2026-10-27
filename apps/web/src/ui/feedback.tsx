@@ -19,8 +19,9 @@ export function Banner({ tone, children, detail }: BannerProps) {
       role="note"
       className={cx(
         'flex items-center gap-3 rounded-container px-4 py-3 text-subhead',
+        // Gold means "you, sitting well" and nothing else, so the demo note stays quiet.
         tone === 'demo'
-          ? 'bg-accent-fill text-on-accent'
+          ? 'border border-rule bg-surface-raised text-text-secondary'
           : 'border border-drift bg-surface-raised text-text',
       )}
     >
@@ -28,11 +29,11 @@ export function Banner({ tone, children, detail }: BannerProps) {
         aria-hidden
         size={18}
         strokeWidth={ICON_STROKE}
-        className={cx('shrink-0', tone === 'warning' && 'text-drift-text')}
+        className={cx('shrink-0', tone === 'warning' ? 'text-drift-text' : 'text-text')}
       />
       <p className="m-0">
-        <span className="font-medium">{children}</span>
-        {detail && <span className="opacity-85"> {detail}</span>}
+        <span className="font-medium text-text">{children}</span>
+        {detail && <span> {detail}</span>}
       </p>
     </div>
   );
@@ -47,7 +48,7 @@ export function Toast({ children, icon: Icon }: { children: ReactNode; icon?: Lu
       initial={{ opacity: 0, scale: 0.98, y: 8 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={springTransition('settle', reduce)}
-      className="material inline-flex min-h-(--touch-min) items-center gap-2 rounded-control px-5 text-subhead shadow-popover"
+      className="material inline-flex min-h-(--touch-min) items-center gap-2 rounded-control border border-rule px-5 text-subhead shadow-popover"
     >
       {Icon && (
         <Icon aria-hidden size={18} strokeWidth={ICON_STROKE} className="text-accent-text" />

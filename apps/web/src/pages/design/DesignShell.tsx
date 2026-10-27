@@ -34,7 +34,9 @@ export function DesignShell({
           className="flex min-h-(--touch-min) items-center gap-2.5 text-text no-underline"
         >
           <img src={markUrl} alt="" width={28} height={28} />
-          <span className="font-display text-title3">{nav.home}</span>
+          <span translate="no" className="font-display text-title3">
+            {nav.home}
+          </span>
         </a>
         <nav
           aria-label={nav.label}

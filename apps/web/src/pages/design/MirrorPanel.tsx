@@ -77,7 +77,7 @@ export function MirrorPanel({
         )}
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-surface/85 to-transparent px-4 pt-10 pb-3">
           <p
-            aria-live="polite"
+            aria-live={compact ? undefined : 'polite'}
             className={cx(
               'm-0 font-display',
               compact ? 'text-title3' : 'text-title1',

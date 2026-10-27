@@ -71,6 +71,8 @@ A broadcast-monitor aesthetic. Deep blue-black, fine scanline grid at very low c
 
 ## 5. Design system (built in Phase 2)
 
+> Built in Phase 2 (ADR-031, ADR-032). Tokens: `config/design/tokens.yaml`, generated into `apps/web/src/design/tokens.css` with `pnpm --filter web tokens`. Components: `apps/web/src/ui/`. Live gallery: `/design/components`; directions: `/design`; overlay prototype: `/design/overlay`; phone shell: `/design/mobile`. Shape rule: controls are pills, containers 14 px, the mirror 24 px, sheets 28 px. Icons: Lucide at stroke 1.75 plus four custom posture glyphs.
+
 - Tokens as CSS custom properties and a Tailwind 4 `@theme`: colour (light and dark; gold reserved for posture meaning), type scale, spacing, radii, elevation, motion (spring presets, durations), glow parameters (outline width, bloom strength/threshold, rim intensity).
 - Components: button (primary, quiet, destructive), icon button, segmented control, toggle, slider with value, list row, grouped list, sheet, toast/nudge, stat block, timeline ribbon, heatmap, bar chart, confusion matrix, model card, permission prompt, empty state, banner (demo, warnings).
 - Charts follow the `dataviz` skill: one palette, tabular numbers, direct labels instead of legends where possible, accessible colour contrast in both themes.

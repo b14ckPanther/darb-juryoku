@@ -8,7 +8,9 @@ export function Home({ name }: { name: string }) {
     <main className="mx-auto grid min-h-dvh max-w-3xl content-center gap-8 px-(--space-gutter) py-16">
       <img src={markUrl} alt="" width={88} height={88} className="size-22" />
       <div className="grid gap-4">
-        <h1 className="text-display">{name}</h1>
+        <h1 translate="no" className="text-display">
+          {name}
+        </h1>
         <p className="m-0 max-w-[34ch] font-display text-title2 font-normal text-text-secondary">
           {home.intro}
         </p>

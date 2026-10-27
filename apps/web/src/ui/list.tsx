@@ -8,19 +8,25 @@ import { swipeSettle } from './gestures';
 
 interface GroupedListProps {
   title?: string;
+  /** Heading level for the title, so it fits the page outline. */
+  level?: 2 | 3;
   footer?: string;
   children: ReactNode;
 }
 
 /** An inset grouped list, as in iOS Settings: an optional small title, rounded rows, hairline separators. */
-export function GroupedList({ title, footer, children }: GroupedListProps) {
+export function GroupedList({ title, footer, children, level = 3 }: GroupedListProps) {
   const titleId = useId();
+  const Heading = level === 2 ? 'h2' : 'h3';
   return (
     <section aria-labelledby={title ? titleId : undefined} className="grid gap-2">
       {title && (
-        <h3 id={titleId} className="px-4 font-ui text-footnote font-medium text-text-secondary">
+        <Heading
+          id={titleId}
+          className="px-4 font-ui text-footnote font-medium text-text-secondary"
+        >
           {title}
-        </h3>
+        </Heading>
       )}
       <ul className="overflow-hidden rounded-container bg-surface-raised [&>li+li]:border-t [&>li+li]:border-rule">
         {children}
@@ -147,7 +153,7 @@ export function SwipeRow({ label, value, actions }: SwipeRowProps) {
         dragElastic={0.12}
         onDragEnd={onDragEnd}
         style={{ x }}
-        className="relative flex min-h-(--touch-min) touch-pan-y items-center gap-3 bg-surface-raised px-4 py-2.5"
+        className="relative flex min-h-(--touch-min) touch-pan-y items-center select-none gap-3 bg-surface-raised px-4 py-2.5"
       >
         <span className="min-w-0 flex-1 truncate text-body">{label}</span>
         {value && <span className="num text-body text-text-secondary">{value}</span>}

@@ -207,7 +207,10 @@ export function BarChart({ title, bars, unit, toggle }: BarsProps) {
                 </span>
               )}
               <span
-                className={cx('block rounded-t-[3px]', i === last ? 'bg-accent' : 'bg-accent/55')}
+                className={cx(
+                  'block rounded-t-[3px]',
+                  i === last ? 'bg-accent' : 'bg-text-secondary/35',
+                )}
                 style={{ height: `${b.value}%` }}
               />
             </div>

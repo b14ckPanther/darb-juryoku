@@ -80,7 +80,7 @@ gallery:
     primary: Start session
     quiet: Calibrate
     destructive: Delete all data
-    loading: Saving
+    loading: Saving…
     icon_pause: Pause
     icon_settings: Settings
     icon_sentinel: Open sentinel

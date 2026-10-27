@@ -18,6 +18,10 @@ export function useTheme(): [ThemeName, (t: ThemeName) => void] {
   const [theme, setTheme] = useState<ThemeName>(initialTheme);
   useEffect(() => {
     document.documentElement.dataset['theme'] = theme;
+    // Keep the browser chrome on the page colour (the meta tag starts on night, the default theme).
+    const surface = getComputedStyle(document.documentElement).getPropertyValue('--surface').trim();
+    if (surface)
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', surface);
     try {
       localStorage.setItem(KEY, theme);
     } catch {

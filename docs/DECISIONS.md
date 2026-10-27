@@ -128,3 +128,20 @@ Status: Accepted. Decided by Claude under Nour's delegation (2026-10-26).
 - Dataset: raw landmarks private; aggregates, eval report, model and dataset cards public; the labelled synthetic fixture is public and never used for reported metrics. DVC remote path lives in git-ignored `.dvc/config.local`.
 - Licence: code MIT; the Darb Juryoku name, mark and brand renders are not licensed for reuse as another product's brand (stated in `ASSETS.md` and the README).
 
+## ADR-031 Art direction: Night Instrument leads, Ivory as its light theme
+Status: Accepted. Decided by Claude under Nour's delegation (2026-10-26).
+Picked on `/design`, where the three brand-faithful directions run side by side on the same live mirror and Today data (screenshots in `docs/screenshots/phase-02/`).
+- **Night Instrument** leads. It sits next to a dark code editor without glare, it is what the approved brand already is (night, forest, gold), and it keeps gold for one meaning: you, sitting well.
+- **Ivory Ledger** becomes the light theme (phone in daylight, `prefers-color-scheme: light`), but drift stays amber in it instead of the ledger's grey, so a colour never changes meaning between themes. The grey variant stays only as the `ledger` direction on `/design`.
+- **Night Monitor** is not picked as a whole: the grid reads technical and busy beside the calm brand. Its framing corner marks echo the camera frame in the mark, so the live mirror may keep them (decided per screen in Phase 3).
+Rejected as defaults: an all-ivory app (glare beside an IDE at night) and the monitor look (busier, more generic developer styling).
+Cost if wrong: low. Each direction is one token block in `config/design/tokens.yaml`.
+
+## ADR-032 Design-system tokens and overlay rendering details
+Status: Accepted. Decided by Claude under Nour's delegation (2026-10-26).
+- Tokens live in `config/design/tokens.yaml` (schema-validated) and reference the brand palette by name; `apps/web/src/design/tokens.css` is generated and drift-tested.
+- Drift amber is `#B8652B` on night and `#843E14` on ivory (the Phase 0 proposal's `#C9822F` was too close to gold: OKLab distance 9, now 17 and above, tested). Gold itself (`#D9A54C`) fails the dataviz validator's lightness band on night; accepted, because it is the approved brand colour and passes contrast.
+- The overlay blooms from 0.4, not the brand render's 0.86: in linear light the gold rim peaks near 0.55 luminance, so 0.86 would never bloom. Bloom therefore appears only near a match.
+- The overlay's warmth is on the calibrated outline, not on the body rim, as UI_DESIGN section 1 says; the rim only fades.
+- The Impeccable detector flags Geist as an overused font. Kept: it is a pinned brand face.
+

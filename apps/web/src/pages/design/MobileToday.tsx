@@ -54,7 +54,7 @@ export default function MobileToday() {
               toggle={gallery.chart_table_toggle}
             />
           </section>
-          <GroupedList title={mobile.sections.facts}>
+          <GroupedList title={mobile.sections.facts} level={2}>
             {today.facts.map((f) => (
               <ListRow key={f.label} label={f.label} value={f.value} />
             ))}
@@ -62,7 +62,7 @@ export default function MobileToday() {
           <p className="m-0 font-display text-title3 font-normal leading-snug">
             {today.observation}
           </p>
-          <GroupedList title={mobile.sections.recent} footer={gallery.swipe_hint}>
+          <GroupedList title={mobile.sections.recent} footer={gallery.swipe_hint} level={2}>
             {gallery.history_rows.map((r) => (
               <SwipeRow
                 key={r.label}
