@@ -2,11 +2,11 @@
 
 The single source of "where are we". Update it in the same commit as the work it records. If this file and `git log` disagree, `git log` wins; fix this file first.
 
-**Current phase:** 2 done and merged into local `main` (`51a7542`); Phase 3 next, not started
-**Current branch:** `main` (local only: no remote, nothing pushed)
-**Last task:** Phase 2 design system built, critiqued and screenshotted
+**Current phase:** 3 done and merged into `main`; Phase 4 next, not started
+**Current branch:** `main` (pushed to `origin` with `phase/03-prototype`, approved by Nour for each phase)
+**Last task:** Phase 3 prototype built on demo seed, reviewed, screenshotted and merged
 **Blockers:** none for Phases 2 to 6. Outward actions still need Nour: creating the GitHub repo, pushing, deploying, DNS
-**Next step:** Phase 3 (clickable prototype on seed data)
+**Next step:** Phase 4 (live pose pipeline and heuristic)
 
 **Delegation.** On 2026-10-26 Nour wrote: "the review must be up to u ... i trust ur recommendation... any choice by u will be approved from my side i trust ur skills". From then on, Phase 1 answers, Phase 2 design choices, screen approvals and local merges of finished phases are decided under Nour's delegation and recorded as such. Outward actions are not delegated.
 
@@ -17,7 +17,7 @@ The single source of "where are we". Update it in the same commit as the work it
 | 0 | Repo bootstrap, CI, conventions | 5% | done (merged locally, `c430c19`) | `phase/00-bootstrap` | `8684454..33569d7` | web 9/9, e2e 3/3, schemas 2/2, ml 5/5, bats 18/18 | superpowers:test-driven-development, superpowers:requesting-code-review, superpowers:verification-before-completion, frontend-design (Phase 2 proposal) | Decided under Nour's delegation (2026-10-26): merge |
 | 1 | Confirm the spec with Nour | 3% | done (merged locally, `40422ac`) | `phase/01-spec` | see task log | n/a (docs only); check:all green | superpowers:brainstorming, writing-guidelines, design:ux-copy | Decided under Nour's delegation (2026-10-26) |
 | 2 | Design system | 8% | done (merged locally, `51a7542`) | `phase/02-design-system` | `013fff1..HEAD` | web 258/258, e2e 25/25, schemas 5/5, ml 5/5, bats 18/18, audio check | frontend-design, design-taste-frontend, impeccable:impeccable, design:design-system, dataviz, animation-systems, threejs-choose-skills, procedural-sfx, writing-guidelines, design:design-critique, web-design-guidelines, design:accessibility-review, superpowers:test-driven-development, superpowers:systematic-debugging, superpowers:requesting-code-review | Decided under Nour's delegation (2026-10-26) (direction and gallery) |
-| 3 | Clickable prototype on seed data | 12% | todo | `phase/03-prototype` | | | | |
+| 3 | Clickable prototype on seed data | 12% | done (merged) | `phase/03-prototype` | `0ec9c8f..HEAD` | web 375/375, e2e 38/38, schemas 13/13, ml 5/5, bats 18/18, audio check | frontend-design, impeccable:impeccable, react-view-transitions, playwright-cli, superpowers:requesting-code-review, superpowers:receiving-code-review | Decided under Nour's delegation (2026-10-26) (every screen) |
 | 4 | Live pose pipeline and heuristic | 10% | todo | `phase/04-pose-pipeline` | | | | |
 | 5 | Dataset Studio and versioned dataset | 8% | todo | `phase/05-dataset` | | | | |
 | 6 | Training pipeline and evaluation | 14% | todo | `phase/06-training` | | | | |
@@ -27,7 +27,7 @@ The single source of "where are we". Update it in the same commit as the work it
 | 10 | Hardening | 7% | todo | `phase/10-hardening` | | | | |
 | 11 | Docs, demo GIF, public launch | 8% | todo | `phase/11-launch` | | | | |
 
-Overall: **16%**
+Overall: **28%**
 
 Status values: `todo`, `in progress`, `blocked`, `review`, `done`.
 
@@ -58,6 +58,11 @@ One row per finished task. Newest at the bottom.
 | 2026-10-26 | 2 | Golden outline prototype, design routes, chime, E2E | done | `4cd665b` | e2e 24/24 | threejs-choose-skills, procedural-sfx, animation-systems | Fixed linear colour, culled backdrop, bloom threshold |
 | 2026-10-27 | 2 | Critique, guidelines and accessibility fixes, ADR-031, screenshots | done | see git log | check:all green | design:design-critique, web-design-guidelines, design:accessibility-review | |
 | 2026-10-27 | 2 | Whole-branch review fixes: reduced motion from the system on every overlay, render on change with a 30 fps cap and pause off screen, full WebGL disposal and context release, no tone mapping, sheet drags only from its grabber and sizes content to the detent, numbers moved to tokens and seed, delegation wording, swipe actions name their row, loading keeps focus | done | see git log | web 258/258, e2e 25/25 | superpowers:receiving-code-review | Reviewer verdict: ready after fixes; all 8 Important findings fixed |
+| 2026-10-27 | 3 | Demo seed recipe and generator, report engine, copy/report/nudge/settings/protocol config with schemas, demo-only loader | done | `0ec9c8f` | web 303/303 | superpowers:test-driven-development | Non-demo mode never calls the seed loader (tested) |
+| 2026-10-27 | 3 | Day report, lab metrics from confusion matrices, formatters; recipe seed picked to show the afternoon slump | done | `2e7a761` | web 310/310 | | |
+| 2026-10-27 | 3 | Every screen, router with view transitions, shortcuts, toast host, sentinel PiP, states via `?state=` | done | `2fff932` | web 372/372 | frontend-design, impeccable:impeccable, react-view-transitions | |
+| 2026-10-27 | 3 | E2E click-through with axe in both themes, phone pass at 360/390/430, screenshots, spec, plan, ADR-033 | done | `d934c26` | e2e 38/38 | playwright-cli | Visual fixes from reviewing 64 captures |
+| 2026-10-27 | 3 | Whole-branch review: 6 Important and 11 Minor findings; all Important and 10 Minor fixed | done | `dc31b32` | web 375/375, e2e 38/38 | superpowers:requesting-code-review, superpowers:receiving-code-review | Minor 16 (fixed "today" past midnight) left for Phase 8 real data |
 
 Test result format: `web 48/48, ml 31/31` or the failing count with a link to the ruling.
 
@@ -79,6 +84,17 @@ Test result format: `web 48/48, ml 31/31` or the failing count with a link to th
 |---|---|---|---|---|
 | 2026-10-26 | Design directions (`/design`) | `4cd665b` | Night Instrument leads, Ivory as light theme (Decided under Nour's delegation (2026-10-26), ADR-031) | none |
 | 2026-10-27 | Component gallery, overlay, phone shell | Phase 2 merge | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Live mirror (`/`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Today (`/today`) and day report (`/history/:date`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Calibrate (`/calibrate`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Sentinel (`/sentinel`, PiP window) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Nudges (`/nudges`, and the nudge on Live) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | History (`/history`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Settings (`/settings`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Welcome and privacy (`/welcome`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Dataset Studio (`/studio`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Model Lab (`/lab`) | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
+| 2026-10-27 | Demo mode and banner | `dc31b32` | Approved (Decided under Nour's delegation (2026-10-26)) | none |
 
 ## Rulings
 
@@ -107,4 +123,6 @@ Decisions an agent made because Nour had not. Each one is the cheapest reversibl
 | 2026-10-26 | 2 | Default theme follows the system preference (UI_DESIGN section 7), remembered per viewer in localStorage | Night leads by design, but a light-preferring phone gets Ivory | Low | Decided under Nour's delegation (2026-10-26) |
 | 2026-10-27 | 2 | Review minors left for Phase 3 screen work: no keyboard control to change a sheet's detent, the toast mounts its own live region (may be missed by VoiceOver), confusion-matrix cell text contrast near a 50% share is not tested | Each belongs to a real screen in Phase 3, where the sheet, toast and Model Lab get built for real | Low | Decided under Nour's delegation (2026-10-26) |
 | 2026-10-27 | 2 | Delegation is recorded as "Decided under Nour's delegation", without the assistant's name, because the agent manual (section 1.1) forbids that name in docs | Hard rule; the brief asked for the name, the agent manual wins unless Nour says otherwise | Low: wording only | Decided under Nour's delegation (2026-10-26) |
-
+| 2026-10-27 | 3 | Phase 3 rulings in ADR-033: own small router with React view transitions, YAML seed generated from a recipe, match-key playback over the synthetic fixture, generated copy type, real mode opens on Welcome, four phone tabs, monitor corner marks kept on the mirror | Each is the cheapest reversible option | Low | Decided under Nour's delegation (2026-10-26) |
+| 2026-10-27 | 3 | Settings changes stay in memory until IndexedDB storage (Phase 8); the main JS chunk is about 680 KB (Ajv, YAML, Motion, React); Ajv standalone validators (Phase 0 ruling) will also trim it | Prototype scope | Low | Decided under Nour's delegation (2026-10-26) |
+| 2026-10-27 | 3 | Screenshots live in `docs/screens/phase-03/` as PLAN asks (Phase 2 used `docs/screenshots/`); `pnpm --filter web screens` regenerates them from a preview server | PLAN wording | Low | Decided under Nour's delegation (2026-10-26) |
