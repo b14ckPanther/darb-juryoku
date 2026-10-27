@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite-node scripts/vendor.ts && tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "lint": "eslint . && prettier --check .",
@@ -13,7 +13,8 @@
     "tokens": "vite-node scripts/tokens.ts",
     "seed": "vite-node scripts/seed.ts",
     "copy:types": "vite-node scripts/copy-types.ts",
-    "screens": "vite-node scripts/screens.ts"
+    "screens": "vite-node scripts/screens.ts",
+    "vendor": "vite-node scripts/vendor.ts"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.1.1",

@@ -13,7 +13,8 @@
     "num_poses",
     "min_pose_detection_confidence",
     "min_pose_presence_confidence",
-    "min_tracking_confidence"
+    "min_tracking_confidence",
+    "outline"
   ],
   "properties": {
     "wasm_base": {
@@ -60,6 +61,50 @@
       "type": "number",
       "minimum": 0,
       "maximum": 1
+    },
+    "outline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "neck_at",
+        "neck_inset",
+        "temple_up",
+        "temple_inset",
+        "crown_up",
+        "arm_spread"
+      ],
+      "properties": {
+        "neck_at": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "neck_inset": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "temple_up": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "temple_inset": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "crown_up": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "arm_spread": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        }
+      }
     }
   }
 }

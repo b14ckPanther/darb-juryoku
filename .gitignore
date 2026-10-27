@@ -36,3 +36,6 @@ models/**/*.onnx
 
 # Agent local settings
 .claude/settings.local.json
+
+# Self-hosted third-party runtime files (pnpm --filter web vendor)
+apps/web/public/vendor/

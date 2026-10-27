@@ -11,3 +11,12 @@ num_poses: 1
 min_pose_detection_confidence: 0.5
 min_pose_presence_confidence: 0.5
 min_tracking_confidence: 0.5
+# How the golden outline's contour is drawn from landmarks, in units of the distance between the
+# ears (head) or along the ear-to-shoulder line (neck). Fitted to the synthetic figure of Phase 2.
+outline:
+  neck_at: 0.56 # how far down from ear to shoulder the neck sides sit
+  neck_inset: 0.69 # neck sides inward from the ear-to-shoulder line
+  temple_up: 0.88 # temples above the ears
+  temple_inset: 0.07 # temples inward from the ears
+  crown_up: 1.25 # top of the head above the ear midpoint
+  arm_spread: 0.65 # upper arms outward from the shoulders, in half shoulder widths, to the frame edge

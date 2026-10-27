@@ -1,6 +1,6 @@
 import type { DataSnapshot } from './types';
 
-const localDate = (now: Date) =>
+export const localDate = (now: Date) =>
   `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
 /** Real mode until the session engine stores minutes (Phase 4 and 8): nothing recorded yet. */

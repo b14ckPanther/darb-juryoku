@@ -5,7 +5,12 @@ const rgb = ([r, g, b]: [number, number, number]) =>
   `rgb(${Math.round(r * 255)} ${Math.round(g * 255)} ${Math.round(b * 255)})`;
 
 /** The 2D fallback: same outline, rim and warmth, with a canvas shadow standing in for bloom. `dashOffset` is in px. */
-export function drawCanvasFrame(ctx: CanvasRenderingContext2D, frame: Frame, dashOffset: number) {
+export function drawCanvasFrame(
+  ctx: CanvasRenderingContext2D,
+  frame: Frame,
+  dashOffset: number,
+  transparent = false,
+) {
   const {
     outline_width_px,
     outline_opacity,
@@ -17,7 +22,9 @@ export function drawCanvasFrame(ctx: CanvasRenderingContext2D, frame: Frame, das
   const dpr = ctx.canvas.width / frame.width;
   ctx.save();
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  paintBackdrop(ctx, frame);
+  // Over live video the canvas stays clear; the darkened video shows through.
+  if (transparent) ctx.clearRect(0, 0, frame.width, frame.height);
+  else paintBackdrop(ctx, frame);
 
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';

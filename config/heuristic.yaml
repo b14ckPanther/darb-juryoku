@@ -3,13 +3,15 @@
 # "just at the threshold". Probabilities are a softmax of the scores with upright at 0.
 # Validated against packages/schemas/config/heuristic.schema.json.
 temperature: 0.5
+# Starting values for a front camera; Nour tunes them at the desk (docs/checklists/phase-04-live.md).
 classes:
   forward_head:
-    - { feature: head_drop_delta, op: lt, threshold: -0.12, scale: 0.08 }
-    - { feature: neck_tilt_deg_delta, op: abs_gt, threshold: 9, scale: 5 }
+    - { feature: head_drop_delta, op: lt, threshold: -0.12, scale: 0.06 } # head sinks toward the shoulders
+    - { feature: shoulder_width_delta, op: gt, threshold: 0.12, scale: 0.08 } # leaning in to the screen
+    - { feature: neck_tilt_deg_delta, op: abs_gt, threshold: 12, scale: 6 }
   slouch:
-    - { feature: shoulder_hunch_delta, op: lt, threshold: -0.1, scale: 0.08 }
-    - { feature: shoulder_width_delta, op: gt, threshold: 0.12, scale: 0.08 }
+    - { feature: shoulder_hunch_delta, op: lt, threshold: -0.15, scale: 0.1 } # shoulders ride up to the ears
+    - { feature: shoulder_width_delta, op: lt, threshold: -0.08, scale: 0.06 } # shoulders roll forward
   lean_side:
     - { feature: shoulder_roll_deg_delta, op: abs_gt, threshold: 7, scale: 4 }
     - { feature: head_forward_delta, op: abs_gt, threshold: 0.18, scale: 0.1 }

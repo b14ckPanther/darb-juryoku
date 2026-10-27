@@ -7,6 +7,7 @@ import {
   rimIntensity,
   segmentWarmth,
   type Point,
+  type Pose,
   type PoseFixture,
 } from './geometry';
 
@@ -41,11 +42,18 @@ export interface Frame {
 export const toRgb = (h: string): [number, number, number] =>
   [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255) as [number, number, number];
 
-export function buildFrame(fixture: PoseFixture, m: number, width: number, height: number): Frame {
+/** One frame of the overlay. `body` replaces the fixture's mixed pose with a live one. */
+export function buildFrame(
+  fixture: PoseFixture,
+  m: number,
+  width: number,
+  height: number,
+  livePose?: Pose,
+): Frame {
   const { drift_warm_from, match_moment_from } = designTokens.glow;
   const ideal = catmullRom(contour(fixture, fixture.ideal, width, height), SAMPLES_PER_SPAN);
   const body = catmullRom(
-    contour(fixture, mixPose(fixture, 1 - m), width, height),
+    contour(fixture, livePose ?? mixPose(fixture, 1 - m), width, height),
     SAMPLES_PER_SPAN,
   );
   const warmth = segmentWarmth(fixture, m, drift_warm_from);

@@ -59,6 +59,14 @@ export interface PoseConfig {
   min_pose_detection_confidence: number;
   min_pose_presence_confidence: number;
   min_tracking_confidence: number;
+  outline: {
+    neck_at: number;
+    neck_inset: number;
+    temple_up: number;
+    temple_inset: number;
+    crown_up: number;
+    arm_spread: number;
+  };
 }
 
 export const parseFeaturesConfig = makeConfigParser<FeaturesConfig>(featuresSchema, (c) =>

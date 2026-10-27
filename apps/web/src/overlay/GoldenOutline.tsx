@@ -2,7 +2,7 @@ import { useReducedMotion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { designTokens } from '../design';
 import { drawCanvasFrame } from './canvas-renderer';
-import type { PoseFixture } from './geometry';
+import type { Pose, PoseFixture } from './geometry';
 import { buildFrame, type Frame } from './scene';
 import { WebGLOverlay, webglAvailable } from './webgl-renderer';
 
@@ -19,6 +19,11 @@ interface GoldenOutlineProps {
   /** Keep the drawn buffer readable (pixel tests and screenshots only; it costs GPU time). */
   preserveDrawingBuffer?: boolean;
   className?: string;
+  /**
+   * Live poses (calibrated ideal and the body now) instead of the fixture's. Drawn with the 2D
+   * renderer on a clear canvas, over the darkened camera video behind it.
+   */
+  live?: { ideal: Pose; body: Pose } | null;
 }
 
 const AT_REST = 0.001;
@@ -39,11 +44,15 @@ export function GoldenOutline({
   reducedMotion,
   preserveDrawingBuffer = false,
   className,
+  live = null,
 }: GoldenOutlineProps) {
   const systemReduced = useReducedMotion();
   const reduced = reducedMotion ?? Boolean(systemReduced);
   const host = useRef<HTMLDivElement>(null);
   const target = useRef(match);
+  const liveRef = useRef(live);
+  const liveVersion = useRef(0);
+  const transparent = live !== null;
   const [used, setUsed] = useState<'webgl' | 'canvas' | null>(null);
   const [settled, setSettled] = useState<number | null>(null);
 
@@ -59,7 +68,8 @@ export function GoldenOutline({
     canvas.setAttribute('aria-hidden', 'true');
     el.replaceChildren(canvas);
 
-    const wantGl = renderer === 'webgl' || (renderer === 'auto' && webglAvailable());
+    const wantGl =
+      !transparent && (renderer === 'webgl' || (renderer === 'auto' && webglAvailable()));
     let gl: WebGLOverlay | null = null;
     if (wantGl) {
       try {
@@ -81,22 +91,22 @@ export function GoldenOutline({
     let raf = 0;
     let onScreen = true;
     let reported = Number.NaN;
-    let built: { m: number; w: number; h: number; dpr: number } | null = null;
+    let built: { m: number; w: number; h: number; dpr: number; v: number } | null = null;
     let frame: Frame | null = null;
 
     const schedule = () => {
       if (!raf && onScreen && !doc.hidden) raf = view.requestAnimationFrame(tick);
     };
 
-    function tick(now: number) {
+    function tick(t: number) {
       raf = 0;
-      if (now - lastDraw < minFrameMs) {
+      if (t - lastDraw < minFrameMs) {
         schedule();
         return;
       }
-      const dt = Math.min(0.05, (now - last) / 1000);
-      last = now;
-      lastDraw = now;
+      const dt = Math.min(0.05, (t - last) / 1000);
+      last = t;
+      lastDraw = t;
       if (reduced) {
         m = target.current;
         velocity = 0;
@@ -109,8 +119,12 @@ export function GoldenOutline({
       const dpr = Math.min(glow.max_dpr, view.devicePixelRatio || 1);
       const shown = Math.min(1, Math.max(0, m));
       const resized = !built || built.w !== w || built.h !== h || built.dpr !== dpr;
-      if (resized || Math.abs((built?.m ?? -1) - shown) > AT_REST / 10) {
-        frame = buildFrame(fixture, shown, w, h);
+      const now = liveRef.current;
+      const v = liveVersion.current;
+      if (resized || built?.v !== v || Math.abs((built?.m ?? -1) - shown) > AT_REST / 10) {
+        frame = now
+          ? buildFrame({ ...fixture, ideal: now.ideal, drift: now.body }, shown, w, h, now.body)
+          : buildFrame(fixture, shown, w, h);
         if (gl) {
           gl.resize(w, h, dpr);
           gl.setFrame(frame, reduced);
@@ -118,11 +132,11 @@ export function GoldenOutline({
           canvas.width = Math.round(w * dpr);
           canvas.height = Math.round(h * dpr);
         }
-        built = { m: shown, w, h, dpr };
+        built = { m: shown, w, h, dpr, v };
       }
-      if (gl) gl.draw(now, reduced);
+      if (gl) gl.draw(t, reduced);
       else if (ctx && frame)
-        drawCanvasFrame(ctx, frame, reduced ? 0 : (now / 1000) * glow.dash_speed_px_s);
+        drawCanvasFrame(ctx, frame, reduced ? 0 : (t / 1000) * glow.dash_speed_px_s, transparent);
 
       const atRest = Math.abs(m - target.current) < AT_REST && Math.abs(velocity) < AT_REST;
       if (atRest && reported !== target.current) {
@@ -156,7 +170,13 @@ export function GoldenOutline({
       el.removeEventListener('jr-wake', wake);
       gl?.dispose();
     };
-  }, [fixture, renderer, reduced, preserveDrawingBuffer]);
+  }, [fixture, renderer, reduced, preserveDrawingBuffer, transparent]);
+
+  useEffect(() => {
+    liveRef.current = live;
+    liveVersion.current += 1;
+    host.current?.dispatchEvent(new Event('jr-wake'));
+  }, [live]);
 
   useEffect(() => {
     target.current = match;
