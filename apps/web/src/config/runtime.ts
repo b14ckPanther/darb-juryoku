@@ -41,6 +41,7 @@ export interface SettingsConfig {
   budokai_enabled_default: boolean;
   shortcuts: { pause: string; calibrate: string; sentinel: string; help: string };
   sentinel_window: { width: number; height: number };
+  toast_seconds: number;
 }
 
 export interface ProtocolConfig {

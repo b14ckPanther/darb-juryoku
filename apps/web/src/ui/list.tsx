@@ -100,18 +100,27 @@ interface SwipeRowProps {
   label: string;
   value?: string;
   actions: SwipeAction[];
+  /** Makes the row itself a button (for example, open the day). It comes before the actions. */
+  onOpen?: () => void;
 }
 
 /**
  * A row that slides left to reveal actions. The actions are real buttons after the row in the tab
  * order, so keyboard and screen reader users reach them without swiping; focusing one opens the row.
  */
-export function SwipeRow({ label, value, actions }: SwipeRowProps) {
+export function SwipeRow({ label, value, actions, onOpen }: SwipeRowProps) {
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const { reveal_px, commit_fraction, elastic, projection_s } = designTokens.motion.swipe;
   const width = reveal_px * actions.length;
   const settle = (to: number) => animate(x, to, springTransition('snappy', reduce));
+
+  const body = (
+    <>
+      <span className="min-w-0 flex-1 truncate text-body">{label}</span>
+      {value && <span className="num text-body text-text-secondary">{value}</span>}
+    </>
+  );
 
   const onDragEnd = (_e: unknown, info: PanInfo) => {
     settle(swipeSettle(x.get(), info.velocity.x, width, commit_fraction, projection_s));
@@ -128,7 +137,35 @@ export function SwipeRow({ label, value, actions }: SwipeRowProps) {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) settle(0);
       }}
     >
-      <div className="absolute inset-y-0 right-0 flex" style={{ width }}>
+      <motion.div
+        drag="x"
+        dragDirectionLock
+        dragConstraints={{ left: -width, right: 0 }}
+        dragElastic={elastic}
+        onDragEnd={onDragEnd}
+        style={{ x }}
+        className="relative z-[1] bg-surface-raised touch-pan-y select-none"
+      >
+        {onOpen ? (
+          <button
+            type="button"
+            onClick={onOpen}
+            className="pressable flex min-h-(--touch-min) w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-surface-overlay"
+          >
+            {body}
+            <ChevronRight
+              aria-hidden
+              size={18}
+              strokeWidth={ICON_STROKE}
+              className="shrink-0 text-text-secondary"
+            />
+          </button>
+        ) : (
+          <div className="flex min-h-(--touch-min) items-center gap-3 px-4 py-2.5">{body}</div>
+        )}
+      </motion.div>
+      {/* The actions sit after the row in the DOM so the row comes first in the tab order. */}
+      <div className="absolute inset-y-0 right-0 z-0 flex" style={{ width }}>
         {actions.map(({ label: actionLabel, accessibleName, icon: Icon, tone, onPress }) => (
           <button
             key={actionLabel}
@@ -149,18 +186,6 @@ export function SwipeRow({ label, value, actions }: SwipeRowProps) {
           </button>
         ))}
       </div>
-      <motion.div
-        drag="x"
-        dragDirectionLock
-        dragConstraints={{ left: -width, right: 0 }}
-        dragElastic={elastic}
-        onDragEnd={onDragEnd}
-        style={{ x }}
-        className="relative flex min-h-(--touch-min) touch-pan-y items-center select-none gap-3 bg-surface-raised px-4 py-2.5"
-      >
-        <span className="min-w-0 flex-1 truncate text-body">{label}</span>
-        {value && <span className="num text-body text-text-secondary">{value}</span>}
-      </motion.div>
     </li>
   );
 }

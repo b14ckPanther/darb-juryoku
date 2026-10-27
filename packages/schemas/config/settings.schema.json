@@ -11,13 +11,18 @@
     "calibration_hold_seconds",
     "budokai_enabled_default",
     "shortcuts",
-    "sentinel_window"
+    "sentinel_window",
+    "toast_seconds"
   ],
   "properties": {
     "sensitivity": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["min", "max", "default"],
+      "required": [
+        "min",
+        "max",
+        "default"
+      ],
       "properties": {
         "min": {
           "type": "integer",
@@ -61,7 +66,12 @@
     "shortcuts": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["pause", "calibrate", "sentinel", "help"],
+      "required": [
+        "pause",
+        "calibrate",
+        "sentinel",
+        "help"
+      ],
       "properties": {
         "pause": {
           "type": "string",
@@ -88,7 +98,10 @@
     "sentinel_window": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["width", "height"],
+      "required": [
+        "width",
+        "height"
+      ],
       "properties": {
         "width": {
           "type": "integer",
@@ -99,6 +112,10 @@
           "minimum": 90
         }
       }
+    },
+    "toast_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
     }
   }
 }

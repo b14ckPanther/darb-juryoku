@@ -9,3 +9,5 @@ budokai_enabled_default: false
 shortcuts: { pause: ' ', calibrate: c, sentinel: p, help: '?' }
 # The Document Picture-in-Picture sentinel window, in CSS pixels.
 sentinel_window: { width: 240, height: 180 }
+# How long a confirmation toast stays, in seconds.
+toast_seconds: 3

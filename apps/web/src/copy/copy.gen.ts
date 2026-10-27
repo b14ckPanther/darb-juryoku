@@ -89,6 +89,7 @@ export interface Copy {
     error_title: string;
     error_body: string;
     retry: string;
+    error_preview: string;
     not_found_title: string;
     not_found_body: string;
     not_found_action: string;
@@ -318,6 +319,7 @@ export interface Copy {
       external: string;
     };
     start: string;
+    demo_speed: string;
     stop: string;
     recording: string;
     label_now: string;
@@ -458,6 +460,7 @@ export interface Copy {
     delete_body: string;
     delete_confirm: string;
     delete_demo: string;
+    deleted: string;
     cancel: string;
     shortcuts: string;
   };

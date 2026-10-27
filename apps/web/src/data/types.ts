@@ -37,6 +37,8 @@ export interface Playback {
   match: number[];
   state_from: { upright: number; drifting: number };
   drift_class: Exclude<PostureClass, 'upright'>;
+  nudge_after_seconds: number;
+  quiet_after_nudge_seconds: number;
 }
 
 /** Calibrations, models and recordings. In demo mode from config/seed/demo/library.yaml. */
@@ -50,6 +52,7 @@ export interface Library {
   recordings: Recording[];
   playback: Playback;
   studio_speed: number;
+  studio_kb_per_second: number;
 }
 
 /** Everything the screens read. Demo mode fills it from the seed; real mode starts empty. */

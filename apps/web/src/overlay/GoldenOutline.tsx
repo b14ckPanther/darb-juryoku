@@ -50,7 +50,11 @@ export function GoldenOutline({
   useEffect(() => {
     const el = host.current;
     if (!el) return;
-    const canvas = document.createElement('canvas');
+    // The overlay may live in the sentinel's Picture-in-Picture window: use that window's document,
+    // frame clock and visibility, not the opener's (which is hidden while Nour codes).
+    const doc = el.ownerDocument;
+    const view = doc.defaultView ?? window;
+    const canvas = doc.createElement('canvas');
     canvas.className = 'block size-full';
     canvas.setAttribute('aria-hidden', 'true');
     el.replaceChildren(canvas);
@@ -81,7 +85,7 @@ export function GoldenOutline({
     let frame: Frame | null = null;
 
     const schedule = () => {
-      if (!raf && onScreen && !document.hidden) raf = requestAnimationFrame(tick);
+      if (!raf && onScreen && !doc.hidden) raf = view.requestAnimationFrame(tick);
     };
 
     function tick(now: number) {
@@ -102,7 +106,7 @@ export function GoldenOutline({
       }
       const w = el?.clientWidth || 1;
       const h = el?.clientHeight || 1;
-      const dpr = Math.min(glow.max_dpr, window.devicePixelRatio || 1);
+      const dpr = Math.min(glow.max_dpr, view.devicePixelRatio || 1);
       const shown = Math.min(1, Math.max(0, m));
       const resized = !built || built.w !== w || built.h !== h || built.dpr !== dpr;
       if (resized || Math.abs((built?.m ?? -1) - shown) > AT_REST / 10) {
@@ -139,16 +143,16 @@ export function GoldenOutline({
     });
     io.observe(el);
     const onVisibility = () => {
-      if (!document.hidden) wake();
+      if (!doc.hidden) wake();
     };
-    document.addEventListener('visibilitychange', onVisibility);
+    doc.addEventListener('visibilitychange', onVisibility);
     el.addEventListener('jr-wake', wake);
     wake();
 
     return () => {
-      cancelAnimationFrame(raf);
+      view.cancelAnimationFrame(raf);
       io.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
+      doc.removeEventListener('visibilitychange', onVisibility);
       el.removeEventListener('jr-wake', wake);
       gl?.dispose();
     };

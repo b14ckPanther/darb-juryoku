@@ -39,3 +39,7 @@ export const weekdayName = (date: string, locale: string) =>
   new Intl.DateTimeFormat(locale, { weekday: 'long', timeZone: 'UTC' }).format(
     new Date(`${date}T00:00:00Z`),
   );
+
+/** The clock time `minutes` from now, for "Snoozed until 15:42". */
+export const clockAfter = (minutes: number, now: Date = new Date()) =>
+  clock(now.getHours() * 60 + now.getMinutes() + minutes);

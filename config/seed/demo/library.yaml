@@ -125,7 +125,13 @@ playback:
     [0.96, 0.96, 0.93, 0.86, 0.72, 0.55, 0.4, 0.31, 0.29, 0.33, 0.5, 0.74, 0.9, 0.97, 0.97, 0.96]
   state_from: { upright: 0.75, drifting: 0.45 }
   drift_class: forward_head
+  # The demo compresses time: this much drift in the loop stands in for nudges.yaml's
+  # notify_after_minutes, and the quiet spell after an answer stands in for the cooldown.
+  nudge_after_seconds: 5
+  quiet_after_nudge_seconds: 40
 
 # Dataset Studio in the demo runs the guided protocol this many times faster than real time, and
 # says so on screen. Real recordings always run at real time.
 studio_speed: 12
+# Size of a demo recording's landmark file per recorded second.
+studio_kb_per_second: 1.37

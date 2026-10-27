@@ -91,6 +91,7 @@ states:
   error_title: This page could not load
   error_body: 'The demo data did not load: {detail}'
   retry: Try again
+  error_preview: 'config/seed/demo/sessions.yaml: a preview of a failed load'
   not_found_title: This page does not exist
   not_found_body: Check the address, or go back to the live mirror.
   not_found_action: Open Live
@@ -313,6 +314,7 @@ studio:
     built_in: Laptop camera
     external: External camera
   start: Start recording
+  demo_speed: In the demo the protocol runs {n} times faster than real time.
   stop: Stop
   recording: Recording
   label_now: Label now
@@ -448,5 +450,6 @@ settings:
   delete_body: Sessions, minutes, calibrations and recordings are removed from this device. This cannot be undone.
   delete_confirm: Delete everything
   delete_demo: Demo data restored to its first state
+  deleted: All your data was deleted
   cancel: Cancel
   shortcuts: Keyboard shortcuts

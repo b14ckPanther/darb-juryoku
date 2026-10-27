@@ -67,8 +67,9 @@ gates: { macro_f1: 0.8, slouch_recall: 0.8, beats_heuristic: 0.05, wasm_p95_ms: 
 heuristic: { confusion: [[1, 2, 3], [4, 5, 6]] }
 models: []
 recordings: []
-playback: { seconds_per_key: 1, match: [1, 0], state_from: { upright: 0.7, drifting: 0.4 }, drift_class: slouch }
+playback: { seconds_per_key: 1, match: [1, 0], state_from: { upright: 0.7, drifting: 0.4 }, drift_class: slouch, nudge_after_seconds: 1, quiet_after_nudge_seconds: 1 }
 studio_speed: 2
+studio_kb_per_second: 1
 `;
     expect(() => parseLibrary(bad, 'library.yaml')).toThrow(/heuristic\.confusion must be 2 by 2/);
   });

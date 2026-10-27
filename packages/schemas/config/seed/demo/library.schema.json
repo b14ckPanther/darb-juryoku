@@ -13,7 +13,8 @@
     "models",
     "recordings",
     "playback",
-    "studio_speed"
+    "studio_speed",
+    "studio_kb_per_second"
   ],
   "properties": {
     "calibrations": {
@@ -21,7 +22,13 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "name", "camera", "created", "active"],
+        "required": [
+          "id",
+          "name",
+          "camera",
+          "created",
+          "active"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -57,13 +64,23 @@
       "type": "array",
       "minItems": 2,
       "items": {
-        "enum": ["upright", "slouch", "forward_head", "lean_side"]
+        "enum": [
+          "upright",
+          "slouch",
+          "forward_head",
+          "lean_side"
+        ]
       }
     },
     "gates": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["macro_f1", "slouch_recall", "beats_heuristic", "wasm_p95_ms"],
+      "required": [
+        "macro_f1",
+        "slouch_recall",
+        "beats_heuristic",
+        "wasm_p95_ms"
+      ],
       "properties": {
         "macro_f1": {
           "type": "number",
@@ -89,7 +106,9 @@
     "heuristic": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["confusion"],
+      "required": [
+        "confusion"
+      ],
       "properties": {
         "confusion": {
           "type": "array",
@@ -159,7 +178,11 @@
           "latency_ms": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["runs", "webgpu", "wasm"],
+            "required": [
+              "runs",
+              "webgpu",
+              "wasm"
+            ],
             "properties": {
               "runs": {
                 "type": "integer",
@@ -168,7 +191,11 @@
               "webgpu": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["p50", "p95", "p99"],
+                "required": [
+                  "p50",
+                  "p95",
+                  "p99"
+                ],
                 "properties": {
                   "p50": {
                     "type": "number",
@@ -187,7 +214,11 @@
               "wasm": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["p50", "p95", "p99"],
+                "required": [
+                  "p50",
+                  "p95",
+                  "p99"
+                ],
                 "properties": {
                   "p50": {
                     "type": "number",
@@ -213,7 +244,16 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "date", "protocol", "seconds", "size_kb", "lighting", "chair", "camera"],
+        "required": [
+          "id",
+          "date",
+          "protocol",
+          "seconds",
+          "size_kb",
+          "lighting",
+          "chair",
+          "camera"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -224,7 +264,10 @@
             "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
           },
           "protocol": {
-            "enum": ["guided", "passive"]
+            "enum": [
+              "guided",
+              "passive"
+            ]
           },
           "seconds": {
             "type": "integer",
@@ -252,7 +295,14 @@
     "playback": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["seconds_per_key", "match", "state_from", "drift_class"],
+      "required": [
+        "seconds_per_key",
+        "match",
+        "state_from",
+        "drift_class",
+        "nudge_after_seconds",
+        "quiet_after_nudge_seconds"
+      ],
       "properties": {
         "seconds_per_key": {
           "type": "number",
@@ -270,7 +320,10 @@
         "state_from": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["upright", "drifting"],
+          "required": [
+            "upright",
+            "drifting"
+          ],
           "properties": {
             "upright": {
               "type": "number",
@@ -285,13 +338,29 @@
           }
         },
         "drift_class": {
-          "enum": ["slouch", "forward_head", "lean_side"]
+          "enum": [
+            "slouch",
+            "forward_head",
+            "lean_side"
+          ]
+        },
+        "nudge_after_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "quiet_after_nudge_seconds": {
+          "type": "number",
+          "minimum": 0
         }
       }
     },
     "studio_speed": {
       "type": "number",
       "minimum": 1
+    },
+    "studio_kb_per_second": {
+      "type": "number",
+      "exclusiveMinimum": 0
     }
   }
 }

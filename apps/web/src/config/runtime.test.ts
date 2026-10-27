@@ -37,6 +37,7 @@ calibration_hold_seconds: 3
 budokai_enabled_default: false
 shortcuts: { pause: ' ', calibrate: c, sentinel: p, help: '?' }
 sentinel_window: { width: 240, height: 180 }
+toast_seconds: 3
 `;
     expect(() => parseSettingsConfig(yaml, 'settings.yaml')).toThrow(/sensitivity\.default/);
   });

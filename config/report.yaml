@@ -9,7 +9,7 @@ streak_goal: 0.75
 # Drift after this hour counts as afternoon drift in the rules below.
 afternoon_from_hour: 15
 heatmap_hours: { from: 9, to: 20 }
-history_days: { week: 7, month: 21 }
+history_days: { week: 7, month: 30 }
 # The one plain sentence under Today's numbers: the first rule whose conditions all hold.
 # Metrics: good_share (0..1), delta_points (against the average), afternoon_drift_share (0..1),
 # longest_drift_minutes. Slots: {afternoon_from}, {worst_hour}, {good_percent}, {delta_points}.
