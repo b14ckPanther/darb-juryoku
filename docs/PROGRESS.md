@@ -2,8 +2,8 @@
 
 The single source of "where are we". Update it in the same commit as the work it records. If this file and `git log` disagree, `git log` wins; fix this file first.
 
-**Current phase:** 2 done (review and merge), Phase 3 next and not started
-**Current branch:** `phase/02-design-system` (local only: no remote, nothing pushed)
+**Current phase:** 2 done and merged into local `main` (`51a7542`); Phase 3 next, not started
+**Current branch:** `main` (local only: no remote, nothing pushed)
 **Last task:** Phase 2 design system built, critiqued and screenshotted
 **Blockers:** none for Phases 2 to 6. Outward actions still need Nour: creating the GitHub repo, pushing, deploying, DNS
 **Next step:** Phase 3 (clickable prototype on seed data)
@@ -16,7 +16,7 @@ The single source of "where are we". Update it in the same commit as the work it
 |---|---|---|---|---|---|---|---|---|
 | 0 | Repo bootstrap, CI, conventions | 5% | done (merged locally, `c430c19`) | `phase/00-bootstrap` | `8684454..33569d7` | web 9/9, e2e 3/3, schemas 2/2, ml 5/5, bats 18/18 | superpowers:test-driven-development, superpowers:requesting-code-review, superpowers:verification-before-completion, frontend-design (Phase 2 proposal) | Decided under Nour's delegation (2026-10-26): merge |
 | 1 | Confirm the spec with Nour | 3% | done (merged locally, `40422ac`) | `phase/01-spec` | see task log | n/a (docs only); check:all green | superpowers:brainstorming, writing-guidelines, design:ux-copy | Decided under Nour's delegation (2026-10-26) |
-| 2 | Design system | 8% | done | `phase/02-design-system` | `013fff1..HEAD` | web 258/258, e2e 25/25, schemas 5/5, ml 5/5, bats 18/18, audio check | frontend-design, design-taste-frontend, impeccable:impeccable, design:design-system, dataviz, animation-systems, threejs-choose-skills, procedural-sfx, writing-guidelines, design:design-critique, web-design-guidelines, design:accessibility-review, superpowers:test-driven-development, superpowers:systematic-debugging, superpowers:requesting-code-review | Decided under Nour's delegation (2026-10-26) (direction and gallery) |
+| 2 | Design system | 8% | done (merged locally, `51a7542`) | `phase/02-design-system` | `013fff1..HEAD` | web 258/258, e2e 25/25, schemas 5/5, ml 5/5, bats 18/18, audio check | frontend-design, design-taste-frontend, impeccable:impeccable, design:design-system, dataviz, animation-systems, threejs-choose-skills, procedural-sfx, writing-guidelines, design:design-critique, web-design-guidelines, design:accessibility-review, superpowers:test-driven-development, superpowers:systematic-debugging, superpowers:requesting-code-review | Decided under Nour's delegation (2026-10-26) (direction and gallery) |
 | 3 | Clickable prototype on seed data | 12% | todo | `phase/03-prototype` | | | | |
 | 4 | Live pose pipeline and heuristic | 10% | todo | `phase/04-pose-pipeline` | | | | |
 | 5 | Dataset Studio and versioned dataset | 8% | todo | `phase/05-dataset` | | | | |
