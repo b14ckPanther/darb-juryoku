@@ -15,7 +15,7 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledTimes(2);
   });
 
-  it('blocks presses and reports busy while loading', async () => {
+  it('blocks presses and reports busy while loading, without dropping focus', async () => {
     const onClick = vi.fn();
     render(
       <Button loading onClick={onClick}>
@@ -23,9 +23,12 @@ describe('Button', () => {
       </Button>,
     );
     const button = screen.getByRole('button', { name: 'Saving' });
-    expect(button).toBeDisabled();
+    expect(button).toHaveAttribute('aria-disabled', 'true');
     expect(button).toHaveAttribute('aria-busy', 'true');
+    button.focus();
+    expect(button).toHaveFocus();
     await userEvent.click(button);
+    await userEvent.keyboard('{Enter}');
     expect(onClick).not.toHaveBeenCalled();
   });
 

@@ -10,7 +10,7 @@ interface Stats {
 }
 
 async function open(page: Page, renderer: string, m: number, motion: 'full' | 'reduced') {
-  await page.goto(`/design/overlay?m=${m}&renderer=${renderer}&motion=${motion}`);
+  await page.goto(`/design/overlay?m=${m}&renderer=${renderer}&motion=${motion}&capture=1`);
   await expect(page.locator(`[data-settled-match="${m}"]`)).toBeVisible();
   await expect(page.locator('[data-renderer]')).toHaveAttribute('data-renderer', renderer);
 }

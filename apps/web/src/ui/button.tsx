@@ -1,9 +1,10 @@
 import { LoaderCircle, type LucideIcon } from 'lucide-react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { designTokens } from '../design';
 import { cx } from './cx';
 
-/** One stroke weight for every icon in the app (Lucide, ADR-030). */
-export const ICON_STROKE = 1.75;
+/** One stroke weight for every icon in the app (Lucide, ADR-030), from tokens. */
+export const ICON_STROKE = designTokens.icons.stroke;
 
 type Variant = 'primary' | 'quiet' | 'destructive';
 
@@ -31,12 +32,14 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  const inactive = disabled || loading;
+  // Loading uses aria-disabled, not disabled, so keyboard focus stays on the button.
   return (
     <button
       type="button"
       {...rest}
-      disabled={inactive}
+      onClick={loading ? undefined : rest.onClick}
+      disabled={disabled}
+      aria-disabled={loading || undefined}
       aria-busy={loading || undefined}
       className={cx(
         'pressable inline-flex min-h-(--touch-min) items-center justify-center gap-2 rounded-control px-5',

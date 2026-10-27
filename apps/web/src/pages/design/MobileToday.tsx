@@ -17,6 +17,7 @@ import { Banner } from '../../ui/feedback';
 import { GroupedList, ListRow, SwipeRow } from '../../ui/list';
 import { LargeTitle, TabBar } from '../../ui/mobile';
 import { Sheet } from '../../ui/sheet';
+import { fillTemplate } from '../../ui/format';
 import { Stat } from '../../ui/stat';
 
 /** Today as the installed phone app: large title, grouped content, swipe rows, a sheet and the tab bar. */
@@ -71,12 +72,20 @@ export default function MobileToday() {
                 actions={[
                   {
                     label: gallery.swipe_actions.export,
+                    accessibleName: fillTemplate(gallery.swipe_action_name, {
+                      action: gallery.swipe_actions.export,
+                      row: r.label,
+                    }),
                     icon: Download,
                     tone: 'neutral',
                     onPress: noop,
                   },
                   {
                     label: gallery.swipe_actions.delete,
+                    accessibleName: fillTemplate(gallery.swipe_action_name, {
+                      action: gallery.swipe_actions.delete,
+                      row: r.label,
+                    }),
                     icon: Trash2,
                     tone: 'danger',
                     onPress: noop,

@@ -2,12 +2,13 @@ import {
   AnimatePresence,
   animate,
   motion,
+  useDragControls,
   useMotionValue,
   useReducedMotion,
   useTransform,
   type PanInfo,
 } from 'motion/react';
-import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { designTokens, springTransition } from '../design';
 import { nearestDetent, sheetShouldDismiss } from './gestures';
@@ -23,8 +24,9 @@ const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
 
 /**
- * A bottom sheet with detents from tokens. Drag the grabber down past the dismiss threshold (or flick)
- * to close; Escape and the scrim close it too. Focus moves in, stays in, and returns to the opener.
+ * A bottom sheet with detents from tokens. Drag the grabber or title down past the dismiss threshold
+ * (or flick) to close; the content scrolls normally. Escape and the scrim close it too. Focus moves in,
+ * stays in, and returns to the opener; the page behind is inert while it is open.
  */
 export function Sheet({ open, onClose, title, children }: SheetProps) {
   return createPortal(
@@ -43,20 +45,43 @@ function SheetPanel({ onClose, title, children }: Omit<SheetProps, 'open'>) {
   const reduce = useReducedMotion();
   const titleId = useId();
   const panel = useRef<HTMLDivElement>(null);
-  const { detents, dismiss_fraction, dismiss_velocity_px_s } = designTokens.motion.sheet;
+  const controls = useDragControls();
+  const { detents, dismiss_fraction, dismiss_velocity_px_s, elastic_top, elastic_bottom } =
+    designTokens.motion.sheet;
   const tallest = Math.max(...detents);
-  const viewport = typeof window === 'undefined' ? 800 : window.innerHeight;
+  const lowest = Math.min(...detents);
+  const [viewport, setViewport] = useState(() => window.innerHeight);
+  const detent = useRef(lowest);
   const height = tallest * viewport;
-  const offsetFor = (detent: number) => (tallest - detent) * viewport;
-  const y = useMotionValue(offsetFor(Math.min(...detents)));
-  const scrim = useTransform(y, [offsetFor(Math.min(...detents)), height], [1, 0]);
+  const offsetFor = (d: number) => (tallest - d) * viewport;
+  const y = useMotionValue(height);
+  const scrim = useTransform(y, [offsetFor(lowest), height], [1, 0]);
 
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null;
     const first = panel.current?.querySelector<HTMLElement>(FOCUSABLE);
     (first ?? panel.current)?.focus();
-    return () => opener?.focus();
+    const root = document.getElementById('root');
+    root?.setAttribute('inert', '');
+    const onResize = () => setViewport(window.innerHeight);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      root?.removeAttribute('inert');
+      opener?.focus();
+    };
   }, []);
+
+  // Rest on the current detent: on open, and again whenever the viewport height changes
+  // (rotation, the mobile address bar).
+  useEffect(() => {
+    const controlsAnim = animate(
+      y,
+      (tallest - detent.current) * viewport,
+      springTransition('snappy', reduce),
+    );
+    return () => controlsAnim.stop();
+  }, [viewport, tallest, reduce, y]);
 
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -79,7 +104,6 @@ function SheetPanel({ onClose, title, children }: Omit<SheetProps, 'open'>) {
   };
 
   const onDragEnd = (_e: unknown, info: PanInfo) => {
-    const lowest = Math.min(...detents);
     const belowLowest = y.get() - offsetFor(lowest);
     const thresholds = { dismiss_fraction, dismiss_velocity_px_s };
     if (sheetShouldDismiss(belowLowest, info.velocity.y, lowest * viewport, thresholds)) {
@@ -87,8 +111,8 @@ function SheetPanel({ onClose, title, children }: Omit<SheetProps, 'open'>) {
       return;
     }
     const detentNow = tallest - y.get() / viewport;
-    const target = nearestDetent(detentNow, info.velocity.y, detents, dismiss_velocity_px_s);
-    animate(y, offsetFor(target), springTransition('snappy', reduce));
+    detent.current = nearestDetent(detentNow, info.velocity.y, detents, dismiss_velocity_px_s);
+    animate(y, offsetFor(detent.current), springTransition('snappy', reduce));
   };
 
   return (
@@ -114,28 +138,34 @@ function SheetPanel({ onClose, title, children }: Omit<SheetProps, 'open'>) {
         onKeyDown={onKeyDown}
         className="material absolute inset-x-0 bottom-0 mx-auto flex max-w-xl flex-col rounded-t-sheet shadow-sheet outline-none"
         style={{ y, height }}
-        initial={{ y: height }}
-        animate={{ y: offsetFor(Math.min(...detents)) }}
         exit={{ y: height }}
         transition={springTransition('snappy', reduce)}
         drag="y"
+        dragControls={controls}
+        dragListener={false}
         dragConstraints={{ top: 0, bottom: height }}
-        dragElastic={{ top: 0.04, bottom: 0.4 }}
+        dragElastic={{ top: elastic_top, bottom: elastic_bottom }}
         dragMomentum={false}
         onDragEnd={onDragEnd}
       >
+        {/* Only the grabber and title start a drag, so the content below scrolls on touch. */}
         <div
-          className="grid cursor-grab place-items-center pt-2 pb-1 active:cursor-grabbing"
-          aria-hidden
+          className="shrink-0 cursor-grab touch-none select-none active:cursor-grabbing"
+          onPointerDown={(e) => controls.start(e)}
         >
-          <span className="h-1.5 w-10 rounded-control bg-text-secondary/40" />
+          <div className="grid place-items-center pt-2 pb-1" aria-hidden>
+            <span className="h-1.5 w-10 rounded-control bg-text-secondary/40" />
+          </div>
+          <h2 id={titleId} className="px-6 pt-2 pb-3 text-title2">
+            {title}
+          </h2>
         </div>
-        <h2 id={titleId} className="px-6 pt-2 pb-3 text-title2">
-          {title}
-        </h2>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
           {children}
         </div>
+        {/* The part of the panel pushed below the screen: the scroll area ends where the screen does,
+            so the last item is always reachable and focus never lands on something hidden. */}
+        <motion.div aria-hidden className="shrink-0" style={{ height: y }} />
       </motion.div>
     </div>
   );

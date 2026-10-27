@@ -1,6 +1,6 @@
 # UI design
 
-Status: the golden outline, the glow, the gentle nudge and the daily report come from Nour's roadmap. Screen list, art directions, motion values and layout details are **accepted in Phase 1** (decided by Claude under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`); Phase 2 picks the art direction side by side and Phase 3 approves each screen.
+Status: the golden outline, the glow, the gentle nudge and the daily report come from Nour's roadmap. Screen list, art directions, motion values and layout details are **accepted in Phase 1** (decided under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`); Phase 2 picks the art direction side by side and Phase 3 approves each screen.
 
 Skills to load before any work in this file's scope: `frontend-design`, `impeccable:impeccable`, `design-taste-frontend`, `build-awwwards-quality-sites`, `design-first-ui-prompting`, `ui-implementer`, `web-design-guidelines`, `design:design-system`, `design:design-critique`, `design:accessibility-review`, `design:ux-copy`, `animation-systems`, `threejs-choose-skills` (then the three.js skills it routes to), `dataviz`, `solar-duotone-bold` if Solar icons are chosen.
 

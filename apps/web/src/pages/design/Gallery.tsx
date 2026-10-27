@@ -11,6 +11,7 @@ import { GroupedList, ListRow, SwipeRow } from '../../ui/list';
 import { ModelCard } from '../../ui/model-card';
 import { Sheet } from '../../ui/sheet';
 import { EmptyState, PermissionPrompt } from '../../ui/states';
+import { fillTemplate } from '../../ui/format';
 import { DesignShell } from './DesignShell';
 
 function Section({
@@ -149,12 +150,20 @@ export default function Gallery() {
                 actions={[
                   {
                     label: gallery.swipe_actions.export,
+                    accessibleName: fillTemplate(gallery.swipe_action_name, {
+                      action: gallery.swipe_actions.export,
+                      row: r.label,
+                    }),
                     icon: Download,
                     tone: 'neutral',
                     onPress: noop,
                   },
                   {
                     label: gallery.swipe_actions.delete,
+                    accessibleName: fillTemplate(gallery.swipe_action_name, {
+                      action: gallery.swipe_actions.delete,
+                      row: r.label,
+                    }),
                     icon: Trash2,
                     tone: 'danger',
                     onPress: noop,

@@ -4,7 +4,7 @@
   "title": "Darb Juryoku design tokens",
   "type": "object",
   "additionalProperties": false,
-  "required": ["palette", "themes", "contrast", "distinguishable", "directions", "type", "space", "radius", "elevation", "layers", "touch", "material", "motion", "glow", "sound"],
+  "required": ["palette", "themes", "contrast", "distinguishable", "directions", "type", "space", "radius", "elevation", "layers", "icons", "touch", "material", "motion", "glow", "sound"],
   "$defs": {
     "colourRef": { "type": "string", "pattern": "^(#[0-9A-Fa-f]{6}|[A-Za-z_][A-Za-z0-9_]*)(/[0-9]{1,3})?$" },
     "hex": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
@@ -111,6 +111,12 @@
     "radius": { "type": "object", "additionalProperties": { "$ref": "#/$defs/cssLength" } },
     "elevation": { "type": "object", "additionalProperties": { "type": "string" } },
     "layers": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "icons": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stroke", "stroke_active"],
+      "properties": { "stroke": { "type": "number", "exclusiveMinimum": 0 }, "stroke_active": { "type": "number", "exclusiveMinimum": 0 } }
+    },
     "touch": {
       "type": "object",
       "additionalProperties": false,
@@ -134,25 +140,27 @@
         "sheet": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["detents", "dismiss_fraction", "dismiss_velocity_px_s"],
+          "required": ["detents", "dismiss_fraction", "dismiss_velocity_px_s", "elastic_top", "elastic_bottom"],
           "properties": {
             "detents": { "type": "array", "items": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }, "minItems": 1 },
             "dismiss_fraction": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
-            "dismiss_velocity_px_s": { "type": "number", "exclusiveMinimum": 0 }
+            "dismiss_velocity_px_s": { "type": "number", "exclusiveMinimum": 0 },
+            "elastic_top": { "type": "number", "minimum": 0, "maximum": 1 },
+            "elastic_bottom": { "type": "number", "minimum": 0, "maximum": 1 }
           }
         },
         "swipe": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["reveal_px", "commit_fraction"],
-          "properties": { "reveal_px": { "type": "number", "minimum": 44 }, "commit_fraction": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 } }
+          "required": ["reveal_px", "commit_fraction", "elastic", "projection_s"],
+          "properties": { "reveal_px": { "type": "number", "minimum": 44 }, "commit_fraction": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 }, "elastic": { "type": "number", "minimum": 0, "maximum": 1 }, "projection_s": { "type": "number", "minimum": 0 } }
         }
       }
     },
     "glow": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["outline_width_px", "outline_opacity", "outline_dash", "rim_width_px", "rim_blur_px", "drift_warm_from", "motes_max", "match_moment_from", "bloom", "exposure"],
+      "required": ["outline_width_px", "outline_opacity", "outline_dash", "rim_width_px", "rim_blur_px", "drift_warm_from", "motes_max", "match_moment_from", "rim_floor_gain", "rim_hdr_gain", "rim_min_opacity", "dash_speed_px_s", "motes", "max_fps", "max_dpr", "bloom", "exposure"],
       "properties": {
         "outline_width_px": { "type": "number", "exclusiveMinimum": 0 },
         "outline_opacity": { "type": "number", "minimum": 0, "maximum": 1 },
@@ -162,6 +170,18 @@
         "drift_warm_from": { "type": "number", "minimum": 0, "maximum": 1 },
         "motes_max": { "type": "integer", "minimum": 0 },
         "match_moment_from": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rim_floor_gain": { "type": "number", "minimum": 0 },
+        "rim_hdr_gain": { "type": "number", "minimum": 0 },
+        "rim_min_opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "dash_speed_px_s": { "type": "number", "minimum": 0 },
+        "motes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["size_px", "brightness", "sway_px", "rise_fraction", "period_ms"],
+          "properties": { "size_px": { "type": "number", "exclusiveMinimum": 0 }, "brightness": { "type": "number", "exclusiveMinimum": 0 }, "sway_px": { "type": "number", "minimum": 0 }, "rise_fraction": { "type": "number", "minimum": 0, "maximum": 1 }, "period_ms": { "type": "number", "exclusiveMinimum": 0 } }
+        },
+        "max_fps": { "type": "number", "minimum": 1, "maximum": 240 },
+        "max_dpr": { "type": "number", "minimum": 1, "maximum": 4 },
         "bloom": {
           "type": "object",
           "additionalProperties": false,

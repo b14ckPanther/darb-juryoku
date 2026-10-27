@@ -43,6 +43,7 @@ export interface DesignTokensFile {
   radius: Record<string, string>;
   elevation: Record<string, string>;
   layers: Record<string, number>;
+  icons: { stroke: number; stroke_active: number };
   touch: { min_target_px: number; press_scale: number };
   material: { blur_px: number; saturate: number };
   motion: {
@@ -52,8 +53,14 @@ export interface DesignTokensFile {
       number
     >;
     easings: Record<string, string>;
-    sheet: { detents: number[]; dismiss_fraction: number; dismiss_velocity_px_s: number };
-    swipe: { reveal_px: number; commit_fraction: number };
+    sheet: {
+      detents: number[];
+      dismiss_fraction: number;
+      dismiss_velocity_px_s: number;
+      elastic_top: number;
+      elastic_bottom: number;
+    };
+    swipe: { reveal_px: number; commit_fraction: number; elastic: number; projection_s: number };
   };
   glow: {
     outline_width_px: number;
@@ -64,6 +71,19 @@ export interface DesignTokensFile {
     drift_warm_from: number;
     motes_max: number;
     match_moment_from: number;
+    rim_floor_gain: number;
+    rim_hdr_gain: number;
+    rim_min_opacity: number;
+    dash_speed_px_s: number;
+    motes: {
+      size_px: number;
+      brightness: number;
+      sway_px: number;
+      rise_fraction: number;
+      period_ms: number;
+    };
+    max_fps: number;
+    max_dpr: number;
     bloom: { strength: number; radius: number; threshold: number };
     exposure: number;
   };

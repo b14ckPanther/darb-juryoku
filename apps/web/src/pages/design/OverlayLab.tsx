@@ -3,6 +3,7 @@ import { designSeed } from '../../demo/seed';
 import type { RendererChoice } from '../../overlay/GoldenOutline';
 import { webglAvailable } from '../../overlay/webgl-renderer';
 import { SegmentedControl } from '../../ui/controls';
+import { formatPercent } from '../../ui/format';
 import { DesignShell } from './DesignShell';
 import { MirrorPanel } from './MirrorPanel';
 
@@ -17,6 +18,7 @@ function initialState() {
       RendererChoice,
       'auto'
     >,
+    capture: q.get('capture') === '1',
     reduced: q.get('motion') === 'reduced' || (q.get('motion') !== 'full' && prefersReduced),
   };
 }
@@ -39,7 +41,12 @@ export default function OverlayLab() {
           <h1 className="text-display">{overlay.title}</h1>
           <p className="m-0 max-w-[60ch] text-body text-text-secondary">{overlay.intro}</p>
           <div className="mt-2">
-            <MirrorPanel match={match} renderer={renderer} reducedMotion={reduced} />
+            <MirrorPanel
+              match={match}
+              renderer={renderer}
+              reducedMotion={reduced}
+              preserveDrawingBuffer={init.capture}
+            />
           </div>
           <p className="m-0 text-footnote text-text-secondary">{overlay.figure_label}</p>
         </div>
@@ -50,7 +57,7 @@ export default function OverlayLab() {
                 {overlay.match_label}
               </label>
               <output htmlFor={sliderId} className="num text-subhead text-accent-text">
-                {Math.round(match * 100)}%
+                {formatPercent(match)}
               </output>
             </div>
             <input
@@ -59,7 +66,7 @@ export default function OverlayLab() {
               min={0}
               max={100}
               value={Math.round(match * 100)}
-              aria-valuetext={`${Math.round(match * 100)}%`}
+              aria-valuetext={formatPercent(match)}
               onChange={(e) => setMatch(Number(e.target.value) / 100)}
               className="jr-slider"
               style={{ '--fill': `${match * 100}%` } as CSSProperties}

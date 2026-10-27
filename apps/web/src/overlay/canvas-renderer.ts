@@ -4,10 +4,16 @@ import { paintBackdrop, type Frame } from './scene';
 const rgb = ([r, g, b]: [number, number, number]) =>
   `rgb(${Math.round(r * 255)} ${Math.round(g * 255)} ${Math.round(b * 255)})`;
 
-/** The 2D fallback: same outline, rim and warmth, with a canvas shadow standing in for bloom. */
+/** The 2D fallback: same outline, rim and warmth, with a canvas shadow standing in for bloom. `dashOffset` is in px. */
 export function drawCanvasFrame(ctx: CanvasRenderingContext2D, frame: Frame, dashOffset: number) {
-  const { outline_width_px, outline_opacity, outline_dash, rim_width_px, rim_blur_px } =
-    designTokens.glow;
+  const {
+    outline_width_px,
+    outline_opacity,
+    outline_dash,
+    rim_width_px,
+    rim_blur_px,
+    rim_min_opacity,
+  } = designTokens.glow;
   const dpr = ctx.canvas.width / frame.width;
   ctx.save();
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -20,7 +26,7 @@ export function drawCanvasFrame(ctx: CanvasRenderingContext2D, frame: Frame, das
   ctx.strokeStyle = rgb(frame.rimColour);
   ctx.shadowColor = rgb(frame.rimColour);
   ctx.shadowBlur = rim_blur_px * frame.intensity;
-  ctx.globalAlpha = Math.max(0.08, frame.intensity);
+  ctx.globalAlpha = Math.max(rim_min_opacity, frame.intensity);
   ctx.beginPath();
   frame.body.forEach(([x, y], i) => (i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)));
   ctx.stroke();

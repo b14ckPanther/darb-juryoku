@@ -3,6 +3,7 @@ import { useId, useState, type CSSProperties } from 'react';
 import { designTokens } from '../../design';
 import { designSeed } from '../../demo/seed';
 import { ICON_STROKE } from '../../ui/button';
+import { formatPercent } from '../../ui/format';
 import { DesignShell } from './DesignShell';
 import { MirrorPanel } from './MirrorPanel';
 import { TodayPanel } from './TodayPanel';
@@ -34,13 +35,13 @@ export default function Directions() {
             min={0}
             max={100}
             value={Math.round(match * 100)}
-            aria-valuetext={`${Math.round(match * 100)}%`}
+            aria-valuetext={formatPercent(match)}
             onChange={(e) => setMatch(Number(e.target.value) / 100)}
             className="jr-slider flex-1"
             style={{ '--fill': `${match * 100}%` } as CSSProperties}
           />
           <output htmlFor={sliderId} className="num w-12 text-right text-subhead text-accent-text">
-            {Math.round(match * 100)}%
+            {formatPercent(match)}
           </output>
         </div>
       </div>

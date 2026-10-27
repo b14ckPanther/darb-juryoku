@@ -1,6 +1,6 @@
 # Architecture
 
-Status: MediaPipe, PyTorch, ONNX Runtime Web, on-device inference and "no cloud" come from Nour's roadmap. Everything else here (feature set, classes, model family, sample rate, storage layout, DVC, tooling) is **accepted in Phase 1** (decided by Claude under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`).
+Status: MediaPipe, PyTorch, ONNX Runtime Web, on-device inference and "no cloud" come from Nour's roadmap. Everything else here (feature set, classes, model family, sample rate, storage layout, DVC, tooling) is **accepted in Phase 1** (decided under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`).
 
 ## 1. Shape in one paragraph
 

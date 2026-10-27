@@ -1,6 +1,6 @@
 # Phase 1 review for Nour
 
-> **Closed 2026-10-26.** Decided by Claude under Nour's delegation (2026-10-26). Eight recommendations below were changed after a second, critical read; see `docs/OPEN_QUESTIONS.md` for the table and `docs/specs/2026-10-26-phase-01-product-spec.md` for the reasons. Phase 0 is merged into local `main`. The GitHub repo is still not created and nothing is pushed: that needs Nour.
+> **Closed 2026-10-26.** Decided under Nour's delegation (2026-10-26). Eight recommendations below were changed after a second, critical read; see `docs/OPEN_QUESTIONS.md` for the table and `docs/specs/2026-10-26-phase-01-product-spec.md` for the reasons. Phase 0 is merged into local `main`. The GitHub repo is still not created and nothing is pushed: that needs Nour.
 
 Phase 0 is done (see `docs/PROGRESS.md`). Phase 1 settles the 20 questions in `docs/OPEN_QUESTIONS.md`. Each one below has a recommended answer and one line of why. Reply "yes to all", or list the numbers you want to change. Nothing here is decided until you answer.
 

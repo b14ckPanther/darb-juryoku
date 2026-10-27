@@ -1,6 +1,6 @@
 # Phase 2 plan: design system
 
-Source: `docs/PLAN.md` Phase 2 and the Phase 1 spec (`docs/specs/2026-10-26-phase-01-product-spec.md`, sections 10 and 11). The spec already settles what Phase 2 decides (three brand-faithful directions, Lucide, both themes), so no separate Phase 2 spec was written; the tasks below are the plan as executed. Decided by Claude under Nour's delegation (2026-10-26).
+Source: `docs/PLAN.md` Phase 2 and the Phase 1 spec (`docs/specs/2026-10-26-phase-01-product-spec.md`, sections 10 and 11). The spec already settles what Phase 2 decides (three brand-faithful directions, Lucide, both themes), so no separate Phase 2 spec was written; the tasks below are the plan as executed. Decided under Nour's delegation (2026-10-26).
 
 | # | Task (PLAN order) | Test written first | Commit |
 |---|---|---|---|

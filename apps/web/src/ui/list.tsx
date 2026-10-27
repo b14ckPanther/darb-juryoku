@@ -89,6 +89,8 @@ export function ListRow({ label, value, icon: Icon, onPress, accessory }: ListRo
 
 export interface SwipeAction {
   label: string;
+  /** What a screen reader hears, naming the row too (for example "Delete, Monday"). */
+  accessibleName: string;
   icon: LucideIcon;
   tone: 'neutral' | 'danger';
   onPress: () => void;
@@ -107,12 +109,12 @@ interface SwipeRowProps {
 export function SwipeRow({ label, value, actions }: SwipeRowProps) {
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
-  const { reveal_px, commit_fraction } = designTokens.motion.swipe;
+  const { reveal_px, commit_fraction, elastic, projection_s } = designTokens.motion.swipe;
   const width = reveal_px * actions.length;
   const settle = (to: number) => animate(x, to, springTransition('snappy', reduce));
 
   const onDragEnd = (_e: unknown, info: PanInfo) => {
-    settle(swipeSettle(x.get(), info.velocity.x, width, commit_fraction));
+    settle(swipeSettle(x.get(), info.velocity.x, width, commit_fraction, projection_s));
   };
 
   return (
@@ -127,10 +129,11 @@ export function SwipeRow({ label, value, actions }: SwipeRowProps) {
       }}
     >
       <div className="absolute inset-y-0 right-0 flex" style={{ width }}>
-        {actions.map(({ label: actionLabel, icon: Icon, tone, onPress }) => (
+        {actions.map(({ label: actionLabel, accessibleName, icon: Icon, tone, onPress }) => (
           <button
             key={actionLabel}
             type="button"
+            aria-label={accessibleName}
             data-swipe-action=""
             onClick={() => {
               onPress();
@@ -150,7 +153,7 @@ export function SwipeRow({ label, value, actions }: SwipeRowProps) {
         drag="x"
         dragDirectionLock
         dragConstraints={{ left: -width, right: 0 }}
-        dragElastic={0.12}
+        dragElastic={elastic}
         onDragEnd={onDragEnd}
         style={{ x }}
         className="relative flex min-h-(--touch-min) touch-pan-y items-center select-none gap-3 bg-surface-raised px-4 py-2.5"

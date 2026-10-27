@@ -44,8 +44,15 @@ describe('nearestDetent', () => {
 describe('swipeSettle', () => {
   const actionsWidth = swipe.reveal_px * 2;
 
+  it('opens on a quick flick, judged where the flick would carry it', () => {
+    const velocity = (-actionsWidth * swipe.commit_fraction - 30) / swipe.projection_s;
+    expect(
+      swipeSettle(-30, velocity, actionsWidth, swipe.commit_fraction, swipe.projection_s),
+    ).toBe(-actionsWidth);
+  });
+
   it('springs back closed for a small swipe', () => {
-    expect(swipeSettle(-20, 0, actionsWidth, swipe.commit_fraction)).toBe(0);
+    expect(swipeSettle(-20, 0, actionsWidth, swipe.commit_fraction, swipe.projection_s)).toBe(0);
   });
 
   it('opens fully past the commit fraction', () => {
@@ -55,11 +62,12 @@ describe('swipeSettle', () => {
         0,
         actionsWidth,
         swipe.commit_fraction,
+        swipe.projection_s,
       ),
     ).toBe(-actionsWidth);
   });
 
   it('closes when swiped back to the right', () => {
-    expect(swipeSettle(30, 0, actionsWidth, swipe.commit_fraction)).toBe(0);
+    expect(swipeSettle(30, 0, actionsWidth, swipe.commit_fraction, swipe.projection_s)).toBe(0);
   });
 });

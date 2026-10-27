@@ -1,6 +1,6 @@
 # Phase 1 product spec: Darb Juryoku v1
 
-Status: **Approved.** Decided by Claude under Nour's delegation (2026-10-26). Nour wrote: "the review must be up to u ... i trust ur recommendation... any choice by u will be approved from my side". The delegation covers product, spec and design choices and local merges. It does not cover outward actions (creating the GitHub repo, pushing, deploying, DNS, spending, publishing data). Those still wait for Nour's yes.
+Status: **Approved.** Decided under Nour's delegation (2026-10-26). Nour wrote: "the review must be up to u ... i trust ur recommendation... any choice by u will be approved from my side". The delegation covers product, spec and design choices and local merges. It does not cover outward actions (creating the GitHub repo, pushing, deploying, DNS, spending, publishing data). Those still wait for Nour's yes.
 
 Nour can veto any line below. Each section names the question it answers (`Q1` to `Q20` from `docs/OPEN_QUESTIONS.md`) and the ADR it settles.
 

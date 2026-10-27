@@ -10,6 +10,7 @@ interface MirrorPanelProps {
   scanGrid?: boolean;
   renderer?: RendererChoice;
   reducedMotion?: boolean;
+  preserveDrawingBuffer?: boolean;
   compact?: boolean;
 }
 
@@ -20,16 +21,17 @@ export function MirrorPanel({
   scanGrid,
   renderer = 'auto',
   reducedMotion,
+  preserveDrawingBuffer,
   compact,
 }: MirrorPanelProps) {
   const { mirror } = designSeed;
   const state =
-    match >= 0.75
+    match >= mirror.state_from.upright
       ? mirror.states.upright
-      : match >= 0.4
+      : match >= mirror.state_from.drifting
         ? mirror.states.drifting
         : mirror.states.forward_head;
-  const good = match >= 0.75;
+  const good = match >= mirror.state_from.upright;
   return (
     <div className="grid gap-3">
       {/* The camera image is always dark, so the mirror uses the dark roles in every theme and direction. */}
@@ -43,6 +45,7 @@ export function MirrorPanel({
           label={mirror.image_label}
           renderer={renderer}
           reducedMotion={reducedMotion}
+          preserveDrawingBuffer={preserveDrawingBuffer}
           className="absolute inset-0"
         />
         {scanGrid && (

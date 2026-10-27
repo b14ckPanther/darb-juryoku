@@ -24,7 +24,7 @@
     }
   },
   "properties": {
-    "banner": { "$ref": "#/$defs/strings", "required": ["demo", "demo_detail"] },
+    "banner": { "type": "object", "$ref": "#/$defs/strings", "required": ["demo", "demo_detail"] },
     "nav": {
       "type": "object",
       "additionalProperties": false,
@@ -44,25 +44,33 @@
         }
       }
     },
-    "home": { "$ref": "#/$defs/strings", "required": ["intro", "cta"] },
+    "home": { "type": "object", "$ref": "#/$defs/strings", "required": ["intro", "cta"] },
     "theme_switch": {
       "type": "object",
       "additionalProperties": false,
       "required": ["label", "options"],
-      "properties": { "label": { "$ref": "#/$defs/text" }, "options": { "$ref": "#/$defs/strings", "required": ["dark", "light"] } }
+      "properties": { "label": { "$ref": "#/$defs/text" }, "options": { "type": "object", "$ref": "#/$defs/strings", "required": ["dark", "light"] } }
     },
     "directions": {
       "type": "object",
       "required": ["title", "intro", "match_label", "pick_label", "notes", "decision"],
       "properties": {
         "notes": { "$ref": "#/$defs/strings" },
-        "decision": { "$ref": "#/$defs/strings", "required": ["title", "body"] }
+        "decision": { "type": "object", "$ref": "#/$defs/strings", "required": ["title", "body"] }
       }
     },
     "mirror": {
       "type": "object",
-      "required": ["states", "session_label", "session_value", "open_sentinel", "pause", "image_label"],
-      "properties": { "states": { "$ref": "#/$defs/strings", "required": ["upright", "drifting", "forward_head"] } }
+      "required": ["states", "state_from", "session_label", "session_value", "open_sentinel", "pause", "image_label"],
+      "properties": {
+        "states": { "type": "object", "$ref": "#/$defs/strings", "required": ["upright", "drifting", "forward_head"] },
+        "state_from": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["upright", "drifting"],
+          "properties": { "upright": { "type": "number", "minimum": 0, "maximum": 1 }, "drifting": { "type": "number", "minimum": 0, "maximum": 1 } }
+        }
+      }
     },
     "today": {
       "type": "object",
@@ -76,15 +84,15 @@
             "start": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
             "bucket_minutes": { "type": "integer", "minimum": 1 },
             "states": { "type": "string", "pattern": "^[GDA]+$" },
-            "labels": { "$ref": "#/$defs/strings", "required": ["G", "D", "A"] },
+            "labels": { "type": "object", "$ref": "#/$defs/strings", "required": ["G", "D", "A"] },
             "title": { "$ref": "#/$defs/text" }
           }
         },
         "facts": { "$ref": "#/$defs/facts" },
-        "tabs": { "$ref": "#/$defs/strings", "required": ["today", "history", "live", "settings"] }
+        "tabs": { "type": "object", "$ref": "#/$defs/strings", "required": ["today", "history", "live", "settings"] }
       }
     },
-    "gallery": { "type": "object", "required": ["title", "intro", "sections", "buttons", "segmented", "toggle", "slider", "rows", "history_rows", "swipe_actions", "sheet", "nudge", "toast", "chime", "banner_warning", "chart_table_toggle"] },
+    "gallery": { "type": "object", "required": ["title", "intro", "sections", "buttons", "segmented", "toggle", "slider", "rows", "history_rows", "swipe_actions", "swipe_action_name", "sheet", "nudge", "toast", "chime", "banner_warning", "chart_table_toggle"] },
     "history": {
       "type": "object",
       "required": ["bars_title", "bars", "heatmap_title", "heatmap"],
@@ -127,7 +135,7 @@
       "properties": { "prompt": { "$ref": "#/$defs/prompt" }, "denied": { "$ref": "#/$defs/prompt" }, "missing": { "$ref": "#/$defs/prompt" } }
     },
     "empty": { "$ref": "#/$defs/prompt" },
-    "glyphs": { "$ref": "#/$defs/strings", "required": ["upright", "slouch", "forward_head", "lean_side"] },
+    "glyphs": { "type": "object", "$ref": "#/$defs/strings", "required": ["upright", "slouch", "forward_head", "lean_side"] },
     "overlay": { "type": "object", "required": ["title", "intro", "match_label", "renderer_label", "renderers", "motion_label", "motion_options", "figure_label"] },
     "mobile": { "type": "object", "required": ["title", "compact_title", "sections"] }
   }

@@ -30,6 +30,7 @@ export interface DesignSeed {
   };
   mirror: {
     states: Strings<'upright' | 'drifting' | 'forward_head'>;
+    state_from: { upright: number; drifting: number };
     session_label: string;
     session_value: string;
     open_sentinel: string;
@@ -77,6 +78,7 @@ export interface DesignSeed {
     history_title: string;
     history_rows: Fact[];
     swipe_actions: Strings<'export' | 'delete'>;
+    swipe_action_name: string;
     swipe_hint: string;
     sheet: { open: string; title: string; body: string; close: string; options: string[] };
     nudge: Strings<'title' | 'body' | 'primary' | 'secondary'>;

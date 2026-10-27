@@ -93,6 +93,16 @@ test.describe('on a 390 px phone', () => {
     await expect(opener).toBeFocused();
   });
 
+  test('the sheet content ends on screen at its lower detent', async ({ page }) => {
+    await page.goto('/design/mobile');
+    await page.getByRole('button', { name: /nudge style/i }).click();
+    const radios = page.getByRole('dialog').getByRole('radio');
+    await expect(radios.last()).toBeVisible();
+    await page.waitForTimeout(600);
+    const box = await radios.last().boundingBox();
+    expect((box?.y ?? Infinity) + (box?.height ?? 0)).toBeLessThanOrEqual(844);
+  });
+
   test('the large title collapses into the compact bar on scroll', async ({ page }) => {
     await page.goto('/design/mobile');
     const compact = page

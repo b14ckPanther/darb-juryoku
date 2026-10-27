@@ -37,6 +37,9 @@ directions:
 
 mirror:
   states: { upright: Upright, drifting: Drifting, forward_head: Head forward }
+  # Demo only: which state word the mirror shows for a match value. The real states come from the
+  # session engine and config in Phase 4.
+  state_from: { upright: 0.75, drifting: 0.4 }
   session_label: Good posture this session
   session_value: 38 min of 52
   open_sentinel: Open sentinel
@@ -108,6 +111,7 @@ gallery:
     - { label: Sunday, value: 81% }
     - { label: Friday, value: 58% }
   swipe_actions: { export: Export, delete: Delete }
+  swipe_action_name: '{action}, {row}' # what a screen reader hears for each swipe action
   swipe_hint: Swipe a day left, or tab to its actions.
   sheet:
     open: Choose nudge style

@@ -1,5 +1,6 @@
 import { type LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { designTokens } from '../design';
 import { ICON_STROKE } from './button';
 import { cx } from './cx';
 
@@ -31,7 +32,7 @@ export function LargeTitle({ title, subtitle, trailing }: LargeTitleProps) {
     <>
       <div
         className={cx(
-          'sticky top-0 z-(--z-sticky) -mx-(--space-gutter) flex h-11 items-center justify-center px-(--space-gutter) pt-[env(safe-area-inset-top)] transition-[background-color,border-color] duration-(--duration-base)',
+          'sticky top-0 z-(--z-sticky) -mx-(--space-gutter) flex h-[calc(2.75rem+env(safe-area-inset-top))] items-center justify-center px-(--space-gutter) pt-[env(safe-area-inset-top)] transition-[background-color,border-color] duration-(--duration-base)',
           compact ? 'material border-b border-rule' : 'border-b border-transparent',
         )}
       >
@@ -82,11 +83,15 @@ export function TabBar({ tabs, current, label }: { tabs: Tab[]; current: string;
                 href={href}
                 aria-current={active ? 'page' : undefined}
                 className={cx(
-                  'pressable flex min-h-[3.25rem] flex-col items-center justify-center gap-0.5 text-[0.6875rem] font-medium no-underline',
+                  'pressable flex min-h-[3.25rem] flex-col items-center justify-center gap-0.5 text-tab font-medium no-underline',
                   active ? 'text-accent-text' : 'text-text-secondary hover:text-text',
                 )}
               >
-                <Icon aria-hidden size={24} strokeWidth={active ? 2.1 : ICON_STROKE} />
+                <Icon
+                  aria-hidden
+                  size={24}
+                  strokeWidth={active ? designTokens.icons.stroke_active : ICON_STROKE}
+                />
                 {tabLabel}
               </a>
             </li>

@@ -48,7 +48,8 @@ export function swipeSettle(
   velocityX: number,
   actionsWidth: number,
   commitFraction: number,
+  projectionS: number,
 ): number {
-  const projected = offsetX + velocityX * 0.1;
+  const projected = offsetX + velocityX * projectionS;
   return projected < -actionsWidth * commitFraction ? -actionsWidth : 0;
 }

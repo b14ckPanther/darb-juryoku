@@ -40,14 +40,27 @@ describe('SwipeRow', () => {
           label="Monday"
           value="80%"
           actions={[
-            { label: 'Export', icon: Download, tone: 'neutral', onPress: vi.fn() },
-            { label: 'Delete', icon: Trash2, tone: 'danger', onPress: onDelete },
+            {
+              label: 'Export',
+              accessibleName: 'Export, Monday',
+              icon: Download,
+              tone: 'neutral',
+              onPress: vi.fn(),
+            },
+            {
+              label: 'Delete',
+              accessibleName: 'Delete, Monday',
+              icon: Trash2,
+              tone: 'danger',
+              onPress: onDelete,
+            },
           ]}
         />
       </GroupedList>,
     );
     await userEvent.tab();
-    expect(screen.getByRole('button', { name: 'Export' })).toHaveFocus();
+    // Each action names its row, so "Delete" is never ambiguous to a screen reader.
+    expect(screen.getByRole('button', { name: 'Export, Monday' })).toHaveFocus();
     await userEvent.tab();
     await userEvent.keyboard('{Enter}');
     expect(onDelete).toHaveBeenCalled();

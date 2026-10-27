@@ -204,6 +204,9 @@
   --text-title2: 1.375rem;
   --text-title2--line-height: 1.25;
   --text-title2--letter-spacing: -0.01em;
+  --text-tab: 0.6875rem;
+  --text-tab--line-height: 1.2;
+  --text-tab--letter-spacing: 0.01em;
   --text-title1: 1.75rem;
   --text-title1--line-height: 1.2;
   --text-title1--letter-spacing: -0.015em;
