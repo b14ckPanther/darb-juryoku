@@ -301,7 +301,12 @@
         "state_from",
         "drift_class",
         "nudge_after_seconds",
-        "quiet_after_nudge_seconds"
+        "quiet_after_nudge_seconds",
+        "match_when_still",
+        "match_example_drift",
+        "match_framing",
+        "tick_ms",
+        "bench_ms"
       ],
       "properties": {
         "seconds_per_key": {
@@ -321,16 +326,10 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "upright",
-            "drifting"
+            "upright"
           ],
           "properties": {
             "upright": {
-              "type": "number",
-              "minimum": 0,
-              "maximum": 1
-            },
-            "drifting": {
               "type": "number",
               "minimum": 0,
               "maximum": 1
@@ -350,6 +349,29 @@
         },
         "quiet_after_nudge_seconds": {
           "type": "number",
+          "minimum": 0
+        },
+        "match_when_still": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "match_example_drift": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "match_framing": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "tick_ms": {
+          "type": "integer",
+          "minimum": 16
+        },
+        "bench_ms": {
+          "type": "integer",
           "minimum": 0
         }
       }

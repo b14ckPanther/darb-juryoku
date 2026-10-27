@@ -16,7 +16,8 @@ export function stepNudge(
   drifting: boolean,
   after: number,
 ): NudgeTimer {
-  if (!drifting) return { ...s, driftSince: null };
+  // Sitting back up answers the nudge too: it goes away without a tap.
+  if (!drifting) return { ...s, driftSince: null, showing: false };
   const since = s.driftSince ?? now;
   const due = !s.showing && now >= s.quietUntil && now - since >= after;
   return { ...s, driftSince: since, showing: s.showing || due };

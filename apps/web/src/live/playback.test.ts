@@ -5,7 +5,12 @@ import { matchAt, stateFor } from './playback';
 const p: Playback = {
   seconds_per_key: 2,
   match: [1, 0, 0.5],
-  state_from: { upright: 0.75, drifting: 0.45 },
+  state_from: { upright: 0.75 },
+  match_when_still: 0.5,
+  match_example_drift: 0.3,
+  match_framing: 0.5,
+  tick_ms: 250,
+  bench_ms: 1,
   drift_class: 'slouch',
   nudge_after_seconds: 1,
   quiet_after_nudge_seconds: 1,

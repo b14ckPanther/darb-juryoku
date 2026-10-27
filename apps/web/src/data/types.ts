@@ -35,7 +35,12 @@ export interface Recording {
 export interface Playback {
   seconds_per_key: number;
   match: number[];
-  state_from: { upright: number; drifting: number };
+  state_from: { upright: number };
+  match_when_still: number;
+  match_example_drift: number;
+  match_framing: number;
+  tick_ms: number;
+  bench_ms: number;
   drift_class: Exclude<PostureClass, 'upright'>;
   nudge_after_seconds: number;
   quiet_after_nudge_seconds: number;

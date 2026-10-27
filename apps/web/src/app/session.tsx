@@ -11,6 +11,8 @@ import { matchAt } from '../live/playback';
 import { useData } from './data';
 
 interface SessionValue {
+  /** When this session started (performance.now); changes on restart. */
+  startedAt: number;
   paused: boolean;
   ended: boolean;
   togglePause: () => void;
@@ -36,6 +38,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   );
   const value = useMemo<SessionValue>(
     () => ({
+      startedAt: clock.start,
       paused: clock.pausedAt !== null,
       ended: clock.ended,
       togglePause: () =>
@@ -64,7 +67,7 @@ export function useSession(): SessionValue {
 }
 
 /** The match the mirror shows now, refreshed a few times a second; null without playback (real mode). */
-export function useLiveMatch(): number | null {
+export function useLiveMatch(view: Window = window): number | null {
   const { data } = useData();
   const session = useSession();
   const playback = data.library?.playback ?? null;
@@ -74,9 +77,10 @@ export function useLiveMatch(): number | null {
   const { paused, elapsed } = session;
   useEffect(() => {
     if (!playback || paused) return;
-    // The overlay springs between targets, so a few updates a second look continuous.
-    const id = window.setInterval(() => setMatch(matchAt(playback, elapsed())), 250);
-    return () => window.clearInterval(id);
-  }, [playback, paused, elapsed]);
+    // The overlay springs between targets, so a few updates a second look continuous. The timer runs
+    // in the window that shows the mirror, so the sentinel keeps time while the opener tab is hidden.
+    const id = view.setInterval(() => setMatch(matchAt(playback, elapsed())), playback.tick_ms);
+    return () => view.clearInterval(id);
+  }, [playback, paused, elapsed, view]);
   return match;
 }

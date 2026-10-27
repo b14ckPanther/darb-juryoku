@@ -42,6 +42,8 @@ export interface SettingsConfig {
   shortcuts: { pause: string; calibrate: string; sentinel: string; help: string };
   sentinel_window: { width: number; height: number };
   toast_seconds: number;
+  chime_url: string;
+  export_file_prefix: string;
 }
 
 export interface ProtocolConfig {

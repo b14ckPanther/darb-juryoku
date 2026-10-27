@@ -11,3 +11,7 @@ shortcuts: { pause: ' ', calibrate: c, sentinel: p, help: '?' }
 sentinel_window: { width: 240, height: 180 }
 # How long a confirmation toast stays, in seconds.
 toast_seconds: 3
+# The nudge chime (scripts/audio/make_chime.py), served from the app origin.
+chime_url: /audio/nudge-chime.wav
+# Exported files start with this name.
+export_file_prefix: juryoku

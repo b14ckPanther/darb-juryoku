@@ -23,3 +23,11 @@ describe('stepNudge', () => {
     expect(stepNudge(s, 46, true, 5).showing).toBe(true);
   });
 });
+
+describe('recovery', () => {
+  it('takes the nudge away when posture recovers', () => {
+    const shown = stepNudge(stepNudge(initialNudgeTimer, 0, true, 5), 5, true, 5);
+    expect(shown.showing).toBe(true);
+    expect(stepNudge(shown, 6, false, 5).showing).toBe(false);
+  });
+});

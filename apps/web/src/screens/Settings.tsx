@@ -197,7 +197,7 @@ export default function Settings() {
             icon={Download}
             label={s.export}
             onPress={() => {
-              downloadJson('juryoku-export.json', {
+              downloadJson(`${settingsConfig.export_file_prefix}-export.json`, {
                 demo: data.demo,
                 sessions: data.sessions,
                 minutes: data.buckets,

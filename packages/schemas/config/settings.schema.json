@@ -12,7 +12,9 @@
     "budokai_enabled_default",
     "shortcuts",
     "sentinel_window",
-    "toast_seconds"
+    "toast_seconds",
+    "chime_url",
+    "export_file_prefix"
   ],
   "properties": {
     "sensitivity": {
@@ -116,6 +118,14 @@
     "toast_seconds": {
       "type": "number",
       "exclusiveMinimum": 0
+    },
+    "chime_url": {
+      "type": "string",
+      "pattern": "^/"
+    },
+    "export_file_prefix": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
     }
   }
 }

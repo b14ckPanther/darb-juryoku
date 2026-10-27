@@ -2,7 +2,7 @@ import { BellRing, Moon, Timer, Volume2, Layers } from 'lucide-react';
 import { useRef } from 'react';
 import { useData } from '../app/data';
 import { useToast } from '../app/toast';
-import { nudgeConfig } from '../config/runtime';
+import { nudgeConfig, settingsConfig } from '../config/runtime';
 import { copy, t } from '../copy';
 import { Mirror } from '../live/Mirror';
 import { Button } from '../ui/button';
@@ -13,9 +13,6 @@ import { Page } from './Page';
 import { clockAfter } from '../report/format';
 
 /** How a nudge escalates (glow, notification, optional chime) and the limits that keep it rare. */
-// The original chime (scripts/audio/make_chime.py), served from the app origin.
-const chimeUrl = '/audio/nudge-chime.wav';
-
 export default function Nudges() {
   const { data } = useData();
   const toast = useToast();
@@ -86,7 +83,7 @@ export default function Nudges() {
                     <div className="mt-3 aspect-[4/3] w-56 overflow-hidden rounded-container">
                       <Mirror
                         size="mini"
-                        match={0.35}
+                        match={data.library.playback.match_example_drift}
                         label={copy.live.image_label}
                         state={copy.posture[drift]}
                         posture={drift}
@@ -126,7 +123,7 @@ export default function Nudges() {
                         icon={Volume2}
                         className="mt-3 w-fit"
                         onClick={() => {
-                          chime.current ??= new Audio(chimeUrl);
+                          chime.current ??= new Audio(settingsConfig.chime_url);
                           void chime.current.play();
                         }}
                       >

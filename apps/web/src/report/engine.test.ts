@@ -198,7 +198,7 @@ describe('pickObservation', () => {
       'You sat well for 50% of the time.',
     );
   });
-  it('fills numeric slots from metrics', () => {
-    expect(pickObservation(rules, { delta_points: 9 }, {})).toBe('Up 9 points.');
+  it('fills slots only from formatted text, never raw metrics', () => {
+    expect(pickObservation(rules, { delta_points: 9 }, {})).toBe('Up {delta_points} points.');
   });
 });

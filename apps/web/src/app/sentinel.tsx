@@ -79,6 +79,17 @@ export function SentinelProvider({
     adoptStyles(win.document);
     win.document.body.style.margin = '0';
     win.addEventListener('pagehide', () => setPip(null), { once: true });
+    // App shortcuts (Space to pause) work while the sentinel has focus too.
+    win.addEventListener('keydown', (e) => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: e.key,
+          metaKey: e.metaKey,
+          ctrlKey: e.ctrlKey,
+          altKey: e.altKey,
+        }),
+      );
+    });
     setPip(win);
   }, [pip, forceUnsupported]);
 
@@ -96,7 +107,7 @@ export function SentinelProvider({
         createPortal(
           <div className="h-dvh w-dvw bg-surface">
             <Suspense>
-              <SentinelView />
+              <SentinelView view={pip} />
             </Suspense>
           </div>,
           pip.document.body,

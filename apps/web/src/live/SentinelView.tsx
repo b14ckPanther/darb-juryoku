@@ -7,10 +7,10 @@ import { describeMatch } from './live-state';
 import { Mirror } from './Mirror';
 
 /** The sentinel: a mini mirror, one word and a pause button. Rendered in the PiP window and as a preview. */
-export function SentinelView() {
+export function SentinelView({ view }: { view?: Window }) {
   const { data } = useData();
   const session = useSession();
-  const match = useLiveMatch();
+  const match = useLiveMatch(view);
   const playback = data.library?.playback;
   if (!playback || match === null) return null;
   const s = describeMatch(playback, match, session.paused, copy);
@@ -18,7 +18,7 @@ export function SentinelView() {
     <div className="relative size-full">
       <Mirror
         size="mini"
-        match={session.paused ? 0.5 : match}
+        match={session.paused ? playback.match_when_still : match}
         label={copy.live.image_label}
         state={s.word}
         posture={s.posture}

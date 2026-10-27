@@ -1,5 +1,5 @@
 import { CircleCheck, CircleX, FlaskConical, Gauge } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../app/data';
 import { previewState } from '../app/preview';
 import { useToast } from '../app/toast';
@@ -27,6 +27,8 @@ export default function Lab() {
   const active = lib?.models.find((m) => m.active);
   const [viewing, setViewing] = useState<string>(active?.name ?? copy.lab.heuristic);
   const [bench, setBench] = useState<'idle' | 'running' | 'done'>('idle');
+  const benchTimer = useRef(0);
+  useEffect(() => () => window.clearTimeout(benchTimer.current), []);
 
   const heuristic = useMemo(() => (lib ? classMetrics(lib.heuristic.confusion) : null), [lib]);
   if (!lib || !heuristic) {
@@ -68,7 +70,8 @@ export default function Lab() {
 
   const runBench = () => {
     setBench('running');
-    window.setTimeout(() => setBench('done'), 900);
+    window.clearTimeout(benchTimer.current);
+    benchTimer.current = window.setTimeout(() => setBench('done'), lib.playback.bench_ms);
   };
 
   return (
@@ -81,6 +84,7 @@ export default function Lab() {
             options={options}
             value={model ? model.version : copy.lab.heuristic}
             onChange={(v) => {
+              window.clearTimeout(benchTimer.current);
               setViewing(v);
               setBench('idle');
             }}

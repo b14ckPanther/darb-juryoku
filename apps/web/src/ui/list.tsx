@@ -1,6 +1,6 @@
 import { ChevronRight, type LucideIcon } from 'lucide-react';
 import { animate, motion, useMotionValue, useReducedMotion, type PanInfo } from 'motion/react';
-import { useId, type ReactNode } from 'react';
+import { useId, useRef, type ReactNode } from 'react';
 import { designTokens, springTransition } from '../design';
 import { ICON_STROKE } from './button';
 import { cx } from './cx';
@@ -118,6 +118,8 @@ export function SwipeRow({ label, value, actions, onOpen }: SwipeRowProps) {
   const { reveal_px, commit_fraction, elastic, projection_s } = designTokens.motion.swipe;
   const width = reveal_px * actions.length;
   const settle = (to: number) => animate(x, to, springTransition('snappy', reduce));
+  // A drag that ends over the row must not also open it.
+  const dragged = useRef(false);
 
   const body = (
     <>
@@ -146,6 +148,9 @@ export function SwipeRow({ label, value, actions, onOpen }: SwipeRowProps) {
         dragDirectionLock
         dragConstraints={{ left: -width, right: 0 }}
         dragElastic={elastic}
+        onDragStart={() => {
+          dragged.current = true;
+        }}
         onDragEnd={onDragEnd}
         style={{ x }}
         className="relative z-[1] bg-surface-raised touch-pan-y select-none"
@@ -153,7 +158,13 @@ export function SwipeRow({ label, value, actions, onOpen }: SwipeRowProps) {
         {onOpen ? (
           <button
             type="button"
-            onClick={onOpen}
+            onClick={() => {
+              if (dragged.current) {
+                dragged.current = false;
+                return;
+              }
+              onOpen();
+            }}
             className="pressable flex min-h-(--touch-min) w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-surface-overlay"
           >
             {body}

@@ -4,11 +4,10 @@ import { useData } from '../app/data';
 import { useRouter } from '../app/router';
 import { useToast } from '../app/toast';
 import { downloadJson } from '../app/download';
-import { reportConfig } from '../config/runtime';
-import { addDays } from '../demo/generate-sessions';
+import { reportConfig, settingsConfig } from '../config/runtime';
 import { copy, t } from '../copy';
 import { dailySummaries, dayStreaks, hourWeekdayGrid } from '../report/engine';
-import { longDate, percent, shortDate } from '../report/format';
+import { addDays, longDate, percent, shortDate } from '../report/format';
 import { Button } from '../ui/button';
 import { BarChart, Heatmap } from '../ui/charts';
 import { SegmentedControl } from '../ui/controls';
@@ -133,7 +132,7 @@ export default function History() {
                     icon: Download,
                     tone: 'neutral',
                     onPress: () => {
-                      downloadJson(`juryoku-${d.date}.json`, {
+                      downloadJson(`${settingsConfig.export_file_prefix}-${d.date}.json`, {
                         demo: data.demo,
                         minutes: data.buckets.filter((b) => b.day === d.date),
                       });

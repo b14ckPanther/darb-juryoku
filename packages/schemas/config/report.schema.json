@@ -40,7 +40,10 @@
     "heatmap_hours": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["from", "to"],
+      "required": [
+        "from",
+        "to"
+      ],
       "properties": {
         "from": {
           "type": "integer",
@@ -57,7 +60,10 @@
     "history_days": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["week", "month"],
+      "required": [
+        "week",
+        "month"
+      ],
       "properties": {
         "week": {
           "type": "integer",
@@ -75,25 +81,39 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["when", "text"],
+        "required": [
+          "when",
+          "text"
+        ],
         "properties": {
           "when": {
             "type": "array",
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["metric", "op", "value"],
+              "required": [
+                "metric",
+                "op",
+                "value"
+              ],
               "properties": {
                 "metric": {
                   "enum": [
                     "good_share",
                     "delta_points",
                     "afternoon_drift_share",
-                    "longest_drift_minutes"
+                    "longest_drift_minutes",
+                    "afternoon_drift_minutes",
+                    "worst_hour_share"
                   ]
                 },
                 "op": {
-                  "enum": ["lt", "lte", "gt", "gte"]
+                  "enum": [
+                    "lt",
+                    "lte",
+                    "gt",
+                    "gte"
+                  ]
                 },
                 "value": {
                   "type": "number"

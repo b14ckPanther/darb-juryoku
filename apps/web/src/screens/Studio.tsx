@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useData } from '../app/data';
 import { downloadJson } from '../app/download';
 import { useToast } from '../app/toast';
-import { protocolConfig } from '../config/runtime';
+import { protocolConfig, settingsConfig } from '../config/runtime';
 import { copy, t } from '../copy';
 import type { Recording } from '../data/types';
 import { duration, shortDate } from '../report/format';
@@ -43,6 +43,7 @@ export default function Studio() {
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [clearing, setClearing] = useState(false);
   const speed = lib?.studio_speed ?? 1;
+  const tick = lib?.playback.tick_ms ?? 1000;
   const guided = mode === copy.studio.guided;
 
   const recording = elapsed !== null;
@@ -73,19 +74,25 @@ export default function Studio() {
   );
 
   const at = elapsed === null ? null : stepAt(elapsed);
+  // The ticking effect reads the latest save through a ref, so data changes mid-recording
+  // (deleting an older recording, for example) never restart the protocol.
+  const saveRef = useRef(save);
+  useEffect(() => {
+    saveRef.current = save;
+  }, [save]);
   const clock = useRef(0);
   useEffect(() => {
     if (!recording) return;
     clock.current = 0;
     const id = window.setInterval(() => {
-      clock.current += speed / 4;
+      clock.current += (speed * tick) / 1000;
       if (guided && clock.current >= totalSeconds) {
         window.clearInterval(id);
-        save('guided', totalSeconds);
+        saveRef.current('guided', totalSeconds);
       } else setElapsed(clock.current);
-    }, 250);
+    }, tick);
     return () => window.clearInterval(id);
-  }, [recording, speed, guided, save]);
+  }, [recording, speed, guided, tick]);
 
   if (!lib) {
     return (
@@ -297,7 +304,10 @@ export default function Studio() {
                         icon: Download,
                         tone: 'neutral',
                         onPress: () => {
-                          downloadJson(`${r.id}.manifest.json`, { demo: data.demo, ...r });
+                          downloadJson(
+                            `${settingsConfig.export_file_prefix}-${r.id}.manifest.json`,
+                            { demo: data.demo, ...r },
+                          );
                           toast(copy.studio.exported);
                         },
                       },
@@ -321,7 +331,7 @@ export default function Studio() {
                 variant="quiet"
                 icon={Download}
                 onClick={() => {
-                  downloadJson('recordings.manifest.json', {
+                  downloadJson(`${settingsConfig.export_file_prefix}-recordings.manifest.json`, {
                     demo: data.demo,
                     recordings: lib.recordings,
                   });

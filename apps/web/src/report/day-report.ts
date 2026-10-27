@@ -42,6 +42,11 @@ export function buildDayReport(
     delta_points: comparison ? Math.round(comparison.delta * 100) : undefined,
     afternoon_drift_share: driftShareFrom(day, config.afternoon_from_hour) ?? undefined,
     longest_drift_minutes: drift?.minutes,
+    afternoon_drift_minutes:
+      day
+        .filter((b) => b.minute >= config.afternoon_from_hour * 60)
+        .reduce((s, b) => s + b.drift_s, 0) / 60,
+    worst_hour_share: worst?.share,
   };
   const slots = {
     afternoon_from: clock(config.afternoon_from_hour * 60),

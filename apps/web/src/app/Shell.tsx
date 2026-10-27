@@ -179,7 +179,7 @@ export function ShortcutSheet({ open, onClose }: { open: boolean; onClose: () =>
 
 /** The frame around every screen: navigation (sidebar on desktop, tab bar on the phone), the demo banner and shortcuts. */
 export function Shell({ name, children }: { name: string; children: ReactNode }) {
-  const { route, path, navigate } = useRouter();
+  const { route, location, navigate } = useRouter();
   const { data } = useData();
   const sentinel = useSentinel();
   const live = useSession();
@@ -242,7 +242,7 @@ export function Shell({ name, children }: { name: string; children: ReactNode })
           className="mx-auto max-w-5xl px-(--space-gutter) pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-20"
         >
           <ViewTransition
-            key={path}
+            key={location}
             default="none"
             enter={{
               'nav-forward': 'nav-forward',

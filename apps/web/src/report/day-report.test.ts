@@ -42,3 +42,26 @@ describe('format', () => {
     expect(points(-0.04, copy.units)).toBe('−4 points');
   });
 });
+
+describe('observation rules', () => {
+  const mk = (minute: number, drift: boolean) => ({
+    sessionId: 's',
+    day: '2026-10-26',
+    minute,
+    good_s: drift ? 0 : 60,
+    drift_s: drift ? 60 : 0,
+    absent_s: 0,
+    unknown_s: 0,
+    dominant: drift ? ('slouch' as const) : ('upright' as const),
+  });
+
+  it('does not blame the afternoon for a near-perfect day with two late drift minutes', () => {
+    const day = [
+      ...Array.from({ length: 200 }, (_, i) => mk(9 * 60 + i, false)),
+      mk(15 * 60 + 10, true),
+      mk(15 * 60 + 11, true),
+    ];
+    const r = buildDayReport(day, '2026-10-26', reportConfig, copy);
+    expect(r.observation).not.toMatch(/after/);
+  });
+});

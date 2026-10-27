@@ -134,8 +134,9 @@ export function dayStreaks(
 }
 
 /**
- * One letter per step of `stepMinutes` from the first sitting step to the last: G good, D drift,
- * A away (away, unwatched, or no session), by whichever held the most seconds of the step.
+ * One letter per step of `stepMinutes` from the first bucket's step to the last: A when away,
+ * unwatched or empty time outweighs the sitting time of the step, else D when drift outweighs good,
+ * else G. So a step reads as sitting whenever sitting held at least half of it.
  */
 export function ribbon(
   buckets: MinuteBucket[],
@@ -207,7 +208,7 @@ const compare = {
 };
 
 /**
- * The first rule whose conditions all hold, with `{slot}`s filled from `slots`, then from metrics.
+ * The first rule whose conditions all hold, with `{slot}`s filled from `slots`.
  * A condition on a metric that is missing does not hold.
  */
 export function pickObservation(
@@ -222,9 +223,6 @@ export function pickObservation(
     }),
   );
   if (!rule) return null;
-  return rule.text.replaceAll(/\{(\w+)\}/g, (slot, key: string) => {
-    if (slots[key] !== undefined) return slots[key];
-    const v = metrics[key];
-    return v === undefined ? slot : String(v);
-  });
+  // Slots are filled only from pre-formatted text, so numbers keep the copy's units and signs.
+  return rule.text.replaceAll(/\{(\w+)\}/g, (slot, key: string) => slots[key] ?? slot);
 }

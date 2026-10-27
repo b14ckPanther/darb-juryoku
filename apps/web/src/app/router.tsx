@@ -13,6 +13,8 @@ import { matchRoute, navType, type Match } from './routes';
 
 interface RouterValue {
   path: string;
+  /** Path and query string. */
+  location: string;
   route: Match;
   navigate: (href: string) => void;
 }
@@ -30,7 +32,9 @@ export function RouterProvider({
   initialPath: string;
   children: ReactNode;
 }) {
-  const [path, setPath] = useState(initialPath);
+  // The location is the path plus the query string, so a change in either re-renders.
+  const [location, setLocation] = useState(() => initialPath + window.location.search);
+  const path = new URL(location, 'http://x').pathname;
   const route = matchRoute(path);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export function RouterProvider({
       const next = window.location.pathname;
       startTransition(() => {
         addTransitionType(navType(matchRoute(path).screen, matchRoute(next).screen));
-        setPath(next);
+        setLocation(next + window.location.search);
       });
     };
     window.addEventListener('popstate', onPop);
@@ -47,16 +51,17 @@ export function RouterProvider({
 
   const navigate = (href: string) => {
     const url = new URL(href, window.location.href);
-    if (url.pathname === path && url.search === window.location.search) return;
-    window.history.pushState(null, '', url.pathname + url.search);
+    const next = url.pathname + url.search;
+    if (next === location) return;
+    window.history.pushState(null, '', next + url.hash);
     startTransition(() => {
       addTransitionType(navType(route.screen, matchRoute(url.pathname).screen));
-      setPath(url.pathname);
+      setLocation(next);
     });
     window.scrollTo({ top: 0 });
   };
 
-  return <RouterContext value={{ path, route, navigate }}>{children}</RouterContext>;
+  return <RouterContext value={{ path, location, route, navigate }}>{children}</RouterContext>;
 }
 
 export function useRouter(): RouterValue {

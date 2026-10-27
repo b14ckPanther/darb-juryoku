@@ -24,9 +24,14 @@ export const parseLibrary = makeConfigParser<Library>(librarySchema, (lib) => [
 ]);
 
 export const parseSeedSessions = makeConfigParser<SeedSessions>(sessionsSchema, (s) =>
-  s.sessions.flatMap((x) =>
-    [...x.minutes].filter((c) => !s.codes[c]).map((c) => `${x.id} uses unknown letter "${c}"`),
-  ),
+  s.sessions.flatMap((x) => {
+    const [h = 0, m = 0] = x.start.split(':').map(Number);
+    const late = h * 60 + m + x.minutes.length > 24 * 60 ? [`${x.id} runs past midnight`] : [];
+    return [
+      ...late,
+      ...[...x.minutes].filter((c) => !s.codes[c]).map((c) => `${x.id} uses unknown letter "${c}"`),
+    ];
+  }),
 );
 
 /** One full-minute bucket per letter of each session. */

@@ -110,7 +110,7 @@ export default function Calibrate() {
         >
           <GoldenOutline
             fixture={poseFixture}
-            match={step === 'frame' ? 0.55 : 1}
+            match={step === 'frame' ? lib.playback.match_framing : 1}
             label={step === 'confirm' ? copy.calibrate.outline_label : copy.calibrate.guide_label}
             className="absolute inset-0"
           />

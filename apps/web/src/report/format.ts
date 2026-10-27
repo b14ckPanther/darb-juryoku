@@ -43,3 +43,7 @@ export const weekdayName = (date: string, locale: string) =>
 /** The clock time `minutes` from now, for "Snoozed until 15:42". */
 export const clockAfter = (minutes: number, now: Date = new Date()) =>
   clock(now.getHours() * 60 + now.getMinutes() + minutes);
+
+/** The date `n` days after a local date ('2026-10-26'), as a date string. */
+export const addDays = (date: string, n: number) =>
+  new Date(Date.parse(`${date}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);

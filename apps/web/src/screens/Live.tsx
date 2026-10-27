@@ -53,10 +53,15 @@ export default function Live() {
     !session.ended &&
     match < playback.state_from.upright;
 
+  const run = useRef(session.startedAt);
+
   useEffect(() => {
     if (!playback) return;
+    // A new session starts with no drift history and no nudge.
+    const fresh = run.current !== session.startedAt;
+    run.current = session.startedAt;
     timer.current = stepNudge(
-      timer.current,
+      fresh ? initialNudgeTimer : timer.current,
       session.elapsed(),
       drifting,
       playback.nudge_after_seconds,
@@ -124,7 +129,7 @@ export default function Live() {
           {preview === 'fallback' && <Banner tone="warning">{copy.live.fallback}</Banner>}
           <div className="relative">
             <Mirror
-              match={absent || session.paused ? 0.5 : match}
+              match={absent || session.paused ? playback.match_when_still : match}
               label={copy.live.image_label}
               state={absent ? copy.posture.absent : s.word}
               posture={s.posture}
@@ -184,7 +189,13 @@ export default function Live() {
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
             <Button
               icon={PictureInPicture2}
-              onClick={() => (sentinel.supported ? void sentinel.open() : navigate('/sentinel'))}
+              onClick={() =>
+                sentinel.isOpen
+                  ? sentinel.close()
+                  : sentinel.supported
+                    ? void sentinel.open()
+                    : navigate('/sentinel')
+              }
             >
               {sentinel.isOpen ? copy.sentinel.close : copy.live.open_sentinel}
             </Button>

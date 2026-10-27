@@ -65,8 +65,8 @@ const letter = Object.fromEntries(Object.entries(STATE_CODES).map(([k, v]) => [v
 const WEEKDAYS: Weekday[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const toUtc = (date: string) => new Date(`${date}T00:00:00Z`);
 export const weekdayOf = (date: string): Weekday => WEEKDAYS[toUtc(date).getUTCDay()] ?? 'mon';
-export const addDays = (date: string, n: number) =>
-  new Date(toUtc(date).getTime() + n * 86_400_000).toISOString().slice(0, 10);
+export { addDays } from '../report/format';
+import { addDays } from '../report/format';
 const clock = (minute: number) =>
   `${String(Math.floor(minute / 60)).padStart(2, '0')}:${String(minute % 60).padStart(2, '0')}`;
 const minuteOf = (hhmm: string) => {
