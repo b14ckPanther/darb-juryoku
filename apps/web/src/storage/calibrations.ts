@@ -8,7 +8,7 @@ export async function saveCalibration(d: JuryokuDb, c: Omit<StoredCalibration, '
   });
 }
 
-export async function useCalibration(d: JuryokuDb, id: string) {
+export async function selectCalibration(d: JuryokuDb, id: string) {
   await d.transaction('rw', d.calibrations, async () => {
     await d.calibrations.toCollection().modify((c) => {
       c.active = c.id === id;

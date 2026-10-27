@@ -95,8 +95,8 @@ states:
   not_found_title: This page does not exist
   not_found_body: Check the address, or go back to the live mirror.
   not_found_action: Open Live
-  pending_title: Live tracking is not built yet
-  pending_body: The camera and pose pipeline arrive in the next build. The demo shows the whole flow on a synthetic sitter.
+  pending_title: This part is not built yet
+  pending_body: It arrives in a later build. The demo shows it on a synthetic sitter.
   pending_action: Open the demo
 
 welcome:
@@ -159,6 +159,9 @@ calibrate:
   saved: Calibration saved
   saved_title: Saved calibrations
   saved_footer: Calibrate again whenever you move the camera or change chairs.
+  need_person: Sit in frame so Juryoku can see your head and shoulders.
+  hold_failed: Juryoku could not see you for most of the hold. Sit in frame and try again.
+  stale: 'Calibrate again: the feature list changed since this one was taken.'
   in_use: In use
   use_this: Use {name}
   switched: Now using {name}
@@ -188,6 +191,17 @@ live:
   ended_body: Its minutes are in today's report.
   start: Start a new session
   report: Open today's report
+  calibrate_first_title: Calibrate before the first session
+  calibrate_first_body: Juryoku compares you with the posture you choose. It takes a few seconds.
+  calibrate_first_action: Calibrate
+  camera_off_title: The camera is off
+  camera_off_body: Start the camera to see your outline. The image stays on this device.
+  camera_on: Start camera
+  starting: Starting the camera and the pose model
+  pose_failed_title: The pose model did not load
+  pose_failed_body: 'Reload the page to try again. Details: {detail}'
+  no_person: Nobody in frame
+  video_label: Your camera image, darkened, with the gold outline of your calibrated posture
 
 sentinel:
   title: Sentinel

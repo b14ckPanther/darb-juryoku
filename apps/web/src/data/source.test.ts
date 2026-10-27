@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { bucketsFromSeed, loadDemoSnapshot, parseLibrary } from './demo-seed';
 import { resolveDemo } from './mode';
-import { loadSnapshot } from './source';
+import { emptySnapshot, loadSnapshot } from './source';
 
 describe('resolveDemo', () => {
   it('follows ?demo=1 and ?demo=0 over everything else', () => {
@@ -25,7 +25,9 @@ describe('loadSnapshot', () => {
 
   it('never touches the seed outside demo mode', async () => {
     const loadDemo = vi.fn();
-    const snap = await loadSnapshot(false, new Date(2026, 9, 27, 10), loadDemo);
+    const snap = await loadSnapshot(false, new Date(2026, 9, 27, 10), loadDemo, async (now) =>
+      emptySnapshot(now),
+    );
     expect(loadDemo).not.toHaveBeenCalled();
     expect(snap).toEqual({
       demo: false,

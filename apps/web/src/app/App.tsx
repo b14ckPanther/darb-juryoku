@@ -17,6 +17,7 @@ import { RouterProvider, useRouter } from './router';
 import type { ScreenId } from './routes';
 import { SentinelProvider } from './sentinel';
 import { SessionProvider } from './session';
+import { LiveProvider, useLive } from './live';
 import { Shell } from './Shell';
 import { ToastProvider } from './toast';
 
@@ -36,12 +37,14 @@ const designRoutes: Record<string, LazyExoticComponent<ComponentType>> = {
 };
 
 const screens: Record<
-  Exclude<ScreenId, 'day' | 'today' | 'not_found'>,
+  Exclude<ScreenId, 'day' | 'today' | 'not_found'> | 'live_real' | 'calibrate_real',
   LazyExoticComponent<ComponentType>
 > = {
   live: lazy(() => import('../screens/Live')),
   welcome: lazy(() => import('../screens/Welcome')),
   calibrate: lazy(() => import('../screens/Calibrate')),
+  live_real: lazy(() => import('../screens/real/LiveReal')),
+  calibrate_real: lazy(() => import('../screens/real/CalibrateReal')),
   sentinel: lazy(() => import('../screens/Sentinel')),
   nudges: lazy(() => import('../screens/Nudges')),
   history: lazy(() => import('../screens/History')),
@@ -55,8 +58,19 @@ const Day = lazy(() => import('../screens/Report').then((m) => ({ default: m.Day
 function Screen() {
   const { route } = useRouter();
   const { data } = useData();
-  // Real mode has nothing to show until the camera pipeline lands, so first run starts at Welcome.
-  const screen = route.screen === 'live' && !data.demo ? 'welcome' : route.screen;
+  const live = useLive();
+  // Real mode: first run (nothing calibrated, camera off) starts at Welcome; the camera screens
+  // run on the live camera instead of the demo playback.
+  const firstRun = !data.demo && !live.calibration && live.camera.kind !== 'live';
+  const screen = data.demo
+    ? route.screen
+    : route.screen === 'live'
+      ? firstRun
+        ? 'welcome'
+        : 'live_real'
+      : route.screen === 'calibrate'
+        ? 'calibrate_real'
+        : route.screen;
   if (screen === 'not_found')
     return (
       <div className="pt-10">
@@ -151,15 +165,17 @@ function AppBody({
   return (
     <RouterProvider initialPath={path}>
       <PrefsProvider camera={camera}>
-        <SessionProvider>
-          <SentinelProvider forceUnsupported={forceUnsupported}>
-            <Shell name={name}>
-              <Suspense fallback={<PageSkeleton label={copy.states.loading} />}>
-                <Screen />
-              </Suspense>
-            </Shell>
-          </SentinelProvider>
-        </SessionProvider>
+        <LiveProvider>
+          <SessionProvider>
+            <SentinelProvider forceUnsupported={forceUnsupported}>
+              <Shell name={name}>
+                <Suspense fallback={<PageSkeleton label={copy.states.loading} />}>
+                  <Screen />
+                </Suspense>
+              </Shell>
+            </SentinelProvider>
+          </SessionProvider>
+        </LiveProvider>
       </PrefsProvider>
     </RouterProvider>
   );

@@ -2,9 +2,11 @@ import { createContext, use, useEffect, useReducer, useState, type ReactNode } f
 import { copy } from '../copy';
 import { loadSnapshot } from '../data/source';
 import type { Calibration, DataSnapshot, Recording } from '../data/types';
+import type { MinuteBucket } from '../report/types';
 
 export type DataAction =
   | { type: 'delete_day'; date: string }
+  | { type: 'add_minutes'; minutes: MinuteBucket[] }
   | { type: 'use_calibration'; id: string }
   | { type: 'add_calibration'; calibration: Omit<Calibration, 'active'> }
   | { type: 'use_model'; name: string | null }
@@ -25,6 +27,8 @@ export function dataReducer(s: DataSnapshot, a: DataAction): DataSnapshot {
       };
     case 'reset':
       return a.snapshot;
+    case 'add_minutes':
+      return { ...s, buckets: [...s.buckets, ...a.minutes] };
   }
   if (!lib) return s;
   switch (a.type) {

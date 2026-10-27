@@ -40,7 +40,7 @@ export function LargeTitle({ title, subtitle, trailing }: LargeTitleProps) {
           aria-hidden={!compact}
           className={cx(
             'font-ui text-subhead font-semibold transition-opacity duration-(--duration-base)',
-            compact ? 'opacity-100' : 'opacity-0',
+            compact ? 'visible opacity-100' : 'invisible opacity-0',
           )}
         >
           {title}

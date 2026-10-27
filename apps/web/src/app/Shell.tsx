@@ -26,6 +26,7 @@ import { Link, useRouter } from './router';
 import type { ScreenId } from './routes';
 import { useSentinel } from './sentinel';
 import { useSession } from './session';
+import { useLive } from './live';
 import { shortcutFor } from './shortcuts';
 import { useTheme, type ThemeName } from './theme';
 
@@ -183,6 +184,7 @@ export function Shell({ name, children }: { name: string; children: ReactNode })
   const { data } = useData();
   const sentinel = useSentinel();
   const live = useSession();
+  const real = useLive();
   const [help, setHelp] = useState(false);
   useTheme();
 
@@ -203,15 +205,19 @@ export function Shell({ name, children }: { name: string; children: ReactNode })
       e.preventDefault();
       if (action === 'help') setHelp(true);
       if (action === 'calibrate') navigate('/calibrate');
-      if (action === 'pause' && data.library) live.togglePause();
+      if (action === 'pause') {
+        if (data.demo) live.togglePause();
+        else if (real.camera.kind === 'live') real.togglePause();
+      }
       if (action === 'sentinel') {
-        if (sentinel.supported && data.library) void sentinel.open();
+        if (sentinel.supported && (data.library || real.camera.kind === 'live'))
+          void sentinel.open();
         else navigate('/sentinel');
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [navigate, sentinel, live, data.library]);
+  }, [navigate, sentinel, live, real, data.demo, data.library]);
 
   const tabs = [
     { id: 'today', label: copy.nav.today, icon: Sun, href: '/today' },

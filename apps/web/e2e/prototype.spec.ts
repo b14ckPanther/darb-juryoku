@@ -125,8 +125,9 @@ for (const width of [360, 390, 430]) {
       await page.goto('/today?demo=1');
       const tabs = page.getByRole('navigation', { name: copy.nav['tabs_label'] });
       await expect(tabs).toBeVisible();
-      for (const [path] of screens) {
+      for (const [path, heading] of screens) {
         await page.goto(path);
+        await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
         await page.waitForTimeout(200);
         const overflow = await page.evaluate(
           () => document.documentElement.scrollWidth - window.innerWidth,

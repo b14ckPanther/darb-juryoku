@@ -20,3 +20,5 @@ outline:
   temple_inset: 0.07 # temples inward from the ears
   crown_up: 1.25 # top of the head above the ear midpoint
   arm_spread: 0.65 # upper arms outward from the shoulders, in half shoulder widths, to the frame edge
+# The live camera image behind the outline, darkened so it reads as a backdrop (UI_DESIGN section 1).
+backdrop: { brightness: 0.5, saturate: 0.55 }

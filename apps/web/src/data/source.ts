@@ -13,6 +13,20 @@ export const emptySnapshot = (now: Date): DataSnapshot => ({
 });
 
 type DemoLoader = () => Promise<DataSnapshot>;
+type RealLoader = (now: Date) => Promise<DataSnapshot>;
+
+/** Real mode reads what the live session stored on this device; no storage means nothing yet. */
+const readReal: RealLoader = async (now) => {
+  try {
+    const [{ db }, { readSnapshot }] = await Promise.all([
+      import('../storage/db'),
+      import('../storage/minutes'),
+    ]);
+    return await readSnapshot(db(), now);
+  } catch {
+    return emptySnapshot(now);
+  }
+};
 
 const importDemo: DemoLoader = async () => (await import('./demo-seed')).loadDemoSnapshot();
 
@@ -21,6 +35,7 @@ export async function loadSnapshot(
   demo: boolean,
   now: Date = new Date(),
   loadDemo: DemoLoader = importDemo,
+  loadReal: RealLoader = readReal,
 ): Promise<DataSnapshot> {
-  return demo ? loadDemo() : emptySnapshot(now);
+  return demo ? loadDemo() : loadReal(now);
 }

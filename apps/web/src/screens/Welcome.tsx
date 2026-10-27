@@ -4,26 +4,14 @@ import markUrl from '../../../../brand/exports/svg/mark-gold.svg?url';
 import { useData } from '../app/data';
 import { previewState } from '../app/preview';
 import { useRouter } from '../app/router';
+import { useLive } from '../app/live';
 import { rememberDemoMode } from '../data/mode';
 import { copy } from '../copy';
 import { Button } from '../ui/button';
 import { PostureGlyph } from '../ui/glyphs';
 import { PermissionPrompt } from '../ui/states';
-import { Notice } from './Page';
 
-type CameraState = 'idle' | 'granted' | 'denied' | 'missing';
-
-/** Asks the browser for the camera, then releases it at once: Phase 3 only checks access. */
-async function checkCamera(): Promise<CameraState> {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    stream.getTracks().forEach((track) => track.stop());
-    return 'granted';
-  } catch (e) {
-    const name = e instanceof DOMException ? e.name : '';
-    return name === 'NotFoundError' || name === 'OverconstrainedError' ? 'missing' : 'denied';
-  }
-}
+type CameraState = 'idle' | 'denied' | 'missing' | 'error';
 
 function Node({
   icon,
@@ -57,6 +45,7 @@ function Node({
 export default function Welcome() {
   const { data } = useData();
   const { navigate } = useRouter();
+  const live = useLive();
   const preview = previewState(data.demo);
   const [camera, setCamera] = useState<CameraState>(
     preview === 'denied' || preview === 'missing' ? preview : 'idle',
@@ -65,7 +54,10 @@ export default function Welcome() {
 
   const allow = async () => {
     if (data.demo) return navigate('/calibrate');
-    setCamera(await checkCamera());
+    const state = await live.start();
+    if (state.kind === 'live') navigate('/calibrate');
+    else if (state.kind === 'denied' || state.kind === 'missing' || state.kind === 'error')
+      setCamera(state.kind);
   };
 
   return (
@@ -152,20 +144,11 @@ export default function Welcome() {
           )}
         </div>
       )}
-      {(camera === 'denied' || camera === 'missing') && (
+      {camera !== 'idle' && (
         <PermissionPrompt
-          state={camera}
-          {...copy.welcome.permission[camera]}
+          state={camera === 'denied' ? 'denied' : 'missing'}
+          {...copy.welcome.permission[camera === 'denied' ? 'denied' : 'missing']}
           onAction={() => void allow()}
-        />
-      )}
-      {camera === 'granted' && (
-        <Notice
-          icon={ScanFace}
-          title={copy.states.pending_title}
-          body={copy.states.pending_body}
-          action={copy.states.pending_action}
-          onAction={() => window.location.assign('/?demo=1')}
         />
       )}
     </div>

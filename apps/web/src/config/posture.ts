@@ -67,6 +67,7 @@ export interface PoseConfig {
     crown_up: number;
     arm_spread: number;
   };
+  backdrop: { brightness: number; saturate: number };
 }
 
 export const parseFeaturesConfig = makeConfigParser<FeaturesConfig>(featuresSchema, (c) =>

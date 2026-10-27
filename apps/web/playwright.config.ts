@@ -13,10 +13,18 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      // SwiftShader gives headless Chromium a software WebGL2 so the overlay renders in CI.
+      // SwiftShader gives headless Chromium a software WebGL2 so the overlay renders in CI. The fake
+      // camera is Chromium's own synthetic test pattern: no person, never a recording of anyone.
       use: {
         ...devices['Desktop Chrome'],
-        launchOptions: { args: ['--enable-unsafe-swiftshader'] },
+        permissions: ['camera'],
+        launchOptions: {
+          args: [
+            '--enable-unsafe-swiftshader',
+            '--use-fake-device-for-media-stream',
+            '--use-fake-ui-for-media-stream',
+          ],
+        },
       },
     },
   ],

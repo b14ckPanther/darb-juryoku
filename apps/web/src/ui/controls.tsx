@@ -45,7 +45,7 @@ export function SegmentedControl({
     <div
       role="radiogroup"
       aria-label={label}
-      className="relative inline-grid auto-cols-fr grid-flow-col rounded-control bg-surface-overlay p-1"
+      className="relative inline-grid auto-cols-fr grid-flow-col rounded-control bg-surface-overlay p-0.5"
     >
       {options.map((option, i) => {
         const selected = option === value;
@@ -62,7 +62,7 @@ export function SegmentedControl({
             onClick={() => onChange(option)}
             onKeyDown={(e) => move(e, i)}
             className={cx(
-              'pressable relative min-h-[calc(var(--touch-min)-0.5rem)] px-4 text-subhead font-medium',
+              'pressable relative min-h-(--touch-min) px-4 text-subhead font-medium',
               orientation === 'horizontal'
                 ? 'rounded-control'
                 : 'min-h-(--touch-min) rounded-[calc(var(--radius-container)-4px)] text-left',

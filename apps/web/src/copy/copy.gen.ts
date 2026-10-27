@@ -163,6 +163,9 @@ export interface Copy {
     saved: string;
     saved_title: string;
     saved_footer: string;
+    need_person: string;
+    hold_failed: string;
+    stale: string;
     in_use: string;
     use_this: string;
     switched: string;
@@ -192,6 +195,17 @@ export interface Copy {
     ended_body: string;
     start: string;
     report: string;
+    calibrate_first_title: string;
+    calibrate_first_body: string;
+    calibrate_first_action: string;
+    camera_off_title: string;
+    camera_off_body: string;
+    camera_on: string;
+    starting: string;
+    pose_failed_title: string;
+    pose_failed_body: string;
+    no_person: string;
+    video_label: string;
   };
   sentinel: {
     title: string;

@@ -14,7 +14,8 @@
     "min_pose_detection_confidence",
     "min_pose_presence_confidence",
     "min_tracking_confidence",
-    "outline"
+    "outline",
+    "backdrop"
   ],
   "properties": {
     "wasm_base": {
@@ -103,6 +104,26 @@
           "type": "number",
           "minimum": 0,
           "maximum": 3
+        }
+      }
+    },
+    "backdrop": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "brightness",
+        "saturate"
+      ],
+      "properties": {
+        "brightness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "saturate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
         }
       }
     }

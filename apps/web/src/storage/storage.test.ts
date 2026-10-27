@@ -5,7 +5,7 @@ import {
   deleteEverything,
   listCalibrations,
   saveCalibration,
-  useCalibration,
+  selectCalibration,
 } from './calibrations';
 import { JuryokuDb } from './db';
 import { readSnapshot, writeMinutes } from './minutes';
@@ -30,7 +30,7 @@ describe('calibration storage', () => {
     await saveCalibration(d, cal('a', 1));
     await saveCalibration(d, cal('b', 2));
     expect((await activeCalibration(d))?.id).toBe('b');
-    await useCalibration(d, 'a');
+    await selectCalibration(d, 'a');
     expect((await listCalibrations(d)).map((c) => [c.id, c.active])).toEqual([
       ['a', true],
       ['b', false],
