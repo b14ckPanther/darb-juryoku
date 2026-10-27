@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/seed/demo/recipe.schema.json",
+  "title": "Demo only: recipe for the synthetic sitter's minute buckets",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "end_date",
+    "days",
+    "rng_seed",
+    "device",
+    "model_version",
+    "workday_sessions",
+    "weekend_sessions",
+    "weekend_session_chance",
+    "jitter_minutes",
+    "drift_by_hour",
+    "weekday_shift",
+    "drift_mix",
+    "mean_drift_run_minutes",
+    "away",
+    "unwatched"
+  ],
+  "$defs": {
+    "share": { "type": "number", "minimum": 0, "maximum": 1 },
+    "range": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "clock": { "type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$" },
+    "sessions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["start", "minutes"],
+        "properties": {
+          "start": { "$ref": "#/$defs/clock" },
+          "minutes": { "$ref": "#/$defs/range" }
+        }
+      }
+    }
+  },
+  "properties": {
+    "end_date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "days": { "type": "integer", "minimum": 1, "maximum": 366 },
+    "rng_seed": { "type": "integer" },
+    "device": { "type": "string", "minLength": 1 },
+    "model_version": { "type": "string", "minLength": 1 },
+    "workday_sessions": { "$ref": "#/$defs/sessions" },
+    "weekend_sessions": { "$ref": "#/$defs/sessions" },
+    "weekend_session_chance": { "$ref": "#/$defs/share" },
+    "jitter_minutes": { "type": "integer", "minimum": 0 },
+    "drift_by_hour": {
+      "type": "object",
+      "propertyNames": { "pattern": "^([0-9]|1[0-9]|2[0-3])$" },
+      "additionalProperties": { "$ref": "#/$defs/share" }
+    },
+    "weekday_shift": {
+      "type": "object",
+      "propertyNames": { "enum": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] },
+      "additionalProperties": { "type": "number", "minimum": -1, "maximum": 1 }
+    },
+    "drift_mix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slouch", "forward_head", "lean_side"],
+      "properties": {
+        "slouch": { "$ref": "#/$defs/share" },
+        "forward_head": { "$ref": "#/$defs/share" },
+        "lean_side": { "$ref": "#/$defs/share" }
+      }
+    },
+    "mean_drift_run_minutes": { "type": "number", "exclusiveMinimum": 1 },
+    "away": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chance_per_minute", "minutes"],
+      "properties": {
+        "chance_per_minute": { "$ref": "#/$defs/share" },
+        "minutes": { "$ref": "#/$defs/range" }
+      }
+    },
+    "unwatched": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chance_per_session", "minutes"],
+      "properties": {
+        "chance_per_session": { "$ref": "#/$defs/share" },
+        "minutes": { "$ref": "#/$defs/range" }
+      }
+    }
+  }
+}

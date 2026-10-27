@@ -18,7 +18,7 @@ export class ConfigError extends Error {
 const ajv = new Ajv2020({ allErrors: true });
 const validateApp = ajv.compile<AppConfig>(appSchema);
 
-function describeError(error: ErrorObject): string {
+export function describeError(error: ErrorObject): string {
   const path = error.instancePath || '/';
   if (error.keyword === 'additionalProperties') {
     return `${path}: unknown key "${String(error.params['additionalProperty'])}"`;

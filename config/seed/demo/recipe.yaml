@@ -1,0 +1,39 @@
+# Demo only. The recipe for a synthetic sitter's three weeks. `pnpm --filter web seed` turns it into
+# sessions.yaml with a seeded random generator, so the same recipe always gives the same minutes.
+# Nothing here or in sessions.yaml is a real measurement or a real person.
+end_date: '2026-10-26' # the demo's "today"
+days: 21
+rng_seed: 26
+device: FaceTime HD Camera
+model_version: v3
+# Sittings on a working day. Each start moves by up to `jitter_minutes` either way.
+workday_sessions:
+  - { start: '09:05', minutes: [140, 185] }
+  - { start: '13:25', minutes: [150, 215] }
+  - { start: '18:10', minutes: [0, 75] } # some evenings, sometimes none
+weekend_sessions:
+  - { start: '10:40', minutes: [45, 110] }
+weekend_session_chance: 0.45
+jitter_minutes: 18
+# Share of sitting time spent drifting, by clock hour: the afternoon slump.
+drift_by_hour:
+  '9': 0.1
+  '10': 0.09
+  '11': 0.13
+  '12': 0.18
+  '13': 0.22
+  '14': 0.3
+  '15': 0.42
+  '16': 0.38
+  '17': 0.3
+  '18': 0.24
+  '19': 0.26
+  '20': 0.28
+# Added to the hourly share on some weekdays: the Friday drop.
+weekday_shift: { mon: 0.02, fri: 0.14 }
+# Which kind of drift a drift run is.
+drift_mix: { slouch: 0.45, forward_head: 0.4, lean_side: 0.15 }
+mean_drift_run_minutes: 7
+away: { chance_per_minute: 0.012, minutes: [3, 9] }
+# A hidden tab in a browser without the sentinel: minutes the app could not watch.
+unwatched: { chance_per_session: 0.15, minutes: [6, 16] }

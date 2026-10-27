@@ -1,0 +1,131 @@
+# Demo only. Calibrations, released models with eval and latency numbers, and Dataset Studio
+# recordings for the synthetic sitter. Invented to show the screens; none of it was measured.
+calibrations:
+  - { id: cal-desk, name: Desk, camera: FaceTime HD Camera, created: '2026-10-05', active: true }
+  - {
+      id: cal-kitchen,
+      name: Kitchen table,
+      camera: FaceTime HD Camera,
+      created: '2026-10-12',
+      active: false,
+    }
+  - {
+      id: cal-external,
+      name: Desk with the external camera,
+      camera: Studio Display Camera,
+      created: '2026-10-19',
+      active: false,
+    }
+
+cameras: [FaceTime HD Camera, Studio Display Camera]
+
+classes: [upright, slouch, forward_head, lean_side]
+
+# The release gates as the Phase 1 spec (section 9) sets them. ml/configs/gates.yaml takes over in
+# Phase 6; until then the Model Lab shows these.
+gates: { macro_f1: 0.85, slouch_recall: 0.85, beats_heuristic: 0.05, wasm_p95_ms: 8 }
+
+heuristic:
+  # The same test sessions, classified by the fixed rules. Rows actual, columns predicted.
+  confusion:
+    - [372, 44, 21, 11]
+    - [61, 307, 32, 17]
+    - [31, 40, 259, 8]
+    - [16, 25, 8, 165]
+
+models:
+  - name: posture-tcn
+    version: v3
+    data_version: data-v2
+    released: '2026-10-22'
+    size_kb: 184
+    active: true
+    confusion:
+      - [412, 21, 9, 6]
+      - [28, 361, 17, 11]
+      - [12, 23, 298, 5]
+      - [9, 14, 4, 187]
+    latency_ms:
+      runs: 500
+      webgpu: { p50: 0.9, p95: 1.6, p99: 2.4 }
+      wasm: { p50: 1.7, p95: 2.6, p99: 3.9 }
+  - name: posture-gru
+    version: v2
+    data_version: data-v1
+    released: '2026-10-14'
+    size_kb: 236
+    active: false
+    confusion:
+      - [395, 31, 13, 9]
+      - [52, 327, 24, 14]
+      - [20, 30, 280, 8]
+      - [14, 18, 7, 175]
+    latency_ms:
+      runs: 500
+      webgpu: { p50: 1.3, p95: 2.2, p99: 3.1 }
+      wasm: { p50: 2.6, p95: 4.1, p99: 6.0 }
+
+recordings:
+  - {
+      id: rec-01,
+      date: '2026-10-08',
+      protocol: guided,
+      seconds: 302,
+      size_kb: 412,
+      lighting: morning,
+      chair: desk_chair,
+      camera: built_in,
+    }
+  - {
+      id: rec-02,
+      date: '2026-10-08',
+      protocol: guided,
+      seconds: 298,
+      size_kb: 405,
+      lighting: morning,
+      chair: desk_chair,
+      camera: built_in,
+    }
+  - {
+      id: rec-03,
+      date: '2026-10-13',
+      protocol: passive,
+      seconds: 3540,
+      size_kb: 4810,
+      lighting: afternoon,
+      chair: desk_chair,
+      camera: built_in,
+    }
+  - {
+      id: rec-04,
+      date: '2026-10-17',
+      protocol: guided,
+      seconds: 305,
+      size_kb: 418,
+      lighting: evening,
+      chair: kitchen_chair,
+      camera: built_in,
+    }
+  - {
+      id: rec-05,
+      date: '2026-10-21',
+      protocol: guided,
+      seconds: 300,
+      size_kb: 409,
+      lighting: afternoon,
+      chair: desk_chair,
+      camera: external,
+    }
+
+# The demo's live mirror: the synthetic track in pose-fixture.yaml plays through these match keys,
+# eased between them, and loops. A match at or above `state_from.upright` reads upright.
+playback:
+  seconds_per_key: 1.6
+  match:
+    [0.96, 0.96, 0.93, 0.86, 0.72, 0.55, 0.4, 0.31, 0.29, 0.33, 0.5, 0.74, 0.9, 0.97, 0.97, 0.96]
+  state_from: { upright: 0.75, drifting: 0.45 }
+  drift_class: forward_head
+
+# Dataset Studio in the demo runs the guided protocol this many times faster than real time, and
+# says so on screen. Real recordings always run at real time.
+studio_speed: 12

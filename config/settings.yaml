@@ -1,0 +1,11 @@
+# Defaults and choices for user settings. The user's choices are stored on the device and override
+# these. Validated against packages/schemas/config/settings.schema.json.
+sensitivity: { min: 1, max: 5, default: 3 }
+sample_rates_hz: [2, 5, 10]
+retention_days_options: [30, 90, 365]
+calibration_hold_seconds: 3
+budokai_enabled_default: false
+# Keyboard shortcuts (UI_DESIGN section 3), by KeyboardEvent.key.
+shortcuts: { pause: ' ', calibrate: c, sentinel: p, help: '?' }
+# The Document Picture-in-Picture sentinel window, in CSS pixels.
+sentinel_window: { width: 240, height: 180 }

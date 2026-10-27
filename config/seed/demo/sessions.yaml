@@ -1,0 +1,274 @@
+# Demo only. GENERATED from recipe.yaml by `pnpm --filter web seed`; do not edit by hand.
+# A synthetic sitter, not a real person. One letter per minute of each session; `codes` names them.
+codes:
+  u: upright
+  s: slouch
+  f: forward_head
+  l: lean_side
+  a: absent
+  x: unknown
+sessions:
+  - id: demo-2026-10-06-0914
+    date: 2026-10-06
+    start: 09:14
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssssssssuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-06-1329
+    date: 2026-10-06
+    start: 13:29
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuufaaaaauuuuaaaauullaaaaaaaaauuuuuuuuffffuuuuussuulllluuussuuuuuuaaaaaaaaauuuuufffffffffffffffffuuuusuuuuuuuuuuuuuffuuufffuuffffffffuuuuuuuuuuuussuuuuuffffffffuufffuuu
+  - id: demo-2026-10-07-0913
+    date: 2026-10-07
+    start: 09:13
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuufaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-07-1334
+    date: 2026-10-07
+    start: 13:34
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuufuuuuuuuuuussssssuuuuuuuuusuaaaaaauffffffuuullllllllllllllluuuuuuuuuuuuuuffffffffaaauuuuuuuuaaaaaauuuulllllllllxxxxxxxxxlllulluuuuuusssssssuuf
+  - id: demo-2026-10-07-1803
+    date: 2026-10-07
+    start: 18:03
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuaaaaaaaauuuuuuuuuuuuuuuuussuuuuu
+  - id: demo-2026-10-08-0923
+    date: 2026-10-08
+    start: 09:23
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuulllllllllllllllluuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-08-1338
+    date: 2026-10-08
+    start: 13:38
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuufffffffffffuuuuuuuuuuuuuuuuuuuuuuulllllluuuuuuuuuuuuuuuuuuuuufuuuuuuuuuufffffffffffuuuuuuuuuuuuuuuuuuuuuuuaaaaaaaaafuuuuffaaauuuuuuuuuuuuuuuuuuuuuuuuuuusssssssssuussssssu
+  - id: demo-2026-10-09-0849
+    date: 2026-10-09
+    start: 08:49
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuusssssuuuuuuuuffffuuuuuuuffffuuuuaaauuuuuulllllllllllllllllllllluuuuuuuuuuuuuuuuuuuuuuuaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-09-1321
+    date: 2026-10-09
+    start: 13:21
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuufffffffuuuuuuuuuuuuuuuuuuusuuuuuuuuuuuuuuuuufffuuuuuuuuuuuuuuuufusssuuuuuuuuaaaauuuufffffffffuuuuuuusssuuuusuaaaaaaalaaaaaaauuuuufffffuu
+  - id: demo-2026-10-09-1802
+    date: 2026-10-09
+    start: 18:02
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuufffuuuuuuuuuuuuuuuuullllluuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-12-0916
+    date: 2026-10-12
+    start: 09:16
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uffffffffffffuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuulllll
+  - id: demo-2026-10-12-1324
+    date: 2026-10-12
+    start: 13:24
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuulllllllluuuuuuuuuuuuuuuuuuuuuufffffffffffffffffffffffffffuuuuuuuuaaauuuuuuuuuuaaaaaauuuuuusssssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuluuuuuuuuffffffffffff
+  - id: demo-2026-10-12-1802
+    date: 2026-10-12
+    start: 18:02
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-13-0851
+    date: 2026-10-13
+    start: 08:51
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffffffffffffuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-13-1317
+    date: 2026-10-13
+    start: 13:17
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuffuuufffuuuuuuuuuuulllluuuuuuuuuuuuuuuuuuuuuffuuuuuuuuuuuuuuuuuuuuuuufffffffuuuuuuuuuuuuuuuuuuuuuuuuuxxxxxxxxxxxxxxxffffffffffffffffffffuuuuuuuuufffffffuuuusssuuulllluuuuuuuuuuuullllluuuuuuu
+  - id: demo-2026-10-14-0914
+    date: 2026-10-14
+    start: 09:14
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaaaaaauuuuuussuuuuuuuuuuaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-14-1333
+    date: 2026-10-14
+    start: 13:33
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuufffffffffuuuuuuuuuuuuuaaaaaaaaauuuuuuuufffffffffffffffuuuuuuuuuuufuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuussssssuuuuuuussuuuluuuuuufffffffffffffffff
+  - id: demo-2026-10-14-1806
+    date: 2026-10-14
+    start: 18:06
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuulllllllllllllllllllluuuuuuuuu
+  - id: demo-2026-10-15-0904
+    date: 2026-10-15
+    start: 09:04
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaauuuuuuuuuuaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuss
+  - id: demo-2026-10-15-1343
+    date: 2026-10-15
+    start: 13:43
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuufffffffffffffffffffuuuuuuuuuuuuuuuuuussssssuuuuuuuuuuuuuuuuuuuuusssufffffaaaaaauuuuuuuuuuuuffuussaaaaaauaaaaaaaauuuuuuuuuuuuuuaaaaaauuuufffffffffff
+  - id: demo-2026-10-15-1803
+    date: 2026-10-15
+    start: 18:03
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuu
+  - id: demo-2026-10-16-0907
+    date: 2026-10-16
+    start: 09:07
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuullllllllluuuaaaaaauuuuuussaaaaaaaaauuuuuuuuuuuuffffuuuuuuuuuuuuuuuuffffffffffffffuuuuuuuuuuuuufffffffuuuuuufffffffffffffffffffaaaaaaauu
+  - id: demo-2026-10-16-1319
+    date: 2026-10-16
+    start: 13:19
+    model: v3
+    device: FaceTime HD Camera
+    minutes: ullllllllluuuuuuuuuuuuuuuluuuuuuuufffffuuuufffffffuuuuuuxxxxxxxxuuuuuuuuuuuuuuuuuuuuuuusssssssssuuaaaaaallufffffuuuuulaaaaaaauuuuuufffffffffffuuuuuuuussss
+  - id: demo-2026-10-16-1801
+    date: 2026-10-16
+    start: 18:01
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuusssssuuuuuuuussssuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  - id: demo-2026-10-19-0905
+    date: 2026-10-19
+    start: 09:05
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuaaauuusssssuuuuuuuuuuuuuuuuuuuuuuuuuaaaaaaauuuufffffffaaauuuuuuuuuuuuuuuuuuuuuuuuuuaaxxxxxxxxxxxxxxxuuuuuuuuuusssssssssssssssullluuuuuuuuuuuuuuuuuuuuuuuuuaaaaaaaf
+  - id: demo-2026-10-19-1319
+    date: 2026-10-19
+    start: 13:19
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuffuuuuuuuuuuuuuuuuuuuuuaaaaaaaauuuuuffuuuuuuuuuuuuuuuuuuuuuuuuffffffffffuuuuuuuuuuuuuuuuluuuulllllllllllllllllllllllllluuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-19-1800
+    date: 2026-10-19
+    start: 18:00
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuufffffffffffuuuuuuuuuuuu
+  - id: demo-2026-10-20-0913
+    date: 2026-10-20
+    start: 09:13
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuufffffffuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaauuuuuuuuuuuuuuuuuuuuuuussuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuaaaaauuuuuuuuuuuuuuuuuuuuuusssssssuuuuuuu
+  - id: demo-2026-10-20-1332
+    date: 2026-10-20
+    start: 13:32
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffffuuuuluuuuuuuuussssssusuuuuuuuuuuuuusssssuusuusuuuuuuuuuuuuussssssssuuuuuullllllllllllluuuuuuuuaaaaaaaauuuuuuuuuuuuuussuuuuuuuuuuuuuu
+  - id: demo-2026-10-20-1823
+    date: 2026-10-20
+    start: 18:23
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuaaaaaaaaauuuuuuuuuuuuuuufffff
+  - id: demo-2026-10-21-0904
+    date: 2026-10-21
+    start: 09:04
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuaaaaauuuuufuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuullluuuuuuuuuuuuuuuaaaaaaaaauuuuuuuuuuuuuuuuuuuuuaaaaaaaauuaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-21-1315
+    date: 2026-10-21
+    start: 13:15
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuussssssssssssssssssssuuussssssssssssssssssssssssuuaaaaaaauuuuuuuuuuuuuuuuuuuuufffffffffffffffffuuuuuuuuuuuuuuuuuuuuuuufaaaauulluuuuuussuuuuuussssuuuusssssssssuuuullllllllluuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-21-1815
+    date: 2026-10-21
+    start: 18:15
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuffffffuuuuuuuuuffffffffffffffffuuuuuuuuuuuuuu
+  - id: demo-2026-10-22-0900
+    date: 2026-10-22
+    start: 09:00
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuaaauuuuuuuuuuuuuuuuuuuussssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuussssssuuuuuuuuuuuaaauuuuuuuuuuuuuuuuuuuuuuuaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  - id: demo-2026-10-22-1332
+    date: 2026-10-22
+    start: 13:32
+    model: v3
+    device: FaceTime HD Camera
+    minutes: ssssssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusuuuuusssssssssuuuuuuuuuuuuaaaaaauuuuuuuuuuuuuuuuuuuuuuufuuuuuuuuuuuuuuuuuuuuuuuuuusssssssssssssuuuuuuffuuuufffffffffffffffffffffffffuuuuuuuuuuuuuusss
+  - id: demo-2026-10-22-1820
+    date: 2026-10-22
+    start: 18:20
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuusssssssssuaaaaaaauuxxxxxxxxxxxxxxxxfffffaaaaaaaaauuuuuuuuuuuuuuuu
+  - id: demo-2026-10-23-0853
+    date: 2026-10-23
+    start: 08:53
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuaaaaaaauuuuuuaaaaaaaauuuuuuuuuuuuuuuuuuuuuufuuuuffffffffuuuuuuuuuuuuufuuuuuuuuuuuuuuuuuuuufffffffuuuuuuuuuuuuuuuffffffffffffffffffuuuuuuuuuuuuuuuusuuuusssssssssss
+  - id: demo-2026-10-23-1326
+    date: 2026-10-23
+    start: 13:26
+    model: v3
+    device: FaceTime HD Camera
+    minutes: sssuuuuufffuuuuuuuuuuuuuuuffuullllllllllllllulllllluuffffffffffffffffffffffffuuuuuuuuuuuuusssuuuuuuusullllllluuuffffuuuuuuuuuuuufffffffffffffffffffffuuuuuuuuuss
+  - id: demo-2026-10-23-1811
+    date: 2026-10-23
+    start: 18:11
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuullllluuusuuuuuuuuuuuuuuuuuuuuffffuuuuusssssuuuuuuuuu
+  - id: demo-2026-10-24-1056
+    date: 2026-10-24
+    start: 10:56
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuussssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuullll
+  - id: demo-2026-10-25-1052
+    date: 2026-10-25
+    start: 10:52
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuufffffffffffuuuu
+  - id: demo-2026-10-26-0902
+    date: 2026-10-26
+    start: 09:02
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuusaaaaaaaauuuuuuuuuuuuuuuuuuuufffuuuuuuuuussssssssssssssssssssssssssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuusuuuuuuusssssssaaaaaaauuuuuuuuuusssuuu
+  - id: demo-2026-10-26-1314
+    date: 2026-10-26
+    start: 13:14
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusuuuuuuuuuuusssssuuuuuuuuuuuuuuuuuuuuuuuuuuuusuuuuuuuuuuuuuuuuuuuuuuussssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssssssssuuulllllllllusssuuuuuussuuuu
+  - id: demo-2026-10-26-1803
+    date: 2026-10-26
+    start: 18:03
+    model: v3
+    device: FaceTime HD Camera
+    minutes: uuuuuuuuuuuuuuuuuuuuussssssuuuuuuuuuuuuuaaauuusssssssuuuussssssssuullll

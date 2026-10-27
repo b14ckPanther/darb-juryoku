@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/copy/en.schema.json",
+  "title": "Every user-facing string, by screen",
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "$ref": "#/$defs/node"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": {
+    "$ref": "#/$defs/node"
+  },
+  "required": [
+    "locale",
+    "app",
+    "nav",
+    "theme",
+    "demo",
+    "units",
+    "posture",
+    "classes",
+    "ribbon",
+    "charts",
+    "shortcuts",
+    "states",
+    "welcome",
+    "calibrate",
+    "live",
+    "sentinel",
+    "nudge",
+    "today",
+    "history",
+    "studio",
+    "lab",
+    "settings"
+  ]
+}

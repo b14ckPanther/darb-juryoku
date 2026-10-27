@@ -1,0 +1,15 @@
+# Dataset Studio guided protocol (ARCHITECTURE section 4). Validated against
+# packages/schemas/config/protocols/guided.schema.json. `label` is the class the step records;
+# `side` keeps the lean direction in the metadata (Phase 1 spec section 3).
+id: guided-v1
+steps:
+  - { id: upright, label: upright, seconds: 60 }
+  - { id: slouch, label: slouch, seconds: 60 }
+  - { id: forward_head, label: forward_head, seconds: 60 }
+  - { id: lean_left, label: lean_side, side: left, seconds: 60 }
+  - { id: lean_right, label: lean_side, side: right, seconds: 60 }
+passive:
+  prompts_per_hour: { min: 1, max: 3, default: 3 }
+lighting: [morning, afternoon, evening]
+chairs: [desk_chair, kitchen_chair]
+cameras: [built_in, external]

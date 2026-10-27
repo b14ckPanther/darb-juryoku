@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/nudges.schema.json",
+  "title": "Nudge escalation and limits",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "notify_after_minutes",
+    "cooldown_minutes",
+    "snooze_minutes",
+    "max_visible",
+    "style_default",
+    "chime_default",
+    "quiet_hours_default"
+  ],
+  "properties": {
+    "notify_after_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cooldown_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "snooze_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "max_visible": {
+      "const": 1
+    },
+    "style_default": {
+      "enum": ["glow", "glow_notify"]
+    },
+    "chime_default": {
+      "type": "boolean"
+    },
+    "quiet_hours_default": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "from", "to"],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "from": {
+          "type": "string",
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+        }
+      }
+    }
+  }
+}
