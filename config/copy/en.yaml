@@ -1,0 +1,456 @@
+# Every user-facing string in the app (agent manual 1.2). `{name}` marks a slot the code fills.
+# Validated against packages/schemas/config/copy/en.schema.json; `pnpm --filter web copy:types`
+# regenerates the TypeScript shape (apps/web/src/copy/copy.gen.ts), and a test fails if it drifts.
+locale: en-GB
+
+app:
+  name_kanji: 重力
+  skip: Skip to content
+  pip_title: Juryoku sentinel
+
+nav:
+  label: Main
+  tabs_label: Tabs
+  live: Live
+  today: Today
+  history: History
+  studio: Dataset Studio
+  lab: Model Lab
+  settings: Settings
+  calibrate: Calibrate
+  sentinel: Sentinel
+  nudges: Nudges
+  welcome: Welcome
+  back: Back
+
+theme:
+  label: Theme
+  dark: Night
+  light: Ivory
+
+demo:
+  banner: Demo data
+  detail: A synthetic sitter's three weeks. Nothing here is a real measurement.
+  leave: Leave demo
+  enter: Try the demo
+
+units:
+  minutes: '{n} min'
+  hours: '{h} h {m} min'
+  hours_even: '{h} h'
+  clock_range: '{from} to {to}'
+  points: '{sign}{n} points'
+  days: '{n} days'
+  day: '1 day'
+  kilobytes: '{n} KB'
+  seconds: '{n} s'
+  ms: '{n} ms'
+  per_second: '{n} per second'
+  plus: '+'
+  minus: '−'
+  none: None
+
+posture:
+  upright: Upright
+  slouch: Slouching
+  forward_head: Head forward
+  lean_side: Leaning
+  absent: Away
+  unknown: Not watched
+  paused: Paused
+
+classes:
+  upright: Upright
+  slouch: Slouch
+  forward_head: Head forward
+  lean_side: Lean
+
+ribbon:
+  title: The day in {minutes}-minute steps
+  G: Good posture
+  D: Drift
+  A: Away
+
+charts:
+  show_table: Show as table
+  hide_table: Hide table
+
+shortcuts:
+  title: Keyboard shortcuts
+  open: Keyboard shortcuts
+  close: Done
+  space: Space
+  pause: Pause or resume the session
+  calibrate: Calibrate
+  sentinel: Open the sentinel
+  help: Show these shortcuts
+  note: Shortcuts work anywhere except while typing in a field.
+
+states:
+  loading: Loading
+  error_title: This page could not load
+  error_body: 'The demo data did not load: {detail}'
+  retry: Try again
+  error_preview: 'config/seed/demo/sessions.yaml: a preview of a failed load'
+  not_found_title: This page does not exist
+  not_found_body: Check the address, or go back to the live mirror.
+  not_found_action: Open Live
+  pending_title: Live tracking is not built yet
+  pending_body: The camera and pose pipeline arrive in the next build. The demo shows the whole flow on a synthetic sitter.
+  pending_action: Open the demo
+
+welcome:
+  title: A quiet coach for how you sit while you code
+  lede: Juryoku watches your neck and shoulders through the camera, compares them with the posture you chose, and tells you gently when you drift.
+  privacy_title: Your camera image never leaves this device
+  privacy_body: Each picture is read in memory and dropped. Only minute totals are kept, on this device.
+  diagram_label: What happens to your camera image
+  diagram:
+    camera: Camera
+    camera_note: Read in memory
+    points: Pose points
+    points_note: Neck and shoulders
+    state: Posture
+    state_note: Upright, drifting or away
+    stored: Minute totals
+    stored_note: Kept on this device
+  never_title: Never saved, never sent
+  never_body: Pictures, video and pose points.
+  allow: Allow camera
+  demo: Try the demo first
+  permission:
+    prompt:
+      title: Juryoku needs your camera
+      body: It watches your neck and shoulders to tell good posture from drift. Your camera image never leaves this device and is never saved.
+      action: Allow camera
+    denied:
+      title: Camera access is blocked
+      body: Your browser blocked the camera for this site. Open the site settings in the address bar, allow the camera, then try again.
+      action: Try again
+    missing:
+      title: No camera found
+      body: Connect a camera, or close other apps that are using it, then try again.
+      action: Try again
+
+calibrate:
+  title: Calibrate
+  steps:
+    frame_title: Frame yourself
+    frame_body: Sit so your head and shoulders fill the guide.
+    hold_title: Sit the way you want to sit
+    hold_body: Then hold still for {seconds} seconds.
+    confirm_title: This is your outline
+    confirm_body: The gold line is the posture Juryoku will hold you to.
+  step_label: Step {n} of {total}
+  ready: I am framed
+  start_hold: Start the hold
+  holding: Hold still
+  seconds_left: '{n} seconds left'
+  cancel: Cancel
+  use: Use this outline
+  redo: Redo
+  guide_label: Framing guide with the synthetic sitter inside it
+  outline_label: The captured outline over the synthetic sitter
+  save_title: Save calibration
+  name_label: Name
+  name_hint: Where you sit, so you can tell calibrations apart.
+  default_name: Desk, {camera}
+  save: Save
+  saved: Calibration saved
+  saved_title: Saved calibrations
+  saved_footer: Calibrate again whenever you move the camera or change chairs.
+  in_use: In use
+  use_this: Use {name}
+  switched: Now using {name}
+  created: Saved {date}
+
+live:
+  title: Live
+  image_label: A synthetic sitter, darkened, with the gold outline of the calibrated posture
+  session_label: Good posture this session
+  session_value: '{good} of {total}'
+  open_sentinel: Open sentinel
+  pause: Pause
+  resume: Resume
+  end: End session
+  calibration_label: Calibration
+  change: Change
+  since_label: Current state for
+  absent_title: No one in frame
+  absent_body: Minutes away do not count against you.
+  fallback: The model did not load, so the heuristic is classifying. Readings may be rougher.
+  end_title: End this session?
+  end_body: Today's report keeps the minutes so far.
+  end_confirm: End session
+  end_cancel: Keep going
+  ended: Session ended
+  ended_title: Session ended
+  ended_body: Its minutes are in today's report.
+  start: Start a new session
+  report: Open today's report
+
+sentinel:
+  title: Sentinel
+  intro: A small window that stays on top while you code. It shows the outline, one word and a pause button. Nudges show here first.
+  open: Open sentinel
+  close: Close sentinel
+  is_open: The sentinel is open in its own window. Keep coding.
+  preview_label: Sentinel preview
+  unsupported_title: This browser cannot keep a window on top
+  unsupported_body: Chrome and Edge can. Here, keep this tab visible. Minutes while it is hidden count as not watched.
+  facts_title: How it behaves
+  facts:
+    - Pauses drawing when nothing changes, to save battery.
+    - Never takes focus from your editor.
+    - Closes when you end the session.
+
+nudge:
+  title: Nudges
+  intro: Rare and soft. Nothing turns red, nothing blocks your work, and only one nudge shows at a time.
+  ladder_title: How a nudge escalates
+  glow_title: Glow
+  glow_body: As soon as you drift, the gold fades and the drifting part of the outline warms to amber.
+  glow_when: Right away
+  notify_title: Notification
+  notify_body: After {minutes} minutes of drift, one notification with two choices.
+  notify_when: After {minutes} min
+  chime_title: Chime
+  chime_body: A soft chime with the notification, only if you switch it on.
+  chime_when: Off by default
+  example_title: The notification
+  titles:
+    slouch: Shoulders forward for {minutes} minutes
+    forward_head: Head forward for {minutes} minutes
+    lean_side: Leaning to one side for {minutes} minutes
+  bodies:
+    slouch: Roll them back?
+    forward_head: Bring your head back over your shoulders?
+    lean_side: Settle back to the middle?
+  primary: Sitting up
+  secondary: Snooze {minutes} min
+  rules_title: Limits
+  cooldown: After a nudge, Juryoku waits {minutes} minutes before the next one.
+  quiet: No nudges during quiet hours, {from} to {to}.
+  one_at_a_time: One nudge at a time, never in front of your work.
+  test: Send a test notification
+  test_sent: Test notification sent
+  blocked: Notifications are blocked for this site.
+  unsupported: This browser cannot show notifications.
+  play_chime: Play the chime
+  sitting_up: Back in the outline
+  snoozed: Snoozed until {time}
+  app_name: Darb Juryoku
+
+today:
+  title: Today
+  hero_label: of sitting time in good posture
+  facts_title: Details
+  sat: Time sitting
+  longest_drift: Longest drift
+  worst_hour: Worst hour
+  vs_average: Against your {days}-day average
+  empty_title: No sessions yet
+  empty_body: Start a session and today's report fills in as you work.
+  empty_action: Open Live
+  no_day_title: Nothing recorded on {date}
+  no_day_body: Days fill in only while a session runs.
+
+history:
+  title: History
+  range_label: Range
+  week: Week
+  month: Month
+  bars_title: Good posture by day
+  heatmap_title: Good posture by hour and weekday
+  weekdays: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+  streaks_title: Streaks
+  current: Days in the current streak
+  best: Days in the best streak
+  streak_note: A day counts when at least {goal} of its sitting time is good posture. Days off do not break a streak.
+  days_title: Days
+  swipe_hint: Swipe a day left, or tab to its actions.
+  export: Export
+  delete: Delete
+  swipe_action_name: '{action}, {row}'
+  delete_title: Delete {day}?
+  delete_body: Its minutes are removed from this device. This cannot be undone.
+  delete_confirm: Delete day
+  cancel: Cancel
+  deleted: '{day} deleted'
+  exported: '{day} exported'
+  no_sitting: No sitting
+  empty_title: No history yet
+  empty_body: Days appear here after your first session.
+  empty_action: Open Live
+
+studio:
+  title: Dataset Studio
+  intro: Record labelled posture to train your model. Landmarks only. No images are recorded.
+  mode_label: Mode
+  guided: Guided
+  passive: Passive
+  guided_title: Guided protocol
+  guided_body: Five positions, about {minutes} minutes. Sit each one as asked; the label comes from the step.
+  steps:
+    upright: Sit upright
+    slouch: Slouch the way you naturally do
+    forward_head: Push your head toward the screen
+    lean_left: Lean left
+    lean_right: Lean right
+  passive_title: Passive recording
+  passive_body: Record while you work. Juryoku asks how you are sitting now and then, and your answer becomes the label.
+  prompts_label: Questions per hour
+  prompts_value: '{n} an hour'
+  metadata_title: This session
+  lighting: Lighting
+  chair: Chair
+  camera: Camera position
+  options:
+    morning: Morning light
+    afternoon: Afternoon light
+    evening: Evening, lamps on
+    desk_chair: Desk chair
+    kitchen_chair: Kitchen chair
+    built_in: Laptop camera
+    external: External camera
+  start: Start recording
+  demo_speed: In the demo the protocol runs {n} times faster than real time.
+  stop: Stop
+  recording: Recording
+  label_now: Label now
+  step_label: Step {n} of {total}
+  time_left: '{n} s left'
+  saved: Recording saved
+  stopped: Recording stopped, nothing saved
+  recordings_title: Recordings
+  swipe_hint: Swipe a recording left, or tab to its actions.
+  recording_row: '{date}, {protocol}'
+  recording_value: '{duration}, {size}'
+  protocol_guided: guided
+  protocol_passive: passive
+  export_all: Export all
+  clear: Clear recordings
+  clear_title: Clear all recordings?
+  clear_body: Export first if you want to train on them. This cannot be undone.
+  clear_confirm: Clear recordings
+  cancel: Cancel
+  cleared: Recordings cleared
+  exported: Recordings exported
+  export: Export
+  delete: Delete
+  deleted: Recording deleted
+  empty_title: No recordings yet
+  empty_body: Run the guided protocol to record your first session.
+  empty_action: Start recording
+
+lab:
+  title: Model Lab
+  intro: How well each classifier reads posture, measured on whole sessions it never saw in training.
+  switcher_label: Classifier
+  heuristic: Heuristic
+  in_use: In use
+  use: Use {name}
+  now_using: Now using {name}
+  facts:
+    macro_f1: Macro F1
+    slouch_recall: Slouch recall
+    vs_heuristic: Against the heuristic
+    p95: p95 latency on WASM
+    data: Trained on
+    released: Released
+    size: Size
+  vs_value: '{sign}{n} macro F1'
+  per_class_title: Per class, test sessions
+  class: Class
+  precision: Precision
+  recall: Recall
+  f1: F1
+  support: Frames
+  confusion_title: Confusion matrix, test sessions
+  actual: Actual
+  predicted: Predicted
+  compare_title: Model against heuristic
+  compare_model: Model
+  compare_heuristic: Heuristic
+  gates_title: Release gates
+  pass: Passes
+  fail: Misses
+  gates:
+    macro_f1: Macro F1 at least {value}
+    slouch_recall: Slouch recall at least {value}
+    beats_heuristic: Beats the heuristic by {value} macro F1
+    wasm_p95_ms: p95 on WASM within {value} ms
+  bench_title: Latency
+  bench_run: Run benchmark
+  bench_running: Running {runs} inferences
+  bench_note: '{runs} inferences in this browser. Lower is better.'
+  bench_demo: Demo numbers from the seed, not measured now.
+  p50: p50
+  p95: p95
+  p99: p99
+  webgpu: WebGPU
+  wasm: WASM
+  webgpu_missing: WebGPU is not available in this browser, so the model runs on WASM.
+  heuristic_note: Fixed rules on the pose features. Always available, and the bar every model must beat.
+  empty_title: No model released yet
+  empty_body: Until a model passes its gates, the heuristic classifies posture.
+
+settings:
+  title: Settings
+  groups:
+    camera: Camera
+    nudges: Nudges
+    tracking: Tracking
+    budokai: Darb Budokai
+    data: Your data
+    appearance: Appearance
+    tools: Tools
+    demo: Demo
+  camera_device: Camera
+  camera_none: No camera
+  calibrations: Calibrations
+  calibrations_value: '{n} saved'
+  sensitivity: Sensitivity
+  sensitivity_levels: [Very relaxed, Relaxed, Balanced, Strict, Very strict]
+  sensitivity_note: Stricter settings nudge sooner after smaller drifts.
+  nudge_style: Nudge style
+  nudge_styles:
+    glow: Glow only
+    glow_notify: Glow and notification
+  nudge_style_body: How Juryoku tells you that you have drifted for a while.
+  chime: Play a sound with nudges
+  chime_detail: Off by default
+  quiet_hours: Quiet hours
+  quiet_off: 'Off'
+  quiet_enabled: No nudges during quiet hours
+  from: From
+  to: To
+  done: Done
+  sample_rate: Checks per second
+  sample_rate_value: '{n} Hz'
+  sample_rate_note: Five a second is plenty for posture and keeps the fan quiet.
+  retention: Keep history for
+  retention_options:
+    '30': 30 days
+    '90': 90 days
+    '365': 1 year
+  budokai_toggle: Send session minutes to Darb Budokai
+  budokai_detail: Only minute totals leave this device, never images or pose points.
+  budokai_url: Ingest URL
+  budokai_url_hint: https://
+  budokai_key: Producer key
+  budokai_secret: Signing secret
+  budokai_secret_hint: Stored on this device only
+  budokai_test: Send a test event
+  budokai_test_demo: 'Demo: the event was signed but not sent'
+  budokai_outbox: Waiting to send
+  export: Export my data
+  exported: Export ready
+  delete: Delete all my data
+  delete_title: Delete all your data?
+  delete_body: Sessions, minutes, calibrations and recordings are removed from this device. This cannot be undone.
+  delete_confirm: Delete everything
+  delete_demo: Demo data restored to its first state
+  deleted: All your data was deleted
+  cancel: Cancel
+  shortcuts: Keyboard shortcuts

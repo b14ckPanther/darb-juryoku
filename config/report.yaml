@@ -1,0 +1,36 @@
+# Report engine settings and wording rules (apps/web/src/report). Validated against
+# packages/schemas/config/report.schema.json.
+ribbon_step_minutes: 10
+average_window_days: 7
+# An hour needs this much sitting before it can be the worst hour.
+worst_hour_min_sitting_minutes: 20
+# A day counts toward a streak at or above this share of good posture.
+streak_goal: 0.75
+# Drift after this hour counts as afternoon drift in the rules below.
+afternoon_from_hour: 15
+heatmap_hours: { from: 9, to: 20 }
+history_days: { week: 7, month: 30 }
+# The one plain sentence under Today's numbers: the first rule whose conditions all hold.
+# Metrics: good_share (0..1), delta_points (against the average), afternoon_drift_share (0..1),
+# longest_drift_minutes, afternoon_drift_minutes, worst_hour_share (only when a worst hour exists).
+# Slots: {afternoon_from}, {worst_hour}, {good_percent}, {delta_points}.
+observations:
+  - when:
+      - { metric: afternoon_drift_share, op: gte, value: 0.55 }
+      - { metric: afternoon_drift_minutes, op: gte, value: 20 }
+      - { metric: longest_drift_minutes, op: gte, value: 15 }
+    text: Most of your drift came after {afternoon_from}, including one long stretch.
+  - when:
+      - { metric: afternoon_drift_share, op: gte, value: 0.55 }
+      - { metric: afternoon_drift_minutes, op: gte, value: 20 }
+    text: Most of your drift came after {afternoon_from}. A short break around then may help.
+  - when: [{ metric: delta_points, op: gte, value: 8 }]
+    text: A clearly better day than usual. Whatever you changed, it is working.
+  - when:
+      - { metric: delta_points, op: lte, value: -8 }
+      - { metric: worst_hour_share, op: lt, value: 1 }
+    text: A harder day than usual, mostly around {worst_hour}.
+  - when: [{ metric: good_share, op: gte, value: 0.85 }]
+    text: You sat well for almost the whole day.
+  - when: []
+    text: You sat well for {good_percent} of your sitting time.

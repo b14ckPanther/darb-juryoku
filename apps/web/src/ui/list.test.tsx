@@ -66,3 +66,33 @@ describe('SwipeRow', () => {
     expect(onDelete).toHaveBeenCalled();
   });
 });
+
+describe('SwipeRow that opens', () => {
+  it('opens its row with a press, before the actions in tab order', async () => {
+    const onOpen = vi.fn();
+    render(
+      <GroupedList>
+        <SwipeRow
+          label="Monday"
+          value="80%"
+          onOpen={onOpen}
+          actions={[
+            {
+              label: 'Delete',
+              accessibleName: 'Delete, Monday',
+              icon: Trash2,
+              tone: 'danger',
+              onPress: vi.fn(),
+            },
+          ]}
+        />
+      </GroupedList>,
+    );
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: /Monday.*80%/ })).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    expect(onOpen).toHaveBeenCalled();
+    await userEvent.tab();
+    expect(screen.getByRole('button', { name: 'Delete, Monday' })).toHaveFocus();
+  });
+});

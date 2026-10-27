@@ -146,3 +146,16 @@ Status: Accepted. Decided under Nour's delegation (2026-10-26).
 - The overlay draws at most `glow.max_fps` (30) frames a second, rebuilds the scene only when the match or size changes, pauses off screen and in hidden tabs, and frees every GPU resource and its context on unmount.
 - The overlay's warmth is on the calibrated outline, not on the body rim, as UI_DESIGN section 1 says; the rim only fades.
 - The Impeccable detector flags Geist as an overused font. Kept: it is a pinned brand face.
+
+## ADR-033 Phase 3 prototype rulings
+Status: Accepted. Decided under Nour's delegation (2026-10-26). Spec: `docs/specs/2026-10-27-phase-03-prototype.md`.
+- **Router:** a small history router of our own (`apps/web/src/app/router.tsx`) instead of a router library. Navigations run in React transitions tagged with a direction, and each page sits in React's `<ViewTransition>`: a fade between tabs, a slide into a day report and back, nothing under reduced motion. Cost if wrong: low; twelve routes.
+- **Seed format:** YAML, not the JSON that ARCHITECTURE section 8 sketched, so the existing schema-per-config-file check covers every seed file. Minutes are generated from `recipe.yaml` by a seeded generator and committed as `sessions.yaml` with a drift test, like the tokens. Cost if wrong: low.
+- **Demo playback:** the live mirror and sentinel play match keys over the Phase 2 synthetic pose fixture (a recorded-synthetic track) instead of a per-frame landmark file. The demo's nudge and its quiet spell use compressed seconds from the seed (`playback.nudge_after_seconds`), standing in for `config/nudges.yaml` minutes. Cost if wrong: low.
+- **Copy type:** the TypeScript shape of `config/copy/en.yaml` is generated from the file (`pnpm --filter web copy:types`), so a missing string fails the typecheck; the schema checks it is a tree of non-empty strings. Closes the Phase 0 ruling about generated config types for copy; other config types stay hand-written.
+- **Real mode before Phase 4:** opens on Welcome; camera screens say the pipeline is not built yet and offer the demo. "Allow camera" asks for the camera and releases it at once, only to show the granted, denied or missing state.
+- **Phone tabs:** UI_DESIGN's four tabs (Today, History, Live, Settings). Dataset Studio, Model Lab and Nudges live under Settings on the phone; desktop has all of them in a sidebar.
+- **Live mirror keeps the monitor's corner marks** (ADR-031 left this to Phase 3): they echo the camera frame in the mark and stay quiet.
+- **Sentinel:** the overlay renders inside the PiP window using that window's document, frame clock and visibility, so it keeps drawing while the opener tab is hidden. Styles are copied into the window at open.
+- **Toasts** announce from one live region that is always in the page (closes the Phase 2 minor about a toast mounting its own region).
+- **Settings** are kept in memory until IndexedDB storage lands (Phase 8); defaults come from `config/settings.yaml` and `config/nudges.yaml`.

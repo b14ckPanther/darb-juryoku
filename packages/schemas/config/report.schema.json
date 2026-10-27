@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/report.schema.json",
+  "title": "Report engine settings and wording rules",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ribbon_step_minutes",
+    "average_window_days",
+    "worst_hour_min_sitting_minutes",
+    "streak_goal",
+    "afternoon_from_hour",
+    "heatmap_hours",
+    "history_days",
+    "observations"
+  ],
+  "properties": {
+    "ribbon_step_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "average_window_days": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "worst_hour_min_sitting_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "streak_goal": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "afternoon_from_hour": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 23
+    },
+    "heatmap_hours": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 23
+        },
+        "to": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 23
+        }
+      }
+    },
+    "history_days": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "week",
+        "month"
+      ],
+      "properties": {
+        "week": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "month": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "when",
+          "text"
+        ],
+        "properties": {
+          "when": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "metric",
+                "op",
+                "value"
+              ],
+              "properties": {
+                "metric": {
+                  "enum": [
+                    "good_share",
+                    "delta_points",
+                    "afternoon_drift_share",
+                    "longest_drift_minutes",
+                    "afternoon_drift_minutes",
+                    "worst_hour_share"
+                  ]
+                },
+                "op": {
+                  "enum": [
+                    "lt",
+                    "lte",
+                    "gt",
+                    "gte"
+                  ]
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Nudge escalation and limits (Phase 1 spec section 4). Validated against
+# packages/schemas/config/nudges.schema.json. User changes are stored on the device and override these.
+notify_after_minutes: 4
+cooldown_minutes: 20
+snooze_minutes: 15
+max_visible: 1
+style_default: glow_notify # glow | glow_notify
+chime_default: false
+quiet_hours_default: { enabled: true, from: '22:00', to: '08:00' }

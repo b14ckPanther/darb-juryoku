@@ -229,17 +229,27 @@ interface HeatmapProps {
   title: string;
   rows: string[];
   columns: string[];
-  values: number[][];
+  /** Null where there is no data (nobody sat); such cells are outlined, never shaded as zero. */
+  values: (number | null)[][];
   unit: string;
   toggle: { show: string; hide: string };
+  emptyLabel?: string;
 }
 
 const ramp = (t: number) =>
   `color-mix(in oklab, var(--accent) ${Math.round(22 + t * 78)}%, var(--surface-raised))`;
 
 /** Hour by weekday, one sequential gold ramp from faint (low) to full (high). */
-export function Heatmap({ title, rows, columns, values, unit, toggle }: HeatmapProps) {
-  const flat = values.flat();
+export function Heatmap({
+  title,
+  rows,
+  columns,
+  values,
+  unit,
+  toggle,
+  emptyLabel = '',
+}: HeatmapProps) {
+  const flat = values.flat().filter((v): v is number => v !== null);
   const min = Math.min(...flat);
   const max = Math.max(...flat);
   const t = (v: number) => (max === min ? 1 : (v - min) / (max - min));
@@ -260,7 +270,7 @@ export function Heatmap({ title, rows, columns, values, unit, toggle }: HeatmapP
           <tr key={r}>
             <th scope="row">{r}</th>
             {(values[i] ?? []).map((v, j) => (
-              <td key={j}>{v}</td>
+              <td key={j}>{v ?? emptyLabel}</td>
             ))}
           </tr>
         ))}
@@ -298,14 +308,22 @@ export function Heatmap({ title, rows, columns, values, unit, toggle }: HeatmapP
         ))}
         {rows.map((r, i) => (
           <Row key={r} label={r}>
-            {(values[i] ?? []).map((v, j) => (
-              <span
-                key={j}
-                title={`${r} ${columns[j] ?? ''}: ${v}${unit}`}
-                className="aspect-square rounded-[3px]"
-                style={{ background: ramp(t(v)) }}
-              />
-            ))}
+            {(values[i] ?? []).map((v, j) =>
+              v === null ? (
+                <span
+                  key={j}
+                  title={`${r} ${columns[j] ?? ''}: ${emptyLabel}`}
+                  className="aspect-square rounded-[3px] border border-dashed border-rule"
+                />
+              ) : (
+                <span
+                  key={j}
+                  title={`${r} ${columns[j] ?? ''}: ${v}${unit}`}
+                  className="aspect-square rounded-[3px]"
+                  style={{ background: ramp(t(v)) }}
+                />
+              ),
+            )}
           </Row>
         ))}
       </div>

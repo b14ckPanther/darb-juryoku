@@ -65,7 +65,18 @@ export interface Tab {
 }
 
 /** The bottom tab bar: translucent material, safe-area aware, the current tab marked for assistive tech. */
-export function TabBar({ tabs, current, label }: { tabs: Tab[]; current: string; label: string }) {
+export function TabBar({
+  tabs,
+  current,
+  label,
+  onNavigate,
+}: {
+  tabs: Tab[];
+  current: string;
+  label: string;
+  /** In-app navigation for a plain click; without it the links load the page. */
+  onNavigate?: (href: string) => void;
+}) {
   return (
     <nav
       aria-label={label}
@@ -82,6 +93,11 @@ export function TabBar({ tabs, current, label }: { tabs: Tab[]; current: string;
               <a
                 href={href}
                 aria-current={active ? 'page' : undefined}
+                onClick={(e) => {
+                  if (!onNavigate || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+                  e.preventDefault();
+                  onNavigate(href);
+                }}
                 className={cx(
                   'pressable flex min-h-[3.25rem] flex-col items-center justify-center gap-0.5 text-tab font-medium no-underline',
                   active ? 'text-accent-text' : 'text-text-secondary hover:text-text',

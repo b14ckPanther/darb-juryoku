@@ -87,6 +87,29 @@ describe('Heatmap', () => {
   });
 });
 
+describe('Heatmap with empty cells', () => {
+  it('names a cell without data instead of shading it as zero', async () => {
+    render(
+      <Heatmap
+        title="By hour"
+        unit="%"
+        toggle={toggle}
+        emptyLabel="No sitting"
+        rows={['Mon']}
+        columns={['09', '10']}
+        values={[[80, null]]}
+      />,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Show as table' }));
+    const row = screen.getByRole('rowheader', { name: 'Mon' }).closest('tr');
+    expect(
+      within(row as HTMLElement)
+        .getAllByRole('cell')
+        .map((c) => c.textContent),
+    ).toEqual(['80', 'No sitting']);
+  });
+});
+
 describe('ConfusionMatrix', () => {
   it('uses class labels, not ids, and keeps every count in the table', async () => {
     render(

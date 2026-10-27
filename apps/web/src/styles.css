@@ -192,3 +192,67 @@
     transform: none;
   }
 }
+
+/* Page transitions (View Transitions through React): a short fade between tabs, a slide one level
+   deeper into a day report and back out. Only transform and opacity move. */
+@keyframes jr-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes jr-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes jr-from-right {
+  from {
+    transform: translateX(2.5rem);
+    opacity: 0;
+  }
+}
+@keyframes jr-to-left {
+  to {
+    transform: translateX(-2.5rem);
+    opacity: 0;
+  }
+}
+@keyframes jr-from-left {
+  from {
+    transform: translateX(-2.5rem);
+    opacity: 0;
+  }
+}
+@keyframes jr-to-right {
+  to {
+    transform: translateX(2.5rem);
+    opacity: 0;
+  }
+}
+
+::view-transition-old(.nav-fade) {
+  animation: jr-fade-out var(--duration-fast) var(--ease-out) both;
+}
+::view-transition-new(.nav-fade) {
+  animation: jr-fade-in var(--duration-base) var(--ease-out) both;
+}
+::view-transition-old(.nav-forward) {
+  animation: jr-to-left var(--duration-base) var(--ease-out) both;
+}
+::view-transition-new(.nav-forward) {
+  animation: jr-from-right var(--duration-slow) var(--ease-out) both;
+}
+::view-transition-old(.nav-back) {
+  animation: jr-to-right var(--duration-base) var(--ease-out) both;
+}
+::view-transition-new(.nav-back) {
+  animation: jr-from-left var(--duration-slow) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

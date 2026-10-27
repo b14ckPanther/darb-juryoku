@@ -8,7 +8,7 @@ Everything runs on your device. Webcam frames never leave the browser, and there
 
 Darb Budokai role: **Stamina** (region: The Springs, stat: Vigor).
 
-Status: Phases 0 to 2 are merged locally (16%): repo bootstrap, the product spec (`docs/specs/2026-10-26-phase-01-product-spec.md`) and the design system. Next: Phase 3, a clickable prototype of every screen on demo data.
+Status: Phases 0 to 3 are done (28%): repo bootstrap, the product spec (`docs/specs/2026-10-26-phase-01-product-spec.md`), the design system and a clickable prototype of every screen on demo data. Next: Phase 4, the live camera and pose pipeline with the heuristic.
 
 ![The golden outline: the body edge glows gold when you sit back into your calibrated posture](docs/screenshots/phase-02/overlay-match-desktop-dark.png)
 
@@ -66,13 +66,19 @@ docs/CONVENTIONS.md    code style, layout, tests, commits, PR template
 
 Night Instrument on the approved brand (Zen Old Mincho and Geist; night, forest and gold), with an Ivory light theme. Tokens live in `config/design/tokens.yaml` and generate the CSS; every text and mark colour pair is contrast-tested in both themes. Run the app and open `/design` (the three directions side by side), `/design/components` (every component and state), `/design/overlay` (the golden outline, WebGL with a 2D fallback) and `/design/mobile` (the phone shell). Screenshots are in `docs/screenshots/phase-02/`.
 
+## The prototype
+
+Every screen runs in demo mode on a synthetic sitter's three weeks (`config/seed/demo/`, generated from a recipe with an afternoon slump and a Friday drop): the live mirror with the golden outline and a gentle nudge, Today and past days, History with the hour by weekday heatmap and streaks, Calibrate, the always-on-top sentinel (Document Picture-in-Picture), Nudges, Welcome with the privacy diagram, Dataset Studio, Model Lab (confusion matrix, release gates, model against the heuristic, latency) and Settings. Open `/?demo=1`; `?demo=0` returns to real mode. Every string is in `config/copy/en.yaml`. Screenshots, phone and desktop in both themes, are in `docs/screens/phase-03/`.
+
+![Today on the phone, Night Instrument](docs/screens/phase-03/today-390-dark.png)
+
 ## Run it locally
 
 Requirements: Node 24 or newer, pnpm 11, Python 3.12 with uv, bats-core.
 
 ```bash
 pnpm install
-pnpm --filter web dev            # http://localhost:5173 (cross-origin isolated)
+pnpm --filter web dev            # http://localhost:5173 (cross-origin isolated); add ?demo=1 for demo data
 pnpm check:all                   # every unit test, lint, typecheck, schema, emoji and hook check
 pnpm --filter web e2e            # Playwright smoke and axe scan against the production build
 uv sync --project ml && pnpm ml:test
