@@ -3,7 +3,7 @@
 # Nothing here or in sessions.yaml is a real measurement or a real person.
 end_date: '2026-10-26' # the demo's "today"
 days: 21
-rng_seed: 26
+rng_seed: 108
 device: FaceTime HD Camera
 model_version: v3
 # Sittings on a working day. Each start moves by up to `jitter_minutes` either way.
