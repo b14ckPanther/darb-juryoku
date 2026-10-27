@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/session.schema.json",
+  "title": "Session engine smoothing and hysteresis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ema_alpha",
+    "enter_drift_below",
+    "enter_drift_seconds",
+    "exit_drift_above",
+    "exit_drift_seconds",
+    "absent_visibility_below",
+    "absent_after_seconds",
+    "max_gap_seconds"
+  ],
+  "properties": {
+    "ema_alpha": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 1
+    },
+    "enter_drift_below": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "enter_drift_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "exit_drift_above": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "exit_drift_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "absent_visibility_below": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "absent_after_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "max_gap_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    }
+  }
+}

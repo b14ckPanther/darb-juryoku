@@ -1,0 +1,15 @@
+# The heuristic baseline (ARCHITECTURE section 3): thresholds on the calibration deltas from
+# features.yaml. A class's score is its strongest condition, (value - threshold) / scale, so 0 is
+# "just at the threshold". Probabilities are a softmax of the scores with upright at 0.
+# Validated against packages/schemas/config/heuristic.schema.json.
+temperature: 0.5
+classes:
+  forward_head:
+    - { feature: head_drop_delta, op: lt, threshold: -0.12, scale: 0.08 }
+    - { feature: neck_tilt_deg_delta, op: abs_gt, threshold: 9, scale: 5 }
+  slouch:
+    - { feature: shoulder_hunch_delta, op: lt, threshold: -0.1, scale: 0.08 }
+    - { feature: shoulder_width_delta, op: gt, threshold: 0.12, scale: 0.08 }
+  lean_side:
+    - { feature: shoulder_roll_deg_delta, op: abs_gt, threshold: 7, scale: 4 }
+    - { feature: head_forward_delta, op: abs_gt, threshold: 0.18, scale: 0.1 }

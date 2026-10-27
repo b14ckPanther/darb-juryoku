@@ -19,6 +19,7 @@ dev = [
   "types-pyyaml",
   "types-jsonschema",
   "dvc>=3.50",
+  "hypothesis>=6.170.12",
 ]
 
 [build-system]

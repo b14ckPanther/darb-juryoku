@@ -1,0 +1,10 @@
+# Session engine (apps/web/src/posture/session.ts): smoothing and hysteresis between posture states.
+# Validated against packages/schemas/config/session.schema.json.
+ema_alpha: 0.35 # weight of the newest sample in the smoothed probabilities
+enter_drift_below: 0.45 # smoothed upright probability that starts a drift...
+enter_drift_seconds: 3 # ...when it stays below for this long
+exit_drift_above: 0.6 # smoothed upright probability that ends a drift...
+exit_drift_seconds: 2 # ...when it stays above for this long
+absent_visibility_below: 0.5 # mean visibility under this counts as nobody in frame...
+absent_after_seconds: 3 # ...for this long
+max_gap_seconds: 2 # a longer gap between samples counts as unwatched time

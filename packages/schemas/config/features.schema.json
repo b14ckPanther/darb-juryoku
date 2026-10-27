@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/features.schema.json",
+  "title": "Posture features shared by the app and the training pipeline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "landmarks",
+    "used",
+    "features"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "landmarks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 32
+      },
+      "required": [
+        "nose",
+        "left_ear",
+        "right_ear",
+        "left_shoulder",
+        "right_shoulder"
+      ]
+    },
+    "used": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z_]+$"
+      }
+    },
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "delta"
+        ],
+        "properties": {
+          "name": {
+            "enum": [
+              "head_forward",
+              "neck_tilt_deg",
+              "shoulder_roll_deg",
+              "shoulder_width",
+              "head_drop",
+              "shoulder_hunch",
+              "visibility"
+            ]
+          },
+          "delta": {
+            "enum": [
+              "difference",
+              "ratio"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

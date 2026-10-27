@@ -1,0 +1,28 @@
+# Posture features (ARCHITECTURE section 4). The app (apps/web/src/posture/features.ts) and the
+# training pipeline (ml/src/pg_ml/features.py) both read this file and must give identical output;
+# a golden-file test checks it. A model records the hash of this file and the app refuses a model
+# whose hash differs. Validated against packages/schemas/config/features.schema.json.
+version: 1
+# MediaPipe Pose landmark indices of the upper body (hips are hidden by the desk).
+landmarks:
+  nose: 0
+  left_eye: 2
+  right_eye: 5
+  left_ear: 7
+  right_ear: 8
+  left_shoulder: 11
+  right_shoulder: 12
+  left_elbow: 13
+  right_elbow: 14
+# Landmarks the features use; their mean visibility is the `visibility` feature.
+used: [nose, left_ear, right_ear, left_shoulder, right_shoulder]
+# Base features in vector order. `delta` says how each compares with the calibrated ideal:
+# `difference` (value minus ideal) or `ratio` (value over ideal, minus 1).
+features:
+  - { name: head_forward, delta: difference } # ear midpoint left of shoulder midpoint, in shoulder widths
+  - { name: neck_tilt_deg, delta: difference } # ear-to-shoulder midline against vertical
+  - { name: shoulder_roll_deg, delta: difference } # shoulder line against horizontal; sign = side
+  - { name: shoulder_width, delta: ratio } # wider means leaning toward the screen
+  - { name: head_drop, delta: difference } # nose above the shoulder line, in shoulder widths
+  - { name: shoulder_hunch, delta: difference } # ears above the shoulder line, in shoulder widths
+  - { name: visibility, delta: difference }
