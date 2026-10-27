@@ -1,0 +1,222 @@
+# Demo only. Copy and sample data for the /design routes (Phase 2 design system).
+# Every page that reads this file shows the "Demo data" banner. Nothing here is a real measurement.
+
+banner:
+  demo: Demo data
+  demo_detail: Every number on these pages is sample data.
+
+nav:
+  label: Design system
+  home: Darb Juryoku
+  links:
+    - { href: /design, label: Directions }
+    - { href: /design/components, label: Components }
+    - { href: /design/overlay, label: Golden outline }
+    - { href: /design/mobile, label: Phone }
+
+home:
+  intro: An on-device posture coach. Your camera image never leaves this device.
+  cta: Open the design system
+
+theme_switch:
+  label: Theme
+  options: { dark: Night, light: Ivory }
+
+directions:
+  title: One brand, three directions
+  intro: The live mirror and the daily report, drawn three ways on the approved palette and type. Drag the match control to watch each one react.
+  match_label: Match
+  pick_label: Chosen
+  notes:
+    instrument: Gold appears only where you sit well. Drift warms to amber. Dark and quiet next to a code editor.
+    ledger: Ivory paper with gold seams. Drift fades to soft grey, so good time reads like a repair line.
+    monitor: A calibrated camera monitor. Framing marks and a faint grid make the mirror read as a measuring tool.
+  decision:
+    title: Night Instrument leads, with Ivory as its light theme
+    body: Night Instrument sits beside a dark code editor without glare and keeps gold for one meaning. Ivory Ledger becomes the light theme for the phone in daylight, with drift kept amber so the meaning never changes between themes. The monitor's framing marks echo the camera frame in the mark, so the live mirror keeps them.
+
+mirror:
+  states: { upright: Upright, drifting: Drifting, forward_head: Head forward }
+  # Demo only: which state word the mirror shows for a match value. The real states come from the
+  # session engine and config in Phase 4.
+  state_from: { upright: 0.75, drifting: 0.4 }
+  session_label: Good posture this session
+  session_value: 38 min of 52
+  open_sentinel: Open sentinel
+  pause: Pause
+  image_label: Your camera image, darkened, with the gold outline of your calibrated posture
+
+today:
+  title: Today
+  date: Monday, 26 October
+  hero_value: '80'
+  hero_unit: '%'
+  hero_label: of sitting time in good posture
+  ribbon:
+    start: '09:00'
+    bucket_minutes: 10
+    # G good, D drift, A away. One letter per 10 minutes.
+    states: AGGGGGGGGDDGGGGGGGGGGGGDDGGGGGAAAAGGGGGDDDDDGGGGGGGDGG
+    labels: { G: Good posture, D: Drift, A: Away }
+    title: The day in 10-minute steps
+  facts:
+    - { label: Longest drift, value: 50 min }
+    - { label: Worst hour, value: '15:00 to 16:00' }
+    - { label: Against your 7-day average, value: +11 points }
+  observation: Most of your drift came after three, in one long stretch.
+  tabs: { today: Today, history: History, live: Live, settings: Settings }
+
+gallery:
+  title: Components
+  intro: Every component in each state, built from the tokens in config/design/tokens.yaml.
+  sections:
+    buttons: Buttons
+    controls: Controls
+    lists: Lists
+    feedback: Nudges, toasts and banners
+    data: Charts
+    model: Model card
+    states: First run and empty states
+    glyphs: Posture glyphs
+  state_labels: { default: Default, disabled: Disabled, loading: Loading }
+  buttons:
+    primary: Start session
+    quiet: Calibrate
+    destructive: Delete all data
+    loading: Saving…
+    icon_pause: Pause
+    icon_settings: Settings
+    icon_sentinel: Open sentinel
+  segmented:
+    label: Report range
+    options: [Day, Week, Month]
+  toggle:
+    label: Play a sound with nudges
+    detail: Off by default
+  slider:
+    label: Sensitivity
+    min: 1
+    max: 5
+    value: 3
+    value_labels: [Very relaxed, Relaxed, Balanced, Strict, Very strict]
+  settings_title: Settings
+  rows:
+    - { label: Camera, value: FaceTime HD Camera }
+    - { label: Quiet hours, value: '22:00 to 08:00' }
+    - { label: Keep history for, value: 1 year }
+    - { label: Darb Budokai, value: 'Off' }
+  history_title: Recent days
+  history_rows:
+    - { label: Monday, value: 80% }
+    - { label: Sunday, value: 81% }
+    - { label: Friday, value: 58% }
+  swipe_actions: { export: Export, delete: Delete }
+  swipe_action_name: '{action}, {row}' # what a screen reader hears for each swipe action
+  swipe_hint: Swipe a day left, or tab to its actions.
+  sheet:
+    open: Choose nudge style
+    title: Nudge style
+    body: How Juryoku tells you that you have drifted for a while.
+    close: Done
+    options: [Glow only, Glow and notification, Glow, notification and sound]
+  nudge:
+    title: Shoulders forward for 4 minutes
+    body: Roll them back?
+    primary: Sitting up
+    secondary: Snooze 15 min
+  toast: Calibration saved
+  chime: Play the nudge chime
+  banner_warning: WebGPU is not available in this browser, so the model runs on WASM.
+  chart_table_toggle: { show: Show as table, hide: Hide table }
+
+history:
+  bars_title: Good posture by day
+  bars:
+    - { label: 13 Oct, value: 61 }
+    - { label: 14 Oct, value: 66 }
+    - { label: 15 Oct, value: 58 }
+    - { label: 16 Oct, value: 70 }
+    - { label: 17 Oct, value: 52 }
+    - { label: 18 Oct, value: 77 }
+    - { label: 19 Oct, value: 80 }
+    - { label: 20 Oct, value: 64 }
+    - { label: 21 Oct, value: 69 }
+    - { label: 22 Oct, value: 71 }
+    - { label: 23 Oct, value: 63 }
+    - { label: 24 Oct, value: 55 }
+    - { label: 25 Oct, value: 81 }
+    - { label: 26 Oct, value: 80 }
+  heatmap_title: Good posture by hour and weekday
+  heatmap:
+    rows: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+    columns: ['09', '10', '11', '12', '13', '14', '15', '16', '17', '18']
+    # Share of good posture, percent. Afternoons and Fridays dip.
+    values:
+      - [82, 85, 80, 74, 66, 61, 52, 55, 63, 70]
+      - [84, 86, 83, 77, 69, 63, 57, 59, 66, 72]
+      - [81, 83, 79, 72, 64, 59, 50, 54, 60, 68]
+      - [83, 87, 84, 76, 70, 66, 58, 61, 67, 73]
+      - [76, 78, 72, 64, 55, 49, 43, 46, 51, 58]
+      - [88, 86, 84, 80, 77, 75, 73, 74, 76, 79]
+      - [90, 89, 87, 84, 81, 79, 78, 80, 83, 85]
+
+model:
+  title: Model
+  name: posture-tcn
+  version: v3
+  data_version: data-v2
+  classes: [upright, slouch, forward_head, lean_side]
+  class_labels: { upright: Upright, slouch: Slouch, forward_head: Head forward, lean_side: Lean }
+  facts:
+    - { label: Macro F1, value: '0.89' }
+    - { label: Slouch recall, value: '0.87' }
+    - { label: Against the heuristic, value: +0.09 macro F1 }
+    - { label: p95 latency, value: 2.6 ms on WASM }
+  confusion_title: Confusion matrix, test sessions
+  confusion_axis: { actual: Actual, predicted: Predicted }
+  # Rows are the actual class, columns the prediction, in the order of `classes`.
+  confusion:
+    - [412, 21, 9, 6]
+    - [28, 361, 17, 11]
+    - [12, 23, 298, 5]
+    - [9, 14, 4, 187]
+
+permission:
+  prompt:
+    title: Juryoku needs your camera
+    body: It watches your neck and shoulders to tell good posture from drift. Your camera image never leaves this device and is never saved.
+    action: Allow camera
+  denied:
+    title: Camera access is blocked
+    body: Your browser blocked the camera for this site. Open the site settings in the address bar, allow the camera, then try again.
+    action: Try again
+  missing:
+    title: No camera found
+    body: Connect a camera, or close other apps that are using it, then try again.
+    action: Try again
+
+empty:
+  title: No sessions yet
+  body: Start a session and today's report fills in as you work.
+  action: Start session
+
+glyphs:
+  upright: Upright
+  slouch: Slouch
+  forward_head: Head forward
+  lean_side: Lean
+
+overlay:
+  title: The golden outline
+  intro: The prototype of the signature moment on a synthetic figure. The faint line is your calibrated posture. When you sit back into it, the edge of your body lights up gold.
+  match_label: Match
+  renderer_label: Renderer
+  renderers: { webgl: WebGL with bloom, canvas: 2D fallback }
+  motion_label: Motion
+  motion_options: { full: Full, reduced: Reduced }
+  figure_label: Synthetic figure drawn from landmarks, not a photo of a person
+
+mobile:
+  title: Today
+  compact_title: Today
+  sections: { day: The day, facts: Details, recent: Recent days }

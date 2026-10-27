@@ -16,6 +16,7 @@
     "ml:test": "uv run --project ml pytest",
     "ml:lint": "uv run --project ml ruff check ml && uv run --project ml ruff format --check ml",
     "ml:typecheck": "uv run --project ml mypy --config-file ml/pyproject.toml ml/src",
-    "check:all": "pnpm -r test && pnpm lint && pnpm typecheck && pnpm schemas:check && pnpm check:emoji && pnpm test:hooks && pnpm ml:test && pnpm ml:lint && pnpm ml:typecheck"
+    "check:all": "pnpm -r test && pnpm lint && pnpm typecheck && pnpm schemas:check && pnpm check:emoji && pnpm test:hooks && pnpm ml:test && pnpm ml:lint && pnpm ml:typecheck && pnpm audio:check",
+    "audio:check": "uv run --quiet --with numpy --with pyyaml python scripts/audio/make_chime.py --check"
   }
 }

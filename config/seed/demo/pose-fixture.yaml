@@ -1,0 +1,41 @@
+# Demo only. A synthetic upper-body pose (drawn by hand, not recorded from a real person) used by the
+# /design routes to show the golden outline without a camera. Coordinates are normalised to a 4:3 frame:
+# x from the left edge, y from the top. "drift" is the same sitter with the head forward and shoulders rounded.
+frame: { width: 4, height: 3 }
+points: [l_arm, l_shoulder, l_neck, l_ear, l_temple, head_top, r_temple, r_ear, r_neck, r_shoulder, r_arm]
+regions:
+  l_arm: shoulders
+  l_shoulder: shoulders
+  l_neck: neck
+  l_ear: head
+  l_temple: head
+  head_top: head
+  r_temple: head
+  r_ear: head
+  r_neck: neck
+  r_shoulder: shoulders
+  r_arm: shoulders
+ideal:
+  l_arm: [0.17, 1.0]
+  l_shoulder: [0.3, 0.63]
+  l_neck: [0.452, 0.5]
+  l_ear: [0.432, 0.335]
+  l_temple: [0.442, 0.215]
+  head_top: [0.5, 0.165]
+  r_temple: [0.558, 0.215]
+  r_ear: [0.568, 0.335]
+  r_neck: [0.548, 0.5]
+  r_shoulder: [0.7, 0.63]
+  r_arm: [0.83, 1.0]
+drift:
+  l_arm: [0.2, 1.0]
+  l_shoulder: [0.325, 0.71]
+  l_neck: [0.458, 0.6]
+  l_ear: [0.418, 0.43]
+  l_temple: [0.428, 0.295]
+  head_top: [0.5, 0.24]
+  r_temple: [0.572, 0.295]
+  r_ear: [0.582, 0.43]
+  r_neck: [0.542, 0.6]
+  r_shoulder: [0.675, 0.71]
+  r_arm: [0.8, 1.0]

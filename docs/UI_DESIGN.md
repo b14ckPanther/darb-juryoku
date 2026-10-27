@@ -1,6 +1,6 @@
 # UI design
 
-Status: the golden outline, the glow, the gentle nudge and the daily report come from Nour's roadmap. Screen list, art directions, motion values and layout details are **accepted in Phase 1** (decided by Claude under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`); Phase 2 picks the art direction side by side and Phase 3 approves each screen.
+Status: the golden outline, the glow, the gentle nudge and the daily report come from Nour's roadmap. Screen list, art directions, motion values and layout details are **accepted in Phase 1** (decided under Nour's delegation, 2026-10-26; see `docs/specs/2026-10-26-phase-01-product-spec.md`); Phase 2 picks the art direction side by side and Phase 3 approves each screen.
 
 Skills to load before any work in this file's scope: `frontend-design`, `impeccable:impeccable`, `design-taste-frontend`, `build-awwwards-quality-sites`, `design-first-ui-prompting`, `ui-implementer`, `web-design-guidelines`, `design:design-system`, `design:design-critique`, `design:accessibility-review`, `design:ux-copy`, `animation-systems`, `threejs-choose-skills` (then the three.js skills it routes to), `dataviz`, `solar-duotone-bold` if Solar icons are chosen.
 
@@ -70,6 +70,8 @@ Light mode first. Warm off-white paper texture (procedural, subtle), ink-black t
 A broadcast-monitor aesthetic. Deep blue-black, fine scanline grid at very low contrast, gold as the single "signal" colour, technical mono labels (JetBrains Mono) and a condensed sans for headings (Barlow Condensed or Archivo Narrow). The live view reads like a calibrated camera monitor with framing marks. Strongest fit for developers.
 
 ## 5. Design system (built in Phase 2)
+
+> Built in Phase 2 (ADR-031, ADR-032). Tokens: `config/design/tokens.yaml`, generated into `apps/web/src/design/tokens.css` with `pnpm --filter web tokens`. Components: `apps/web/src/ui/`. Live gallery: `/design/components`; directions: `/design`; overlay prototype: `/design/overlay`; phone shell: `/design/mobile`. Shape rule: controls are pills, containers 14 px, the mirror 24 px, sheets 28 px. Icons: Lucide at stroke 1.75 plus four custom posture glyphs.
 
 - Tokens as CSS custom properties and a Tailwind 4 `@theme`: colour (light and dark; gold reserved for posture meaning), type scale, spacing, radii, elevation, motion (spring presets, durations), glow parameters (outline width, bloom strength/threshold, rim intensity).
 - Components: button (primary, quiet, destructive), icon button, segmented control, toggle, slider with value, list row, grouped list, sheet, toast/nudge, stat block, timeline ribbon, heatmap, bar chart, confusion matrix, model card, permission prompt, empty state, banner (demo, warnings).

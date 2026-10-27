@@ -10,7 +10,16 @@ export default defineConfig({
   forbidOnly: Boolean(process.env['CI']),
   reporter: process.env['CI'] ? 'github' : 'list',
   use: { baseURL, trace: 'retain-on-failure' },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    {
+      name: 'chromium',
+      // SwiftShader gives headless Chromium a software WebGL2 so the overlay renders in CI.
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: { args: ['--enable-unsafe-swiftshader'] },
+      },
+    },
+  ],
   webServer: {
     command: `pnpm build && pnpm preview --host 127.0.0.1 --port ${port} --strictPort`,
     url: baseURL,

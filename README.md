@@ -8,7 +8,9 @@ Everything runs on your device. Webcam frames never leave the browser, and there
 
 Darb Budokai role: **Stamina** (region: The Springs, stat: Vigor).
 
-Status: Phase 0 (repo bootstrap, CI, conventions) is merged; Phase 1 settled the product spec (`docs/specs/2026-10-26-phase-01-product-spec.md`). 8% done. Next: Phase 2 builds the design system.
+Status: Phases 0 to 2 are merged locally (16%): repo bootstrap, the product spec (`docs/specs/2026-10-26-phase-01-product-spec.md`) and the design system. Next: Phase 3, a clickable prototype of every screen on demo data.
+
+![The golden outline: the body edge glows gold when you sit back into your calibrated posture](docs/screenshots/phase-02/overlay-match-desktop-dark.png)
 
 ---
 
@@ -59,6 +61,10 @@ docs/OPEN_QUESTIONS.md the 20 Phase 1 questions and their answers
 docs/specs/            approved phase specs
 docs/CONVENTIONS.md    code style, layout, tests, commits, PR template
 ```
+
+## Design system
+
+Night Instrument on the approved brand (Zen Old Mincho and Geist; night, forest and gold), with an Ivory light theme. Tokens live in `config/design/tokens.yaml` and generate the CSS; every text and mark colour pair is contrast-tested in both themes. Run the app and open `/design` (the three directions side by side), `/design/components` (every component and state), `/design/overlay` (the golden outline, WebGL with a 2D fallback) and `/design/mobile` (the phone shell). Screenshots are in `docs/screenshots/phase-02/`.
 
 ## Run it locally
 

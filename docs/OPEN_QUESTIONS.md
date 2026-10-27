@@ -1,6 +1,6 @@
 # Open questions: closed in Phase 1
 
-**All 20 answered on 2026-10-26.** Decided by Claude under Nour's delegation (2026-10-26). Answers and reasons are in `docs/specs/2026-10-26-phase-01-product-spec.md`; the ADRs in `docs/DECISIONS.md` are Accepted. Nothing below blocks Phases 2 to 6. Outward actions (repo creation, push, deploy, DNS, publishing data) still need Nour's yes.
+**All 20 answered on 2026-10-26.** Decided under Nour's delegation (2026-10-26). Answers and reasons are in `docs/specs/2026-10-26-phase-01-product-spec.md`; the ADRs in `docs/DECISIONS.md` are Accepted. Nothing below blocks Phases 2 to 6. Outward actions (repo creation, push, deploy, DNS, publishing data) still need Nour's yes.
 
 | # | Answer | Spec section | Changed from the review sheet? |
 |---|---|---|---|

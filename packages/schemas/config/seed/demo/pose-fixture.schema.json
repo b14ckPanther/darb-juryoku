@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://darb-juryoku.local/schemas/config/seed/demo/pose-fixture.schema.json",
+  "title": "Synthetic demo pose for the design routes",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["frame", "points", "regions", "ideal", "drift"],
+  "$defs": {
+    "point": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 1 }, "minItems": 2, "maxItems": 2 },
+    "pose": { "type": "object", "minProperties": 3, "additionalProperties": { "$ref": "#/$defs/point" } }
+  },
+  "properties": {
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": { "width": { "type": "number", "exclusiveMinimum": 0 }, "height": { "type": "number", "exclusiveMinimum": 0 } }
+    },
+    "points": { "type": "array", "items": { "type": "string" }, "minItems": 3, "uniqueItems": true },
+    "regions": { "type": "object", "additionalProperties": { "enum": ["head", "neck", "shoulders"] } },
+    "ideal": { "$ref": "#/$defs/pose" },
+    "drift": { "$ref": "#/$defs/pose" }
+  }
+}
